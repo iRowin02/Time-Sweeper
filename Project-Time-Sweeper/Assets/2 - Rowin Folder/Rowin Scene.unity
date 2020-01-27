@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294adbcbf2465b545902fe2f29138194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 100
 --- !u!1 &169167575
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294adbcbf2465b545902fe2f29138194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 100
 --- !u!1 &1170684927
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +612,7 @@ MonoBehaviour:
   timer: 2
   radius: 20
   force: 500
+  maxDamage: 150
   particleEffect: {fileID: 4882725903710816521, guid: 475f5d1e71843684aa8c08d705d8ac56,
     type: 3}
 --- !u!65 &1170684929
@@ -682,7 +683,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170684927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.78, y: 1.69, z: -0.84}
+  m_LocalPosition: {x: -0.78, y: 1.69, z: -3.14}
   m_LocalScale: {x: 0.21601012, y: 0.51734614, z: 0.17368}
   m_Children: []
   m_Father: {fileID: 0}
@@ -827,7 +828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294adbcbf2465b545902fe2f29138194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 100
 --- !u!1 &1813483208
 GameObject:
   m_ObjectHideFlags: 0
