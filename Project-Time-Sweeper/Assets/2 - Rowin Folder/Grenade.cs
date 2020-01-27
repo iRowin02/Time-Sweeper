@@ -38,9 +38,16 @@ public class Grenade : MonoBehaviour
         foreach (Collider nearObjects in colliders)
         {
             Rigidbody rb = nearObjects.GetComponent<Rigidbody>();
+            FakePlayer victimPlayer = nearObjects.gameObject.GetComponent<FakePlayer>();
             if(rb != null)
             {
                 rb.AddExplosionForce(force, transform.position, radius);
+                
+            }
+            if(victimPlayer != null)
+            {
+                float distance = (transform.position - nearObjects.transform.position).sqrMagnitude;
+                print(distance);
             }
         }
 
