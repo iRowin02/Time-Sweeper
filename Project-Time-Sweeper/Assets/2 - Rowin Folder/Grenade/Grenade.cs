@@ -7,6 +7,7 @@ public class Grenade : MonoBehaviour
     public float timer;
     public float radius;
     public float force;
+    public float maxDamage;
     private float countdown;
     private bool hasExploded;
     public GameObject particleEffect;
@@ -38,9 +39,17 @@ public class Grenade : MonoBehaviour
         foreach (Collider nearObjects in colliders)
         {
             Rigidbody rb = nearObjects.GetComponent<Rigidbody>();
+            FakePlayer victimPlayer = nearObjects.gameObject.GetComponent<FakePlayer>();
             if(rb != null)
             {
                 rb.AddExplosionForce(force, transform.position, radius);
+                
+            }
+            if(victimPlayer != null)
+            {
+                float distance = (transform.position - nearObjects.transform.position).magnitude;
+
+                victimPlayer.health -= (maxDamage * (1 / distance));
             }
         }
 
