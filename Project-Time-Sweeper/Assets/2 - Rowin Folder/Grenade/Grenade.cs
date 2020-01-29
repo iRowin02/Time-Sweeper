@@ -4,30 +4,31 @@ using UnityEngine;
 
 public class Grenade : MonoBehaviour
 {
-    public float timer;
     public float radius;
     public float force;
     public float maxDamage;
-    private float countdown;
     private bool hasExploded;
+    public GameObject timeFieldObj;
+    public enum GrenadeStates
+    {
+        impact,
+        damage,
+        time
+    }
+
+    public GrenadeStates grenade;
     public GameObject particleEffect;
 
 
-    void Start()
-    {
-        countdown = timer;
-    }
-    void Update()
-    {
-        TimerGrenade();
-    }
-    void TimerGrenade()
-    {
-        countdown -= Time.deltaTime;
 
-        if(countdown <= 0 && !hasExploded)
+    void OnCollisionEnter(Collision collider)
+    {
+        if(collider.gameObject.CompareTag("Floor"))
         {
-            ExplodeGrenade();
+            if(!hasExploded)
+            {
+                ExplodeGrenade();   
+            }
         }
     }
     void ExplodeGrenade()
@@ -39,22 +40,39 @@ public class Grenade : MonoBehaviour
         foreach (Collider nearObjects in colliders)
         {
             Rigidbody rb = nearObjects.GetComponent<Rigidbody>();
+            
             FakePlayer victimPlayer = nearObjects.gameObject.GetComponent<FakePlayer>();
-            if(rb != null)
+            if(grenade == GrenadeStates.impact)
             {
-                rb.AddExplosionForce(force, transform.position, radius);
-                
+                Impact(rb);
             }
-            if(victimPlayer != null)
+            if(grenade == GrenadeStates.damage)
             {
-                float distance = (transform.position - nearObjects.transform.position).magnitude;
 
-                victimPlayer.health -= (maxDamage * (1 / distance));
+                if(victimPlayer != null)
+                {
+                    float distance = (transform.position - nearObjects.transform.position).magnitude;
+
+                    victimPlayer.health -= (maxDamage * (1 / distance));
+
+                    Impact(rb);
+                }
+            }
+            if(grenade == GrenadeStates.time)
+            {
+                GameObject timeField = Instantiate(timeFieldObj, transform.position, Quaternion.identity);
             }
         }
 
         Object.Destroy(particle, 1);
         Destroy(gameObject);
         hasExploded = true;
+    }
+    public void Impact(Rigidbody rig)
+    {
+        if(rig != null)
+        {
+            rig.AddExplosionForce(force, transform.position, radius);
+        }
     }
 }
