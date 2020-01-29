@@ -10,6 +10,7 @@ namespace SA
 
         int currentLayer = 8;
         int layerNine = 9;
+        int rotationSpeed = 5;
 
         [Header("Inputs")]
         public float ver;
@@ -20,8 +21,9 @@ namespace SA
         public Vector3 moveDir;
 
         [Header("Stats")]
-        public float moveSpeed = 2;
-        public float runSpeed = 3.5f;
+        public float moveSpeed = 3;
+        public float runSpeed = 5f;
+        public float rotateSpeed = 6;
         public float toGround = 0.5f;
 
         [Header("States")]
@@ -31,12 +33,11 @@ namespace SA
         [Header("RigStats")]
         public int rigAngDrag = 999;
         public int rigDrag = 4;
+        public Animator anim;
 
         [HideInInspector]
         public float delta;
 
-        [HideInInspector]
-        public Animator anim;
         [HideInInspector]
         public Rigidbody rig;
         [HideInInspector]
@@ -52,6 +53,8 @@ namespace SA
 
             gameObject.layer = currentLayer;
             ignoreLayer = ~(1 << layerNine);
+
+            anim.SetBool("OnGround", true);
         }
 
         public void SetupAnimtor()
@@ -80,20 +83,37 @@ namespace SA
         {
             d = delta;
             onGround = OnGround();
+            Debug.Log(onGround);
+            anim.SetBool("OnGround", onGround);
         }
 
         public void FixedTick(float d)
         {
             delta = d;
 
-            rig.drag = (moveAmount > 0) ? 0 : rigDrag;
+            rig.drag = (moveAmount > 0 || onGround == false) ? 0 : rigDrag;
 
             float targetSpeed = moveSpeed;
             if (run)
             {
                 targetSpeed = runSpeed;
             }
-            rig.velocity = moveDir * (targetSpeed * moveAmount);
+
+            if (onGround)
+            {
+                rig.velocity = moveDir * (targetSpeed * moveAmount);
+            }
+
+            Vector3 targetDir = moveDir;
+            targetDir.y = 0;
+            if(targetDir == Vector3.zero)
+            {
+                targetDir = transform.forward;
+            }
+            Quaternion tr = Quaternion.LookRotation(targetDir);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, delta * moveAmount * rotationSpeed);
+            transform.rotation = targetRotation;
+           
             MovementAnimationHandler();
         }
 
@@ -108,9 +128,10 @@ namespace SA
 
             Vector3 origin = transform.position + (Vector3.up * toGround);
             Vector3 dir = -Vector3.up;
-            float dis = toGround - groundOffset;
+            float dis = toGround + groundOffset;
             RaycastHit hit;
-            if(Physics.Raycast(origin, dir, out hit, dis, ignoreLayer))
+            Debug.DrawRay(origin, dir * dis);
+            if (Physics.Raycast(origin, dir, out hit, dis, ignoreLayer))
             {
                 r = true;
                 Vector3 targetPosition = hit.point;
