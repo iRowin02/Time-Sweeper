@@ -68,7 +68,29 @@ public class AI : MonoBehaviour
 
 	public void Patrol()
 	{
-		
+		/*
+		IEnumerator FollowPath(Vector3[] waypoints)
+    	{
+        	transform.position = waypoints[0];
+
+        	int targetWaypointInt = 1;
+        	Vector3 targetWaypoint = waypoints[targetWaypointInt];
+        	transform.LookAt(targetWaypoint);
+        
+        	while (true)
+        	{
+            	transform.position = Vector3.MoveTowards(transform.position, targetWaypoint, speed * Time.deltaTime);
+            	if (transform.position == targetWaypoint)
+            	{
+                	targetWaypointInt = (targetWaypointInt + 1) % waypoints.Length;
+                	targetWaypoint = waypoints[targetWaypointInt];
+                	yield return new WaitForSeconds(waitTime);
+               		yield return StartCoroutine(TurnToFace(targetWaypoint));
+            	}
+            	yield return null;
+        	}
+    	}
+		*/
 	}
 
 	IEnumerator FindTargetsWithDelay(float delay) 
