@@ -8,6 +8,7 @@ namespace SA
     {
         public float ver;
         public float hor;
+        public bool runInput;
 
         float delta;
 
@@ -25,14 +26,15 @@ namespace SA
 
         public void FixedUpdate()
         {
+            delta = Time.fixedDeltaTime;
             GetInput();
             UpdateStates();
-            delta = Time.fixedDeltaTime;
             states.FixedTick(delta);
         }
 
         public void Update()
         {
+            delta = Time.deltaTime;
             cameraManager.Tick(delta);
             states.Tick(delta);
         }
@@ -41,6 +43,7 @@ namespace SA
         {
             ver = Input.GetAxis("Vertical");
             hor = Input.GetAxis("Horizontal");
+            
         }
 
         public void UpdateStates()

@@ -2,13 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FieldOfView : MonoBehaviour 
+public class AI : MonoBehaviour 
 {
     [Header("View Values")]
 	public float viewRadius;
 	[Range(0,360)]
 	public float viewAngle;
 
+	[Header("Movement Values")]
+	public float speed;
+    public float waitTime;
+    public float turnSpeed;
 
     [Header("Layer masks")]
 	public LayerMask targetMask;
@@ -18,11 +22,25 @@ public class FieldOfView : MonoBehaviour
 	public List<Transform> visibleTargets = new List<Transform>();
 
 	[Header("Mesh")]
+	[Range(0,50)]
 	public float meshRes;
 	public MeshFilter viewMeshFilter;
 	private Mesh viewMesh;
 
     private float findTargetDelay;
+
+	[HideInInspector]
+	public bool inSight;
+	
+	public _AIstates states;
+
+	public enum _AIstates
+	{
+		Idle,
+		Alert,
+		Patrol,
+		Chase,
+	}
 
 	void Start() 
     {
@@ -31,7 +49,48 @@ public class FieldOfView : MonoBehaviour
 		viewMeshFilter.mesh = viewMesh;
 
         findTargetDelay = 0.2f;
-		StartCoroutine ("FindTargetsWithDelay", findTargetDelay);
+		StartCoroutine("FindTargetsWithDelay", findTargetDelay);
+	}
+
+	public void LateUpdate() 
+	{
+		DrawFOV();
+		StateManager();
+	}
+	
+	public void StateManager()
+	{
+		if(states == _AIstates.Patrol)
+		{
+			Patrol();
+		}
+	}
+
+	public void Patrol()
+	{
+		/*
+		IEnumerator FollowPath(Vector3[] waypoints)
+    	{
+        	transform.position = waypoints[0];
+
+        	int targetWaypointInt = 1;
+        	Vector3 targetWaypoint = waypoints[targetWaypointInt];
+        	transform.LookAt(targetWaypoint);
+        
+        	while (true)
+        	{
+            	transform.position = Vector3.MoveTowards(transform.position, targetWaypoint, speed * Time.deltaTime);
+            	if (transform.position == targetWaypoint)
+            	{
+                	targetWaypointInt = (targetWaypointInt + 1) % waypoints.Length;
+                	targetWaypoint = waypoints[targetWaypointInt];
+                	yield return new WaitForSeconds(waitTime);
+               		yield return StartCoroutine(TurnToFace(targetWaypoint));
+            	}
+            	yield return null;
+        	}
+    	}
+		*/
 	}
 
 	IEnumerator FindTargetsWithDelay(float delay) 
@@ -45,20 +104,22 @@ public class FieldOfView : MonoBehaviour
 
 	void FindVisibleTargets() 
     {
+		inSight = false;
 		visibleTargets.Clear ();
-		Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
+		Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
 		for(int i = 0; i < targetsInViewRadius.Length; i++) 
         {
 			Transform target = targetsInViewRadius [i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
-			if (Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2) 
+			if(Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2) 
             {
 				float distToTarget = Vector3.Distance (transform.position, target.position);
 
-				if (!Physics.Raycast (transform.position, dirToTarget, distToTarget, obstacleMask)) 
+				if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask)) 
                 {
-					visibleTargets.Add (target);
+					visibleTargets.Add(target);
+					inSight = true;
 				}
 			}
 		}
@@ -70,7 +131,7 @@ public class FieldOfView : MonoBehaviour
 		float rayDegrees = viewAngle / rayCount;
 		List<Vector3> viewPoints = new List<Vector3>();
 
-		for (int i = 0; i < rayCount; i++)
+		for(int i = 0; i < rayCount; i++)
 		{
 			float angle = transform.eulerAngles.y - viewAngle/2 + rayDegrees * i;
 			ViewCastInfo newViewCastInfo = ViewCast(angle);
@@ -83,10 +144,10 @@ public class FieldOfView : MonoBehaviour
 
 		vertices[0] = Vector3.zero;
 
-		for (int i = 0; i < vertexCount -1; i++)
+		for(int i = 0; i < vertexCount -1; i++)
 		{
-			vertices[i+1] = viewPoints[i];
-			if (i < vertexCount -2)
+			vertices[i+1] = transform.InverseTransformPoint(viewPoints[i]);
+			if(i < vertexCount -2)
 			{
 				triangles[i * 3] = 0;
 				triangles[i * 3 + 1] = i + 1;
