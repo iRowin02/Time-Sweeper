@@ -27,11 +27,18 @@ public class AI : MonoBehaviour
 	public MeshFilter viewMeshFilter;
 	private Mesh viewMesh;
 
+	[Header("Patrol")]
+	public Transform pathholder;
+
     private float findTargetDelay;
+	private Transform player;
+	
+	private bool hasDone;
 
 	[HideInInspector]
 	public bool inSight;
 	
+	[Header("AI States")]
 	public _AIstates states;
 
 	public enum _AIstates
@@ -50,48 +57,95 @@ public class AI : MonoBehaviour
 
         findTargetDelay = 0.2f;
 		StartCoroutine("FindTargetsWithDelay", findTargetDelay);
+
+		player = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 
 	public void LateUpdate() 
 	{
+		if(states != _AIstates.Patrol)
+		{
+			hasDone = false;
+		}
+
 		DrawFOV();
 		StateManager();
 	}
 	
 	public void StateManager()
 	{
+		if(states == _AIstates.Idle)
+		{
+			Idle();
+		}
 		if(states == _AIstates.Patrol)
 		{
 			Patrol();
 		}
 	}
 
+	public void Idle()
+	{
+		//Insert animation
+	}
+
+	//Patrol State
 	public void Patrol()
 	{
-		/*
-		IEnumerator FollowPath(Vector3[] waypoints)
+		if(!hasDone == true)
+		{
+			Vector3[] waypoints = new Vector3[pathholder.childCount];
+        	for (int i = 0; i < waypoints.Length; i++)
+        	{
+            	waypoints[i] = pathholder.GetChild(i).position;
+            	waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);s
+        	}
+			hasDone = true;
+        	StartCoroutine (FollowPath(waypoints));
+		}
+	}
+
+	IEnumerator FollowPath(Vector3[] waypoints)
     	{
-        	transform.position = waypoints[0];
+			if(transform.position != waypoints[0])
+			{
+				transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
+			}
 
         	int targetWaypointInt = 1;
         	Vector3 targetWaypoint = waypoints[targetWaypointInt];
-        	transform.LookAt(targetWaypoint);
         
-        	while (true)
+        	while(true)
         	{
             	transform.position = Vector3.MoveTowards(transform.position, targetWaypoint, speed * Time.deltaTime);
-            	if (transform.position == targetWaypoint)
+            	if(transform.position == targetWaypoint)
             	{
                 	targetWaypointInt = (targetWaypointInt + 1) % waypoints.Length;
                 	targetWaypoint = waypoints[targetWaypointInt];
                 	yield return new WaitForSeconds(waitTime);
-               		yield return StartCoroutine(TurnToFace(targetWaypoint));
+
+					if(inSight == false)
+					{
+               			yield return StartCoroutine(TurnToFace(targetWaypoint));
+					}
             	}
             	yield return null;
         	}
     	}
-		*/
-	}
+
+	IEnumerator TurnToFace(Vector3 lookTarget)
+    {
+        Vector3 dirLookAt = (lookTarget - transform.position).normalized;
+        float targetAngle = 90 - Mathf.Atan2(dirLookAt.z, dirLookAt.x) * Mathf.Rad2Deg;
+
+        while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, targetAngle)) > 0.05f)
+        {
+            float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
+            transform.eulerAngles = Vector3.up * angle;
+            yield return null;
+        }
+    }
+	//End Patrol state
 
 	IEnumerator FindTargetsWithDelay(float delay) 
     {
@@ -200,4 +254,18 @@ public class AI : MonoBehaviour
 			angle = _angle;
 		}
 	}
+
+	private void OnDrawGizmos()
+    {
+        Vector3 startPosition = pathholder.GetChild(0).position;
+        Vector3 prevPosition = startPosition;
+
+        foreach (Transform waypoint in pathholder)
+        {
+            Gizmos.DrawSphere(waypoint.position, .3f);
+            Gizmos.DrawLine(prevPosition, waypoint.position);
+            prevPosition = waypoint.position;
+        }
+        Gizmos.DrawLine(prevPosition, startPosition);
+    }
 }
