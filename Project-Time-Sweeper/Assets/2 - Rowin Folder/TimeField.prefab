@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8155226413171357021}
   - component: {fileID: 8155226413171357020}
   - component: {fileID: 8155226413171357024}
+  - component: {fileID: -5204151522015016653}
   m_Layer: 0
   m_Name: TimeField
   m_TagString: Untagged
@@ -113,3 +114,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-5204151522015016653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8155226413171357019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3b91cdeb1f76b43b61a8f6ea9d7353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
