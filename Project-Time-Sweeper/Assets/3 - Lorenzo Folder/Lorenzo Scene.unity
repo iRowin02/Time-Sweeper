@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 33311157}
   - component: {fileID: 33311156}
   - component: {fileID: 33311155}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,9 +433,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacles:
     serializedVersion: 2
-    m_Bits: 0
-  gridWorldSize: {x: 0, y: 0}
-  nodeSize: 0
+    m_Bits: 256
+  gridWorldSize: {x: 50, y: 50}
+  nodeSize: 0.5
 --- !u!4 &80295412
 Transform:
   m_ObjectHideFlags: 0
@@ -1025,10 +1025,10 @@ MonoBehaviour:
   turnSpeed: 90
   targetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 256
   visibleTargets: []
   meshRes: 5
   viewMeshFilter: {fileID: 1040960098}
