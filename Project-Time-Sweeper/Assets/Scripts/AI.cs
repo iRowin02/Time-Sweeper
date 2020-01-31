@@ -84,10 +84,12 @@ public class AI : MonoBehaviour
 		}
 	}
 
+	//Idle State
 	public void Idle()
 	{
 		//Insert animation
 	}
+	//End Idle State
 
 	//Patrol State
 	public void Patrol()
@@ -98,7 +100,7 @@ public class AI : MonoBehaviour
         	for (int i = 0; i < waypoints.Length; i++)
         	{
             	waypoints[i] = pathholder.GetChild(i).position;
-            	waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);s
+            	waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
         	}
 			hasDone = true;
         	StartCoroutine (FollowPath(waypoints));
