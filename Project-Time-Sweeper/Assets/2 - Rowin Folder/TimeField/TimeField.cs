@@ -4,34 +4,40 @@ using UnityEngine;
 
 public class TimeField : MonoBehaviour
 {
-    public float radius;
-    public Collider[] enemy;
-    public Collider field;
+    [SerializeField]
+    public Dictionary<int, GameObject> enemies = new Dictionary<int, GameObject>();
 
-    void Start()
+    void OnTriggerStay(Collider other)
     {
-        field = GetComponent<Collider>();
-    }
-
-    void OnTriggerEnter(Collider coll)
-    {
-        Freeze(coll);
-    }
-    void OnTriggerStay(Collider coll)
-    {
-        Freeze(coll);
+        int id = other.gameObject.GetInstanceID();
+        if (!enemies.ContainsKey(id)) { enemies.Add(id, other.gameObject); }
+        Freeze();
     }
 
-    public void Freeze(Collider coll)
+    private void OnTriggerExit(Collider other)
     {
-        //Collider[] field = 
+        int id = other.gameObject.GetInstanceID();
+        if (enemies.ContainsKey(id)) { enemies.Remove(id); }
     }
-    void OnTriggerExit(Collider coll)
+
+
+    void Freeze()
     {
-        UnFreeze();
-    }
-    void UnFreeze()
-    {
-        
+        // enemies will contain all gameobjects currently in the collider
+        foreach (KeyValuePair<int,GameObject> kvp in enemies)
+        {
+            GameObject enemy = kvp.Value;
+            
+            FakePlayer _enemy = enemy.GetComponent<FakePlayer>();
+
+            if(_enemy.enemyStates != FakePlayer.states.TimeFrozen)
+            {
+                _enemy.enemyStates = FakePlayer.states.TimeFrozen;
+            }
+            else
+            {
+                _enemy.enemyStates = FakePlayer.states.Walking;
+            }
+        }
     }
 }
