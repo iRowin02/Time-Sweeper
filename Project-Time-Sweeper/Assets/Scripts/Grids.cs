@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid : MonoBehaviour
+public class Grids : MonoBehaviour
 {
     public LayerMask obstacles;
     public Vector2 gridWorldSize;
@@ -34,6 +34,18 @@ public class Grid : MonoBehaviour
                 grid[x,y] = new Node(walkable, worldPoint);
             }
         }
+    }
+
+    public Node nodeWorldPos(Vector3 worldPos)
+    {
+        float percentageX = (worldPos.x +  gridWorldSize.x / 2) / gridWorldSize.x;
+        float percentageY = (worldPos.z +  gridWorldSize.y / 2) / gridWorldSize.y;
+        percentageX = Mathf.Clamp01(percentageX);
+        percentageY = Mathf.Clamp01(percentageY);
+
+        int x = Mathf.RoundToInt((gridSizeX - 1) * percentageX);
+        int y = Mathf.RoundToInt((gridSizeY - 1) * percentageY);
+        return grid[x,y];
     }
 
     void OnDrawGizmos() 
