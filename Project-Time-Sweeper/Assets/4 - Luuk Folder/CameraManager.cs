@@ -10,6 +10,7 @@ namespace SA
 
         public float mouseSpeed = 2;
         public float followSpeed = 9;
+        public float slerpSpeed = 9;
 
         public float turnSmoothing = 0.1f;
         public float minAngle = -35;
@@ -23,6 +24,7 @@ namespace SA
         public float tiltAngle;
 
         public Transform target;
+        public Transform lockOnTarget;
         public Transform pivot;
         public Transform camTrans;
 
@@ -57,18 +59,28 @@ namespace SA
                 smoothY = v;
             }
 
-            if (lockOn)
-            {
-
-            }
-
-            lookAngle += smoothX * targetSpeed;
-            transform.rotation = Quaternion.Euler(0, lookAngle, 0);
-
             tiltAngle -= smoothY * targetSpeed;
             tiltAngle = Mathf.Clamp(tiltAngle, minAngle, maxAngle);
             pivot.localRotation = Quaternion.Euler(tiltAngle, 0, 0);
+            lookAngle += smoothX * targetSpeed;
 
+            if (lockOn && lockOnTarget != null)
+            {
+                Vector3 lockOnTargetDir = lockOnTarget.position - transform.position;
+                lockOnTargetDir.Normalize();
+                lockOnTargetDir.y = 0;
+
+                if(lockOnTargetDir == Vector3.zero)
+                {
+                    lockOnTargetDir = transform.forward;
+                }
+
+                Quaternion targetRot = Quaternion.LookRotation(lockOnTargetDir);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, d * slerpSpeed);
+                return;
+            }
+
+            transform.rotation = Quaternion.Euler(0, lookAngle, 0);
         }
 
         public static CameraManager singleton;

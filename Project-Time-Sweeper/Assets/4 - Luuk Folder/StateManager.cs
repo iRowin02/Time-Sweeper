@@ -36,9 +36,11 @@ namespace SA
         public int rigDrag = 4;
         public Animator anim;
 
+        [Header("Other")]
+        public TempScript lockOnTarget;
+
         [HideInInspector]
         public float delta;
-
         [HideInInspector]
         public Rigidbody rig;
         [HideInInspector]

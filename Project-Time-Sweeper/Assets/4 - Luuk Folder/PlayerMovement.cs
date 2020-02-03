@@ -8,7 +8,9 @@ namespace SA
     {
         public float ver;
         public float hor;
+
         public bool runInput;
+        public bool cursorLockMode;
 
         float delta;
 
@@ -44,6 +46,11 @@ namespace SA
             ver = Input.GetAxis("Vertical");
             hor = Input.GetAxis("Horizontal");
             runInput = Input.GetButton("Run");
+            cursorLockMode = Input.GetButton("Cancel");
+            if(Input.GetButton("MiddleMouseButton"))
+            {
+                states.lockOn = !states.lockOn;
+            }
         }
 
         public void UpdateStates()
@@ -64,6 +71,25 @@ namespace SA
             else
             {
                 states.run = false;
+            }
+
+            if (cursorLockMode)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+
+            if (states.lockOnTarget == null)
+                states.lockOn = false;
+
+
+            if(states.lockOn)
+            {
+                cameraManager.lockOnTarget = states.lockOnTarget.transform;
+                cameraManager.lockOn = states.lockOn;
             }
         }
     }
