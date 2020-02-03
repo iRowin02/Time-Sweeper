@@ -24,7 +24,7 @@ public class FakePlayer : MonoBehaviour
     {
         if(enemyStates == states.Walking)
         {
-            speed = 5;
+            speed = standardSpeed;
         }
         if(enemyStates == states.TimeFrozen)
         {

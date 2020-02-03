@@ -42,6 +42,7 @@ public class Grenade : MonoBehaviour
             Rigidbody rb = nearObjects.GetComponent<Rigidbody>();
             
             FakePlayer victimPlayer = nearObjects.gameObject.GetComponent<FakePlayer>();
+            
             if(grenade == GrenadeStates.impact)
             {
                 Impact(rb);
