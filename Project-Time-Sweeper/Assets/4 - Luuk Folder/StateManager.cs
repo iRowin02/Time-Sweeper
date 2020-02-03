@@ -29,6 +29,7 @@ namespace SA
         [Header("States")]
         public bool onGround;
         public bool run;
+        public bool lockOn;
 
         [Header("RigStats")]
         public int rigAngDrag = 999;
@@ -83,7 +84,6 @@ namespace SA
         {
             d = delta;
             onGround = OnGround();
-            Debug.Log(onGround);
             anim.SetBool("OnGround", onGround);
         }
 
@@ -104,21 +104,27 @@ namespace SA
                 rig.velocity = moveDir * (targetSpeed * moveAmount);
             }
 
-            Vector3 targetDir = moveDir;
-            targetDir.y = 0;
-            if(targetDir == Vector3.zero)
+            if (run)
+                lockOn = false;
+
+            if (!lockOn)
             {
-                targetDir = transform.forward;
+                Vector3 targetDir = moveDir;
+                targetDir.y = 0;
+                if (targetDir == Vector3.zero)
+                {
+                    targetDir = transform.forward;
+                }
+                Quaternion tr = Quaternion.LookRotation(targetDir);
+                Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, delta * moveAmount * rotationSpeed);
+                transform.rotation = targetRotation;
             }
-            Quaternion tr = Quaternion.LookRotation(targetDir);
-            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, delta * moveAmount * rotationSpeed);
-            transform.rotation = targetRotation;
-           
             MovementAnimationHandler();
         }
 
         public void MovementAnimationHandler()
         {
+            anim.SetBool("Running", run);
             anim.SetFloat("Vertical", moveAmount, animOffset, delta);
         }
 

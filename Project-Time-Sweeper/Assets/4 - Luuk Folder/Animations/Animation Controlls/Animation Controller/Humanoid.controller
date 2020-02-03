@@ -321,9 +321,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: Running
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: LockOn
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7007118123594069424}
   m_Solo: 0
@@ -879,7 +876,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MidAir
+  m_Name: Falling
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

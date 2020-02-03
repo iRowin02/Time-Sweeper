@@ -43,7 +43,7 @@ namespace SA
         {
             ver = Input.GetAxis("Vertical");
             hor = Input.GetAxis("Horizontal");
-            
+            runInput = Input.GetButton("Run");
         }
 
         public void UpdateStates()
@@ -56,6 +56,15 @@ namespace SA
             states.moveDir = (v + h).normalized;
             float m = Mathf.Abs(hor) + Mathf.Abs(ver);
             states.moveAmount = Mathf.Clamp01(m);
+
+            if (runInput)
+            {
+                states.run = states.moveAmount > 0;
+            }
+            else
+            {
+                states.run = false;
+            }
         }
     }
 }
