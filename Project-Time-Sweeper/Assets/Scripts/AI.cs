@@ -34,6 +34,7 @@ public class AI : MonoBehaviour
 	private Transform player;
 	
 	private bool hasDone;
+	private bool done;
 
 	[HideInInspector]
 	public bool inSight;
@@ -54,6 +55,8 @@ public class AI : MonoBehaviour
 		viewMesh = new Mesh();
 		viewMesh.name = "View Mesh";
 		viewMeshFilter.mesh = viewMesh;
+
+		inSight = false;
 
         findTargetDelay = 0.2f;
 		StartCoroutine("FindTargetsWithDelay", findTargetDelay);
@@ -109,9 +112,10 @@ public class AI : MonoBehaviour
 
 	IEnumerator FollowPath(Vector3[] waypoints)
     	{
-			if(transform.position != waypoints[0])
+			if(transform.position != waypoints[0] && done == false)
 			{
 				transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
+				done = true;
 			}
 
         	int targetWaypointInt = 1;
@@ -125,11 +129,7 @@ public class AI : MonoBehaviour
                 	targetWaypointInt = (targetWaypointInt + 1) % waypoints.Length;
                 	targetWaypoint = waypoints[targetWaypointInt];
                 	yield return new WaitForSeconds(waitTime);
-
-					if(inSight == false)
-					{
-               			yield return StartCoroutine(TurnToFace(targetWaypoint));
-					}
+               		yield return StartCoroutine(TurnToFace(targetWaypoint));
             	}
             	yield return null;
         	}
@@ -175,7 +175,6 @@ public class AI : MonoBehaviour
 				if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask)) 
                 {
 					visibleTargets.Add(target);
-					inSight = true;
 				}
 			}
 		}

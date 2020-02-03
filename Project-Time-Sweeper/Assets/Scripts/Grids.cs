@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid : MonoBehaviour
+public class Grids : MonoBehaviour
 {
     public LayerMask obstacles;
     public Vector2 gridWorldSize;
@@ -31,10 +31,49 @@ public class Grid : MonoBehaviour
             {
                 Vector3 worldPoint = worldBottemLeft + Vector3.right * (x * nodeDiameter + nodeSize) + Vector3.forward * (y * nodeDiameter + nodeSize);
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeSize, obstacles));
-                grid[x,y] = new Node(walkable, worldPoint);
+                grid[x,y] = new Node(walkable, worldPoint, x, y);
             }
         }
     }
+
+    public List<Node> GetNodes(Node node)
+    {
+        List<Node> getNodes = new List<Node>();
+
+        for (int x = -1; x <= 1; x++)
+        {
+           for (int y = -1; y <= 1; y++)
+            {
+                if(x == 0 && y == 0)
+                {
+                    continue;    
+                }
+
+                int checkX = node.gridX + x;
+                int checkY = node.gridY + y;
+
+                if(checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+                {
+                    getNodes.Add(grid[checkX, checkY]);
+                }
+            } 
+        }
+        return getNodes;
+    }
+
+    public Node nodeWorldPos(Vector3 worldPos)
+    {
+        float percentageX = (worldPos.x +  gridWorldSize.x / 2) / gridWorldSize.x;
+        float percentageY = (worldPos.z +  gridWorldSize.y / 2) / gridWorldSize.y;
+        percentageX = Mathf.Clamp01(percentageX);
+        percentageY = Mathf.Clamp01(percentageY);
+
+        int x = Mathf.RoundToInt((gridSizeX - 1) * percentageX);
+        int y = Mathf.RoundToInt((gridSizeY - 1) * percentageY);
+        return grid[x,y];
+    }
+
+    public List<Node> path;
 
     void OnDrawGizmos() 
     {
@@ -45,6 +84,13 @@ public class Grid : MonoBehaviour
             foreach(Node n in grid)
             {
                 Gizmos.color = (n.canWalk) ? Color.green : Color.red;
+                if(path != null)
+                {
+                    if(path.Contains(n))
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                }
                 Gizmos.DrawCube(n.worldPos, Vector3.one * (nodeDiameter - 0.1f));
             }
         }
