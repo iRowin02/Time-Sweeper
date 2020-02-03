@@ -129,11 +129,7 @@ public class AI : MonoBehaviour
                 	targetWaypointInt = (targetWaypointInt + 1) % waypoints.Length;
                 	targetWaypoint = waypoints[targetWaypointInt];
                 	yield return new WaitForSeconds(waitTime);
-
-					if(inSight == false)
-					{
-               			yield return StartCoroutine(TurnToFace(targetWaypoint));
-					}
+               		yield return StartCoroutine(TurnToFace(targetWaypoint));
             	}
             	yield return null;
         	}
@@ -179,7 +175,6 @@ public class AI : MonoBehaviour
 				if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask)) 
                 {
 					visibleTargets.Add(target);
-					inSight = true;
 				}
 			}
 		}
