@@ -1002,7 +1002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1300,8 +1300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd2d8c4082248c44686eb54b22f0f730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu: {fileID: 0}
-  transition: {fileID: 0}
+  mainMenu: {fileID: 568750569}
+  transition: {fileID: 1176896548}
   startScreen: {fileID: 0}
 --- !u!1 &1151024044
 GameObject:
@@ -2299,7 +2299,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
-  m_UseSpriteMesh: 1
+  m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1824764310
 CanvasRenderer:
@@ -2325,6 +2325,7 @@ MonoBehaviour:
   clock1: {fileID: 246496886}
   clock2: {fileID: 1846004541}
   startScreen: {fileID: 1148572783}
+  image: {fileID: 0}
 --- !u!1 &1846004539
 GameObject:
   m_ObjectHideFlags: 0
