@@ -23,12 +23,13 @@ public class ButtonManager : MonoBehaviour
         
         transition.SetTrigger("Play");
 
-        //StartCoroutine(LoadLevel(level));
+        StartCoroutine(LoadLevel(level));
     }
     
     IEnumerator LoadLevel(int sceneIndex)
     {
         yield return new WaitForSeconds(loadingTime);
+        
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
 
         loadingScreen.SetActive(true);
