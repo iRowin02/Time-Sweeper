@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grids : MonoBehaviour
 {
-    public bool showGizmos;
+    public bool hideGizmos;
 
     public LayerMask obstacles;
     public Vector2 gridWorldSize;
@@ -89,7 +89,7 @@ public class Grids : MonoBehaviour
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x,1,gridWorldSize.y));
 
-        if(showGizmos)
+        if(hideGizmos)
         {
             if(path != null)
             {
