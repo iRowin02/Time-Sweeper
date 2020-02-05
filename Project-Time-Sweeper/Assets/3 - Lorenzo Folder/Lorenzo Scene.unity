@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0f1eddac8c93145be776e516c27d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showGizmos: 1
   obstacles:
     serializedVersion: 2
     m_Bits: 256
@@ -463,8 +464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874568a77af962f40a7bb90268539936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seeker: {fileID: 0}
-  target: {fileID: 0}
+  seeker: {fileID: 832050495}
+  target: {fileID: 2101635265}
 --- !u!1 &138101484
 GameObject:
   m_ObjectHideFlags: 0
