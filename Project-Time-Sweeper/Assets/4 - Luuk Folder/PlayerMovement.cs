@@ -47,10 +47,7 @@ namespace SA
             hor = Input.GetAxis("Horizontal");
             runInput = Input.GetButton("Run");
             cursorLockMode = Input.GetButton("Cancel");
-            if(Input.GetButton("MiddleMouseButton"))
-            {
-                states.lockOn = !states.lockOn;
-            }
+            states.lockOn = Input.GetButton("RightMouse");
         }
 
         public void UpdateStates()
@@ -82,15 +79,17 @@ namespace SA
                 Cursor.lockState = CursorLockMode.Locked;
             }
 
-            if (states.lockOnTarget == null)
-                states.lockOn = false;
-
-
-            if(states.lockOn)
+            if(states.lockOn != cameraManager.lockOn)
             {
-                cameraManager.lockOnTarget = states.lockOnTarget.transform;
                 cameraManager.lockOn = states.lockOn;
+
+                if(states.lockOnTarget != null)
+                {
+                    cameraManager.lockOnTarget = states.lockOnTarget.transform;
+                    states.lockOn = !states.lockOn;
+                }
             }
+
         }
     }
 }
