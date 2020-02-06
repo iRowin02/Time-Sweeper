@@ -70,7 +70,7 @@ namespace SA
                 lockOnTargetDir.Normalize();
                 lockOnTargetDir.y = 0;
 
-                if(lockOnTargetDir == Vector3.zero)
+                if (lockOnTargetDir == Vector3.zero)
                 {
                     lockOnTargetDir = transform.forward;
                 }
