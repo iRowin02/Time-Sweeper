@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Pistol : MonoBehaviour
 {
+    public Gun pistolInfo;
     public Transform barrel;
-    public GameObject bullet;
     private bool canShoot = true;
-    public float interval;
     private float interval_;
 
     void Start()
     {
-        interval_ = interval;
+        interval_ = pistolInfo.fireDelay;
     }
 
     void Update()
@@ -21,19 +20,19 @@ public class Pistol : MonoBehaviour
         {
             if(canShoot)
             {
-                Instantiate(bullet, barrel.position, Quaternion.identity);
+                Instantiate(pistolInfo.bullet, barrel.position, transform.rotation);
                 canShoot = false;
             }
         }
 
         if(!canShoot)
         {
-            interval -= Time.deltaTime;
+            pistolInfo.fireDelay-= Time.deltaTime;
 
 
-            if(interval <= 0)
+            if(pistolInfo.fireDelay <= 0)
             {
-                interval = interval_;
+                pistolInfo.fireDelay = interval_;
                 canShoot = true;
             }
         }
