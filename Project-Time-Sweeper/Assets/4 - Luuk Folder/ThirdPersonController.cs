@@ -13,8 +13,10 @@ namespace ThirdPersonMovement
 
         [Header("Inputs")]
         public Vector3 moveDir;
+
         public bool running;
         public bool onGround;
+
         public float walkSpeed = 5;
         public float runSpeed = 8;
         public float ver;

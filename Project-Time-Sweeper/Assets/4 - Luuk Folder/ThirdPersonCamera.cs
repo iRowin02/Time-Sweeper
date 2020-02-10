@@ -9,25 +9,26 @@ namespace ThirdPersonMovement
         [Header("CamStats")]
         public float mouseSpeed = 2;
         public float followSpeed = 9;
+        public float rotationSpeed = 5;
         public float slerpSpeed = 9;
         public float turnSmoothing = 0.1f;
 
         [Header("Objects")]
         public Transform target;
-        public Transform lockOnTarget;
         public Transform pivot;
         public Transform camTrans;
 
         [Header("Misc")]
         public float minAngle = -35;
         public float maxAngle = 35;
+        public float lookAngle;
+        public float tiltAngle;
+
         float smoothX;
         float smoothY;
         float smoothXVel;
         float smoothYVel;
 
-        public float lookAngle;
-        public float tiltAngle;
 
 
         public void CamInit(Transform t)
@@ -44,14 +45,14 @@ namespace ThirdPersonMovement
 
             float targetSpeed = mouseSpeed;
 
-            Vector3 targetDir = moveDir;
+            Vector3 targetDir = target.GetComponent<ThirdPersonController>().moveDir; 
             targetDir.y = 0;
             if (targetDir == Vector3.zero)
             {
                 targetDir = transform.forward;
             }
             Quaternion tr = Quaternion.LookRotation(targetDir);
-            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, Time.deltaTime * moveAmount * rotationSpeed);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, Time.deltaTime * rotationSpeed);
             transform.rotation = targetRotation;
 
             FollowTarget();
