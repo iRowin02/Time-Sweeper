@@ -2,51 +2,63 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SA
+namespace ThirdPersonMovement
 {
-    public class CameraManager : MonoBehaviour
+    public class ThirdPersonCamera : MonoBehaviour
     {
-        public bool lockOn;
-
+        [Header("CamStats")]
         public float mouseSpeed = 2;
         public float followSpeed = 9;
         public float slerpSpeed = 9;
-
         public float turnSmoothing = 0.1f;
-        public float minAngle = -35;
-        public float maxAngle = 35;
 
-        float smoothX;
-        float smoothY;
-        float smoothXVel;
-        float smoothYVel;
-        public float lookAngle;
-        public float tiltAngle;
-
+        [Header("Objects")]
         public Transform target;
         public Transform lockOnTarget;
         public Transform pivot;
         public Transform camTrans;
 
-        public void Init(Transform t)
+        [Header("Misc")]
+        public float minAngle = -35;
+        public float maxAngle = 35;
+        float smoothX;
+        float smoothY;
+        float smoothXVel;
+        float smoothYVel;
+
+        public float lookAngle;
+        public float tiltAngle;
+
+
+        public void CamInit(Transform t)
         {
             target = t;
             camTrans = Camera.main.transform;
             pivot = camTrans.parent;
         }
 
-        public void Tick(float d)
+        public void Tick()
         {
             float h = Input.GetAxis("Mouse X");
             float v = Input.GetAxis("Mouse Y");
 
             float targetSpeed = mouseSpeed;
 
-            FollowTarget(d);
-            Rotation(d, v, h, targetSpeed);
+            Vector3 targetDir = moveDir;
+            targetDir.y = 0;
+            if (targetDir == Vector3.zero)
+            {
+                targetDir = transform.forward;
+            }
+            Quaternion tr = Quaternion.LookRotation(targetDir);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, Time.deltaTime * moveAmount * rotationSpeed);
+            transform.rotation = targetRotation;
+
+            FollowTarget();
+            Rotation(v, h, targetSpeed);
         }
 
-        public void Rotation(float d, float v, float h, float targetSpeed)
+        public void Rotation(float v, float h, float targetSpeed)
         {
             if (turnSmoothing > 0)
             {
@@ -62,40 +74,16 @@ namespace SA
             tiltAngle -= smoothY * targetSpeed;
             tiltAngle = Mathf.Clamp(tiltAngle, minAngle, maxAngle);
             pivot.localRotation = Quaternion.Euler(tiltAngle, 0, 0);
+
             lookAngle += smoothX * targetSpeed;
-
-            if (lockOn && lockOnTarget != null)
-            {
-                Vector3 lockOnTargetDir = lockOnTarget.position - transform.position;
-                lockOnTargetDir.Normalize();
-                lockOnTargetDir.y = 0;
-
-                if (lockOnTargetDir == Vector3.zero)
-                {
-                    lockOnTargetDir = transform.forward;
-                }
-
-                Quaternion targetRot = Quaternion.LookRotation(lockOnTargetDir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, d * slerpSpeed);
-                return;
-            }
-
             transform.rotation = Quaternion.Euler(0, lookAngle, 0);
         }
 
-        public static CameraManager singleton;
-
-        public void Awake()
+        void FollowTarget()
         {
-            singleton = this;
-        }
-
-        void FollowTarget(float d)
-        {
-            float speed = d * followSpeed;
+            float speed = Time.deltaTime * followSpeed;
             Vector3 targetPosition = Vector3.Lerp(transform.position, target.position, speed);
             target.position = targetPosition;
         }
-
     }
 }
