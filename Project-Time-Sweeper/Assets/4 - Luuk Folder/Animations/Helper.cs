@@ -45,8 +45,6 @@ namespace SA
                 vertical = Mathf.Clamp01(vertical);
             }
 
-            animControl.SetBool("LockOn", lockOn);
-
             UsingItem();
             AttackAnim();
 

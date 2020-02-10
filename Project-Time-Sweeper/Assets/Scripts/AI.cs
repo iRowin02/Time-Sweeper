@@ -27,6 +27,11 @@ public class AI : MonoBehaviour
 	public MeshFilter viewMeshFilter;
 	private Mesh viewMesh;
 
+	[Header("Chase")]
+	public Transform target;
+	private Vector3[] paths;
+	int targetIndex;
+
 	[Header("Patrol")]
 	public Transform pathholder;
 

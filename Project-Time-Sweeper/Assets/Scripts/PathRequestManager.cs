@@ -9,15 +9,38 @@ public class PathRequestManager : MonoBehaviour
     PathRequest currentPathRequest;
 
     static PathRequestManager instance;
+    Pathfinding pathfinding;
+
+    bool isProccesingPath;
 
     private void Awake() 
     {
         instance = this;
+        pathfinding = GetComponent<Pathfinding>();
     }
 
     public static void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action<Vector3[], bool> callback)
     {
+        PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback);
+        instance.pathRequestsQueue.Enqueue(newRequest);
+        instance.TryProcessNext();
+    }
 
+    private void TryProcessNext()
+    {
+        if(!isProccesingPath && pathRequestsQueue.Count > 0)
+        {
+            currentPathRequest = pathRequestsQueue.Dequeue();
+            isProccesingPath = true;
+            pathfinding.StartFindPath(currentPathRequest.pathStart, currentPathRequest.pathEnd);
+        }
+    }
+
+    public void FinishedProccesingPath(Vector3[] path, bool succes)
+    {
+        currentPathRequest.callback(path, succes);
+        isProccesingPath = false;
+        TryProcessNext();
     }
 
     struct PathRequest

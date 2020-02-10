@@ -109,25 +109,39 @@ namespace SA
             if (run)
                 lockOn = false;
 
-            if (!lockOn)
+            Vector3 targetDir = (!lockOn) ? moveDir
+                : lockOnTarget.transform.position;
+            targetDir.y = 0;
+            if (targetDir == Vector3.zero)
             {
-                Vector3 targetDir = moveDir;
-                targetDir.y = 0;
-                if (targetDir == Vector3.zero)
-                {
-                    targetDir = transform.forward;
-                }
-                Quaternion tr = Quaternion.LookRotation(targetDir);
-                Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, delta * moveAmount * rotationSpeed);
-                transform.rotation = targetRotation;
+                targetDir = transform.forward;
             }
-            MovementAnimationHandler();
+            Quaternion tr = Quaternion.LookRotation(targetDir);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, delta * moveAmount * rotationSpeed);
+            transform.rotation = targetRotation;
+
+            anim.SetBool("LockOn", lockOn);
+
+            if (!lockOn)
+                MovementAnimationHandler();
+            else
+                LockedOnMovementAnimHandler(moveDir);
         }
 
         public void MovementAnimationHandler()
         {
             anim.SetBool("Running", run);
             anim.SetFloat("Vertical", moveAmount, animOffset, delta);
+        }
+
+        public void LockedOnMovementAnimHandler(Vector3 moveDir)
+        {
+            //Vector3 relativeDir = transform.InverseTransformDirection(moveDir);
+            //float h = relativeDir.x;
+            //float v = relativeDir.z;
+
+            //anim.SetFloat("Horizontal", h, animOffset, delta);
+            //anim.SetFloat("Vertical", v, animOffset, delta);
         }
 
         public bool OnGround()

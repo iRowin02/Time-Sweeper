@@ -83,7 +83,7 @@ namespace SA
             transform.rotation = Quaternion.Euler(0, lookAngle, 0);
         }
 
-        public static CameraManager singleton;
+        public static CameraManager singleton;  
 
         public void Awake()
         {
