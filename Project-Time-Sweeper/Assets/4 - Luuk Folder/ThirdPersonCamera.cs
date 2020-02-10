@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ThirdPersonMovement
 {
@@ -9,7 +7,6 @@ namespace ThirdPersonMovement
         [Header("CamStats")]
         public float mouseSpeed = 2;
         public float followSpeed = 9;
-        public float rotationSpeed = 5;
         public float slerpSpeed = 9;
         public float turnSmoothing = 0.1f;
 
@@ -44,16 +41,6 @@ namespace ThirdPersonMovement
             float v = Input.GetAxis("Mouse Y");
 
             float targetSpeed = mouseSpeed;
-
-            Vector3 targetDir = target.GetComponent<ThirdPersonController>().moveDir; 
-            targetDir.y = 0;
-            if (targetDir == Vector3.zero)
-            {
-                targetDir = transform.forward;
-            }
-            Quaternion tr = Quaternion.LookRotation(targetDir);
-            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, Time.deltaTime * rotationSpeed);
-            transform.rotation = targetRotation;
 
             FollowTarget();
             Rotation(v, h, targetSpeed);

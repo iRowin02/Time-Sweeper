@@ -19,20 +19,30 @@ namespace ThirdPersonMovement
 
         public float walkSpeed = 5;
         public float runSpeed = 8;
+        public float rotationSpeed = 5;
+        public float moveVar;
         public float ver;
         public float hor;
 
         [Header("Handlers")]
         public Animator anim;
+        public Rigidbody rig;
         public ThirdPersonCamera thirdPersonCamManager;
         public GameObject activeModel;
 
         public void Update()
         {
             BaseMovement();
+            IntermediateMovement();
             Inputs();
-            thirdPersonCamManager.CamInit(transform);
             thirdPersonCamManager.Tick();
+        }
+
+        public void Awake()
+        {
+            rig = gameObject.GetComponent<Rigidbody>();
+            thirdPersonCamManager.CamInit(transform);
+            AnimatorSetup();
         }
 
         public void Inputs()
@@ -41,11 +51,6 @@ namespace ThirdPersonMovement
             hor = Input.GetAxis("Horizontal");
             running = Input.GetButton("Run");
         }
-        public void Awake()
-        {
-            AnimatorSetup();
-        }
-
         public void AnimatorSetup()
         {
             if (activeModel == null)
@@ -68,15 +73,32 @@ namespace ThirdPersonMovement
 
         public void BaseMovement()
         {
-            moveDir = new Vector3(hor, 0, ver).normalized;
+            Vector3 v = ver * thirdPersonCamManager.transform.forward;
+            Vector3 h = hor * thirdPersonCamManager.transform.right;
+            moveDir = (v + h).normalized;
+            float m = Mathf.Abs(hor) + Mathf.Abs(ver);
+            moveVar = Mathf.Clamp01(m);
             float moveAmount = (running) ? runSpeed : walkSpeed;
-            transform.Translate(moveDir * moveAmount * Time.deltaTime);
+            rig.velocity = moveDir * (moveAmount * moveVar);
             MovementAnimHandler();
+        }
+
+        public void IntermediateMovement()
+        {
+            Vector3 targetDir = moveDir;
+            targetDir.y = 0;
+            if (targetDir == Vector3.zero)
+            {
+                targetDir = transform.forward;
+            }
+            Quaternion tr = Quaternion.LookRotation(targetDir);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, Time.deltaTime * moveVar * rotationSpeed);
+            transform.rotation = targetRotation;
         }
 
         public void MovementAnimHandler()
         {
-            anim.SetFloat("Vertical", ver, animDamp, Time.deltaTime);
+            anim.SetFloat("Vertical", moveVar, animDamp, Time.deltaTime);
             anim.SetBool("Running", running);
         }
 
