@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0f1eddac8c93145be776e516c27d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hideGizmos: 0
+  displayGrid: 0
   obstacles:
     serializedVersion: 2
     m_Bits: 256
@@ -465,8 +465,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874568a77af962f40a7bb90268539936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seeker: {fileID: 832050495}
-  target: {fileID: 2101635265}
 --- !u!114 &80295414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,7 +1026,7 @@ GameObject:
   - component: {fileID: 832050493}
   - component: {fileID: 832050492}
   - component: {fileID: 832050491}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: AI
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1047,11 +1045,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12ff67b5a589c974ab7940798dad982d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 10
-  viewAngle: 80
+  health: 0
+  viewRadius: 20
+  viewAngle: 100
   speed: 5
   waitTime: 0.3
-  turnSpeed: 90
+  turnSpeed: 180
   targetMask:
     serializedVersion: 2
     m_Bits: 512
@@ -1059,8 +1058,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   visibleTargets: []
-  meshRes: 5
+  meshRes: 1
   viewMeshFilter: {fileID: 1040960098}
+  _target: {fileID: 0}
   pathholder: {fileID: 1521352994}
   inSight: 0
   states: 0
