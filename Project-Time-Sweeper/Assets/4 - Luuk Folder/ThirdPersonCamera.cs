@@ -4,10 +4,17 @@ namespace ThirdPersonMovement
 {
     public class ThirdPersonCamera : MonoBehaviour
     {
+        [HideInInspector]
+        Vector3 zoomPos = new Vector3(0.59f, -0.83f, -1.14f);
+
+        [HideInInspector]
+        Vector3 resetPos = new Vector3(0f, -0.83f, -1.9f);
+
         [Header("CamStats")]
         public float mouseSpeed = 2;
         public float followSpeed = 9;
         public float slerpSpeed = 9;
+        public float zoomSpeed = 0.5f;
         public float turnSmoothing = 0.1f;
 
         [Header("Objects")]
@@ -18,6 +25,8 @@ namespace ThirdPersonMovement
         [Header("Misc")]
         public float minAngle = -35;
         public float maxAngle = 35;
+        public float minAngleX = -90;
+        public float maxAngleX = 90;
         public float lookAngle;
         public float tiltAngle;
 
@@ -41,6 +50,21 @@ namespace ThirdPersonMovement
             float v = Input.GetAxis("Mouse Y");
 
             float targetSpeed = mouseSpeed;
+
+            if (target.GetComponent<ThirdPersonController>().aiming)
+            {
+                float aimSpeed = zoomSpeed * Time.deltaTime;
+                Vector3 smoothZoom = Vector3.Lerp(camTrans.localPosition, zoomPos, aimSpeed);
+                camTrans.localPosition = smoothZoom;
+
+                lookAngle = Mathf.Clamp(lookAngle, minAngleX, maxAngleX);
+            }
+            else
+            {
+                float unAimSpeed = zoomSpeed * Time.deltaTime;
+                Vector3 smoothUnZoom = Vector3.Lerp(camTrans.localPosition, resetPos, unAimSpeed);
+                camTrans.localPosition = smoothUnZoom;
+            }
 
             FollowTarget();
             Rotation(v, h, targetSpeed);

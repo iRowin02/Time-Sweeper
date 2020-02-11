@@ -16,6 +16,8 @@ namespace ThirdPersonMovement
 
         public bool running;
         public bool onGround;
+        public bool aiming;
+        public bool cursorLockMode;
 
         public float walkSpeed = 5;
         public float runSpeed = 8;
@@ -50,21 +52,23 @@ namespace ThirdPersonMovement
             ver = Input.GetAxis("Vertical");
             hor = Input.GetAxis("Horizontal");
             running = Input.GetButton("Run");
+            aiming = Input.GetButton("RightMouse");
+            cursorLockMode = Input.GetButton("Cancel");
         }
         public void AnimatorSetup()
         {
             if (activeModel == null)
-            {
-                anim = GetComponentInChildren<Animator>();
-                if (anim == null)
-                {
-                    Debug.Log("No model found");
-                }
-                else
-                {
-                    activeModel = anim.gameObject;
-                }
-            }
+            {                                                                                   
+                anim = GetComponentInChildren<Animator>();                                      
+                if (anim == null)                                                               
+                {                                                                               
+                    Debug.Log("No model found");                                                
+                }                                                                               
+                else                                                                            
+                {                                                                               
+                    activeModel = anim.gameObject;                                              
+                }                                                                               
+            }                                                                                   
             if (anim == null)
             {
                 anim = activeModel.GetComponent<Animator>();
@@ -80,6 +84,16 @@ namespace ThirdPersonMovement
             moveVar = Mathf.Clamp01(m);
             float moveAmount = (running) ? runSpeed : walkSpeed;
             rig.velocity = moveDir * (moveAmount * moveVar);
+
+            if (cursorLockMode)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+
             MovementAnimHandler();
         }
 

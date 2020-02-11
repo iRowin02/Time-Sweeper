@@ -157,11 +157,16 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   running: 0
   onGround: 0
+  aiming: 0
+  cursorLockMode: 0
   walkSpeed: 5
   runSpeed: 8
+  rotationSpeed: 5
+  moveVar: 0
   ver: 0
   hor: 0
   anim: {fileID: 0}
+  rig: {fileID: 0}
   thirdPersonCamManager: {fileID: 1987410397}
   activeModel: {fileID: 0}
 --- !u!54 &81433130
@@ -178,7 +183,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &81433131
 CapsuleCollider:
@@ -288,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199345229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.096, z: -2.9}
+  m_LocalPosition: {x: 0, y: -0.83, z: -1.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 791889672}
@@ -1064,12 +1069,14 @@ MonoBehaviour:
   mouseSpeed: 2
   followSpeed: 9
   slerpSpeed: 9
+  zoomSpeed: 5
   turnSmoothing: 0.1
   target: {fileID: 0}
-  lockOnTarget: {fileID: 0}
   pivot: {fileID: 0}
   camTrans: {fileID: 0}
   minAngle: -35
   maxAngle: 35
+  minAngleX: -90
+  maxAngleX: 90
   lookAngle: 0
   tiltAngle: 0
