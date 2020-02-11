@@ -68,6 +68,10 @@ public class Pathfinding : MonoBehaviour
                         {
                             openSet.Add(getNodes);
                         }
+                        else
+                        {
+                            openSet.UpdateItem(getNodes);
+                        }
                     }
                 }
             }
@@ -80,7 +84,6 @@ public class Pathfinding : MonoBehaviour
         }
 
     }
-
 
     Vector3[] RetracePath(Node startNode, Node endNode)
     {
