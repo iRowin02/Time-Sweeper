@@ -6,6 +6,8 @@ public class AI : MonoBehaviour
 {
 	[Header("General Values")]
 	public float health;
+    public GameObject weapon;
+    public float minDist, maxDist;
 
     [Header("View Values")]
     public float viewRadius;
@@ -34,10 +36,10 @@ public class AI : MonoBehaviour
     public Transform _target;
     private Vector3[] paths;
     private int targetIndex;
-	private Vector3 lastSeen;
 
     [Header("Patrol")]
     public Transform pathholder;
+    private Vector3 lastSeen;
 
     private float findTargetDelay;
     private Transform player;
@@ -50,6 +52,7 @@ public class AI : MonoBehaviour
 
     [Header("AI States")]
     public _AIstates states;
+    public _AIstates defaultState;
 
     public enum _AIstates
     {
@@ -90,14 +93,15 @@ public class AI : MonoBehaviour
 		}
 		else
 		{
+            states = defaultState;
 			inSight = false;
 		}
 		if(inSight)
 		{
-			Attack();
+			states = _AIstates.Attack;
 		}
 
-        DrawFOV();
+        //DrawFOV();
         StateManager();
     }
 
@@ -151,7 +155,8 @@ public class AI : MonoBehaviour
 
 	public void Attack()
 	{
-		StartCoroutine("TurnToFace", _target);
+		StartCoroutine(TurnToFace(_target.position));
+        weapon.GetComponent<Pistol>().Shoot();
 	}
 
     //Idle State
@@ -228,6 +233,7 @@ public class AI : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
+        _target = null;
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
