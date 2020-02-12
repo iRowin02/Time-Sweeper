@@ -16,15 +16,19 @@ public class Pistol : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
-            if(canShoot)
-            {
-                Instantiate(pistolInfo.bullet, barrel.position, transform.rotation);
-                canShoot = false;
-            }
+            Shoot();
         }
+    }
 
+    public void Shoot()
+    {
+        if (canShoot)
+        {
+            Instantiate(pistolInfo.bullet, barrel.position, transform.rotation);
+            canShoot = false;
+        }
         if(!canShoot)
         {
             pistolInfo.fireDelay-= Time.deltaTime;
