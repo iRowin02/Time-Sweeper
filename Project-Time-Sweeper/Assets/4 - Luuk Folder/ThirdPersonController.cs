@@ -127,7 +127,7 @@ namespace ThirdPersonMovement
         {
             Vector3 relativeDir = transform.TransformDirection(moveDir);
             float h = relativeDir.x;
-            float v = relativeDir.z;
+            float v = relativeDir.z;         
 
             anim.SetFloat("Horizontal", h, animDamp, Time.deltaTime);
             anim.SetFloat("Vertical", v, animDamp, Time.deltaTime);
