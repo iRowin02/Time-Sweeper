@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ThirdPersonMovement
 {
@@ -11,16 +9,22 @@ namespace ThirdPersonMovement
         [HideInInspector]
         public float resetSpeed = 5;
 
-        [Header("Inputs")]
-        public Vector3 moveDir;
-
+        [Header("States")]
         public bool running;
+        public bool jumping;
         public bool onGround;
         public bool aiming;
         public bool cursorLockMode;
 
+        [Header("Inputs")]
+        public Vector3 moveDir;
+
+        public int rigAngDrag = 999;
+        public int rigDrag = 4;
+
         public float walkSpeed = 5;
         public float runSpeed = 8;
+        public float jumpForce = 7;
         public float rotationSpeed = 5;
         public float moveVar;
         public float ver;
@@ -42,9 +46,14 @@ namespace ThirdPersonMovement
 
         public void Awake()
         {
-            rig = gameObject.GetComponent<Rigidbody>();
             thirdPersonCamManager.CamInit(transform);
             AnimatorSetup();
+
+            rig = gameObject.GetComponent<Rigidbody>();
+            rig = GetComponent<Rigidbody>();
+            rig.angularDrag = rigAngDrag;
+            rig.drag = rigDrag;
+            rig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
         }
 
         public void Inputs()
@@ -52,38 +61,30 @@ namespace ThirdPersonMovement
             ver = Input.GetAxis("Vertical");
             hor = Input.GetAxis("Horizontal");
             running = Input.GetButton("Run");
+            jumping = Input.GetButton("Jump");
             aiming = Input.GetButton("RightMouse");
             cursorLockMode = Input.GetButton("Cancel");
         }
-        public void AnimatorSetup()
-        {
-            if (activeModel == null)
-            {                                                                                   
-                anim = GetComponentInChildren<Animator>();                                      
-                if (anim == null)                                                               
-                {                                                                               
-                    Debug.Log("No model found");                                                
-                }                                                                               
-                else                                                                            
-                {                                                                               
-                    activeModel = anim.gameObject;                                              
-                }                                                                               
-            }                                                                                   
-            if (anim == null)
-            {
-                anim = activeModel.GetComponent<Animator>();
-            }
-        }
+
 
         public void BaseMovement()
         {
             Vector3 v = ver * thirdPersonCamManager.transform.forward;
             Vector3 h = hor * thirdPersonCamManager.transform.right;
+
             moveDir = (v + h).normalized;
             float m = Mathf.Abs(hor) + Mathf.Abs(ver);
             moveVar = Mathf.Clamp01(m);
+
             float moveAmount = (running) ? runSpeed : walkSpeed;
-            rig.velocity = moveDir * (moveAmount * moveVar);
+            if (onGround)
+                rig.velocity = moveDir * (moveAmount * moveVar);
+
+            rig.drag = (moveAmount > 0 || onGround == false) ? 0 : rigDrag;
+
+            if (onGround)
+                if (jumping)
+                    rig.AddForce(Vector3.up.normalized * jumpForce);
 
             if (cursorLockMode)
             {
@@ -94,7 +95,6 @@ namespace ThirdPersonMovement
                 Cursor.lockState = CursorLockMode.Locked;
             }
 
-            MovementAnimHandler();
         }
 
         public void IntermediateMovement()
@@ -108,21 +108,71 @@ namespace ThirdPersonMovement
             Quaternion tr = Quaternion.LookRotation(targetDir);
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, Time.deltaTime * moveVar * rotationSpeed);
             transform.rotation = targetRotation;
+
+            anim.SetBool("Aiming", aiming);
+
+            if (aiming)
+                AimedAnimHandler(moveDir);
+            else
+                MovementAnimHandler();
         }
 
+        #region AnimHandlers
         public void MovementAnimHandler()
         {
             anim.SetFloat("Vertical", moveVar, animDamp, Time.deltaTime);
             anim.SetBool("Running", running);
         }
-
-        public void OnCollisionEnter(Collision collision)
+        public void AimedAnimHandler(Vector3 moveDir)
         {
+            Vector3 relativeDir = transform.TransformDirection(moveDir);
+            float h = relativeDir.x;
+            float v = relativeDir.z;
 
-            if (collision.transform == GameObject.FindGameObjectWithTag("Ground"))
+            anim.SetFloat("Horizontal", h, animDamp, Time.deltaTime);
+            anim.SetFloat("Vertical", v, animDamp, Time.deltaTime);
+        }
+
+        public void AnimatorSetup()
+        {
+            if (activeModel == null)
+            {
+                anim = GetComponentInChildren<Animator>();
+                if (anim == null)
+                {
+                    Debug.Log("No model found");
+                }
+                else
+                {
+                    activeModel = anim.gameObject;
+                }
+            }
+            if (anim == null)
+            {
+                anim = activeModel.GetComponent<Animator>();
+            }
+        }
+
+        #endregion
+
+        #region ongroundOn/Off
+        void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.tag == "Ground")
             {
                 onGround = true;
+                anim.SetBool("OnGround", onGround);
+            }
+        }
+
+        private void OnCollisionExit(Collision other)
+        {
+            if (other.gameObject.tag == "Ground")
+            {
+                onGround = false;
+                anim.SetBool("OnGround", onGround);
             }
         }
     }
+    #endregion
 }
