@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GunUsage : MonoBehaviour
 {
@@ -9,18 +10,15 @@ public class GunUsage : MonoBehaviour
     public float fireDelay = 0.2f;
     [ReadOnly]public float interval_;
     [ReadOnly]public bool canShoot = true;
+    [ReadOnly]public bool isReloading;
 
     [Header("Usage")]
     public GameObject bullet;
     public Transform barrel;
-    public static Gun gunInfo;
-}
-[System.Serializable]
-[CreateAssetMenu(fileName = "Gun", menuName = "Weapons/Guns", order = 0)]
-public class Gun : ScriptableObject
-{
+
     [Header("Ammunition")]
-    public int currentAmmo;
     public int currentBullets;
-    //private int 
+    public int currentAmmo;
+
+    protected int maxAmmo;
 }

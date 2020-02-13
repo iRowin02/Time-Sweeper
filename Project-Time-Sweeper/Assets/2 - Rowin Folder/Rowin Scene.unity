@@ -993,8 +993,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInfo: {fileID: 1185323472}
   healthBar: {fileID: 1395252398}
-  currentBullets: {fileID: 0}
-  bulletsLeft: {fileID: 0}
   updateSeconds: 0.2
 --- !u!4 &467835410
 Transform:
@@ -1209,7 +1207,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 683622465}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1277,8 +1275,11 @@ MonoBehaviour:
   fireDelay: 0.2
   interval_: 0
   canShoot: 1
+  isReloading: 0
   bullet: {fileID: 8161649942551297050, guid: 34285361b62765f4f9f300b188d74617, type: 3}
-  barrel: {fileID: 0}
+  barrel: {fileID: 841825201}
+  currentBullets: 24
+  currentAmmo: 642
 --- !u!1 &693867756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,13 +1395,10 @@ MonoBehaviour:
   weapons:
   - weaponObject: {fileID: 1910203154}
     weaponImage: {fileID: 1664384304}
-    gunInfo: {fileID: 11400000, guid: e25e2974de06e54458af51c94f439d57, type: 2}
   - weaponObject: {fileID: 1703026734}
     weaponImage: {fileID: 1235017210}
-    gunInfo: {fileID: 11400000, guid: 676b5a7aa5c26944aa14d00a4a1dce74, type: 2}
   - weaponObject: {fileID: 683622465}
     weaponImage: {fileID: 1561894715}
-    gunInfo: {fileID: 11400000, guid: d5ff020e5f1bcef4d9d1f22ec58a7c3c, type: 2}
   ammo:
   - {fileID: 1787268833}
   - {fileID: 654410351}
@@ -2593,7 +2591,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703026734}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -2661,8 +2659,11 @@ MonoBehaviour:
   fireDelay: 0.2
   interval_: 0
   canShoot: 1
+  isReloading: 0
   bullet: {fileID: 8161649942551297050, guid: 34285361b62765f4f9f300b188d74617, type: 3}
   barrel: {fileID: 841825201}
+  currentBullets: 124
+  currentAmmo: 2145
 --- !u!1 &1737797845
 GameObject:
   m_ObjectHideFlags: 0
@@ -3268,7 +3269,7 @@ PrefabInstance:
     - target: {fileID: 2025715304096061031, guid: a60b10bab59d1184895b7b57d9c06053,
         type: 3}
       propertyPath: fireDelay
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2025715304096061031, guid: a60b10bab59d1184895b7b57d9c06053,
         type: 3}
@@ -3276,6 +3277,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: e25e2974de06e54458af51c94f439d57,
         type: 2}
+    - target: {fileID: 2025715304096061031, guid: a60b10bab59d1184895b7b57d9c06053,
+        type: 3}
+      propertyPath: currentAmmo
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025715304096061031, guid: a60b10bab59d1184895b7b57d9c06053,
+        type: 3}
+      propertyPath: currentBullets
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025715304096061031, guid: a60b10bab59d1184895b7b57d9c06053,
+        type: 3}
+      propertyPath: reloadTime
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2025715304096061034, guid: a60b10bab59d1184895b7b57d9c06053,
         type: 3}
       propertyPath: m_Name

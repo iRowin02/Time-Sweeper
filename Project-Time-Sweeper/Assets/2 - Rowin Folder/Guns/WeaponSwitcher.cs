@@ -9,15 +9,16 @@ public class Weapon
 {
     public GameObject weaponObject;
     public Image weaponImage;
-    public Gun gunInfo;
 }
 
 public class WeaponSwitcher : MonoBehaviour
 {
-    [ReadOnly]public Gun activeGun;
-    public int selectedWeapon = 0;
+    [ReadOnly]public GameObject activeGun;
+    [ReadOnly]public int selectedWeapon = 0;
     public Weapon[] weapons;
     public TextMeshProUGUI[] ammo;
+    private int ammoDifference;
+    
 
     void Start()
     {
@@ -53,6 +54,10 @@ public class WeaponSwitcher : MonoBehaviour
         {
             SelectWeapon();
         }
+        if(ammoDifference != activeGun.GetComponent<FireArms>().currentBullets)
+        {
+            UpdateAmmo();
+        }
     }
 
     public void SelectWeapon()
@@ -62,11 +67,13 @@ public class WeaponSwitcher : MonoBehaviour
         {
             if(i == selectedWeapon)
             {
+                ammoDifference = weapons[i].weaponObject.GetComponent<FireArms>().currentBullets;
+                
                 weapons[i].weaponObject.SetActive(true);
                 weapons[i].weaponImage.GetComponent<CanvasGroup>().alpha = 0.7f;
-                activeGun = weapons[i].gunInfo;
+                activeGun = weapons[i].weaponObject;
 
-                if(activeGun !=  null)
+                if(activeGun != null)
                 {
                     UpdateAmmo();
                 }
@@ -81,7 +88,7 @@ public class WeaponSwitcher : MonoBehaviour
     }
     public void UpdateAmmo()
     {
-       ammo[0].text = activeGun.currentBullets.ToString();
-       ammo[1].text = activeGun.currentAmmo.ToString();
+       ammo[0].text = activeGun.GetComponent<FireArms>().currentBullets.ToString();
+       ammo[1].text = activeGun.GetComponent<FireArms>().currentAmmo.ToString();
     }
 }

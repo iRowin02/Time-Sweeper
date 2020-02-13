@@ -17,7 +17,6 @@ public class HUD_Manager : MonoBehaviour
     public PlayerInfo playerInfo;
     [Header("UI Elements")]
     public Image healthBar;
-    public TextMeshProUGUI currentBullets, bulletsLeft;
     [Header("Variables")]
 
     [SerializeField]

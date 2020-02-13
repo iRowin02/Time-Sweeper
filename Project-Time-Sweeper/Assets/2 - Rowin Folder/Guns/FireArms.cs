@@ -7,12 +7,11 @@ public class FireArms : GunUsage
     void Start()
     {
         interval_ = fireDelay;
+        maxAmmo = currentBullets;
     }
 
     void Update()
     {
-
-
         if (Input.GetButtonDown("Fire1"))
         {
             //if(gunInfo.currentBullets <= 0)
@@ -37,15 +36,32 @@ public class FireArms : GunUsage
 
     public void Shoot()
     {
-        if (canShoot)
+        if(currentBullets > 1 && isReloading != true)
         {
-            Instantiate(bullet, barrel.position, transform.rotation);
-            canShoot = false;
+            if (canShoot && !isReloading)
+            {
+                Instantiate(bullet, barrel.position, transform.rotation);
+                currentBullets--;
+
+                canShoot = false;
+            }
+            return;
+        }
+        else
+        {
+            StartCoroutine(Reload());
         }
     }
-    //IEnumerator Reload()
-    //{
-    //    
-    //}
+    IEnumerator Reload()
+    {
+        isReloading = true;
+
+        currentBullets = maxAmmo;
+        currentAmmo -= maxAmmo;
+
+        yield return new WaitForSeconds(reloadTime);
+
+        isReloading = false;
+    }
 }
 
