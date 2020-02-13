@@ -9,10 +9,12 @@ public class Weapon
 {
     public GameObject weaponObject;
     public Image weaponImage;
+    public Gun gunInfo;
 }
 
 public class WeaponSwitcher : MonoBehaviour
 {
+    [ReadOnly]public Gun activeGun;
     public int selectedWeapon = 0;
     public Weapon[] weapons;
     public TextMeshProUGUI[] ammo;
@@ -62,6 +64,12 @@ public class WeaponSwitcher : MonoBehaviour
             {
                 weapons[i].weaponObject.SetActive(true);
                 weapons[i].weaponImage.GetComponent<CanvasGroup>().alpha = 0.7f;
+                activeGun = weapons[i].gunInfo;
+
+                if(activeGun !=  null)
+                {
+                    UpdateAmmo();
+                }
             }
             else
             {
@@ -73,6 +81,7 @@ public class WeaponSwitcher : MonoBehaviour
     }
     public void UpdateAmmo()
     {
-        
+       ammo[0].text = activeGun.currentBullets.ToString();
+       ammo[1].text = activeGun.currentAmmo.ToString();
     }
 }

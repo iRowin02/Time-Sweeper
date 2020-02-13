@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Gun", order = 1)]
-public class GunInfo : ScriptableObject
+public class GunUsage : MonoBehaviour
 {
-    public int maxBullets;
-    public int currentBullets;
-}
-public class Gun : MonoBehaviour
-{
+    [Header("Variables")]
     public float reloadTime;
-    public float fireDelay;
+    public float fireDelay = 0.2f;
+    [ReadOnly]public float interval_;
+    [ReadOnly]public bool canShoot = true;
+
+    [Header("Usage")]
     public GameObject bullet;
+    public Transform barrel;
+    public static Gun gunInfo;
+}
+[System.Serializable]
+[CreateAssetMenu(fileName = "Gun", menuName = "Weapons/Guns", order = 0)]
+public class Gun : ScriptableObject
+{
+    [Header("Ammunition")]
+    public int currentAmmo;
+    public int currentBullets;
+    //private int 
 }

@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol : Gun
+public class FireArms : GunUsage
 {
-    public GunInfo gunInfo;
-    public Transform barrel;
-    public bool canShoot = true;
-    public float interval_;
-
     void Start()
     {
         interval_ = fireDelay;
@@ -16,8 +11,15 @@ public class Pistol : Gun
 
     void Update()
     {
+
+
         if (Input.GetButtonDown("Fire1"))
         {
+            //if(gunInfo.currentBullets <= 0)
+            //{
+                //StartCoroutine(Reload());
+                //return;
+            //}
             Shoot();
         }
         
@@ -41,5 +43,9 @@ public class Pistol : Gun
             canShoot = false;
         }
     }
+    //IEnumerator Reload()
+    //{
+    //    
+    //}
 }
 

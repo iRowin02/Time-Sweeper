@@ -156,7 +156,7 @@ public class AI : MonoBehaviour
 	public void Attack()
 	{
 		StartCoroutine(TurnToFace(_target.position));
-        weapon.GetComponent<Pistol>().Shoot();
+        weapon.GetComponent<FireArms>().Shoot();
 	}
 
     //Idle State

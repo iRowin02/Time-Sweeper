@@ -1178,6 +1178,7 @@ GameObject:
   - component: {fileID: 683622469}
   - component: {fileID: 683622468}
   - component: {fileID: 683622467}
+  - component: {fileID: 683622470}
   m_Layer: 0
   m_Name: shotgunnooeee
   m_TagString: Untagged
@@ -1195,7 +1196,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.59, y: -0.466, z: 0.79}
   m_LocalScale: {x: 0.40703, y: 0.26303, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 841825201}
   m_Father: {fileID: 901496896}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1259,6 +1261,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 683622465}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &683622470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683622465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12369329321ac914290c8015f78c210c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reloadTime: 0
+  fireDelay: 0.2
+  interval_: 0
+  canShoot: 1
+  bullet: {fileID: 8161649942551297050, guid: 34285361b62765f4f9f300b188d74617, type: 3}
+  barrel: {fileID: 0}
 --- !u!1 &693867756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,6 +1312,36 @@ Transform:
   - {fileID: 1170684932}
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &841825200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 841825201}
+  m_Layer: 0
+  m_Name: Barrel (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &841825201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841825200}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.2, y: 0.20000006, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 683622466}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &901496895
 GameObject:
@@ -1339,11 +1389,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9115e545012f74fbd141a8adbf2dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeGun: {fileID: 0}
   selectedWeapon: 0
-  highlightWeapon:
-  - {fileID: 1664384301}
-  - {fileID: 1235017207}
-  - {fileID: 1561894712}
+  weapons:
+  - weaponObject: {fileID: 1910203154}
+    weaponImage: {fileID: 1664384304}
+    gunInfo: {fileID: 11400000, guid: e25e2974de06e54458af51c94f439d57, type: 2}
+  - weaponObject: {fileID: 1703026734}
+    weaponImage: {fileID: 1235017210}
+    gunInfo: {fileID: 11400000, guid: 676b5a7aa5c26944aa14d00a4a1dce74, type: 2}
+  - weaponObject: {fileID: 683622465}
+    weaponImage: {fileID: 1561894715}
+    gunInfo: {fileID: 11400000, guid: d5ff020e5f1bcef4d9d1f22ec58a7c3c, type: 2}
+  ammo:
+  - {fileID: 1787268833}
+  - {fileID: 654410351}
 --- !u!1 &906712038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2502,6 +2562,7 @@ GameObject:
   - component: {fileID: 1703026738}
   - component: {fileID: 1703026737}
   - component: {fileID: 1703026736}
+  - component: {fileID: 1703026739}
   m_Layer: 0
   m_Name: AK-47
   m_TagString: Untagged
@@ -2519,7 +2580,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.59, y: -0.466, z: 0.79}
   m_LocalScale: {x: 0.40703, y: 0.26303, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2023958574}
   m_Father: {fileID: 901496896}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2583,6 +2645,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703026734}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1703026739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703026734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12369329321ac914290c8015f78c210c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reloadTime: 0
+  fireDelay: 0.2
+  interval_: 0
+  canShoot: 1
+  bullet: {fileID: 8161649942551297050, guid: 34285361b62765f4f9f300b188d74617, type: 3}
+  barrel: {fileID: 841825201}
 --- !u!1 &1737797845
 GameObject:
   m_ObjectHideFlags: 0
@@ -3006,6 +3086,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1910203154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2025715304096061034, guid: a60b10bab59d1184895b7b57d9c06053,
+    type: 3}
+  m_PrefabInstance: {fileID: 2025715303729532510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2023958573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2023958574}
+  m_Layer: 0
+  m_Name: Barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2023958574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023958573}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1703026735}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2105159453
 GameObject:
   m_ObjectHideFlags: 0
@@ -3154,6 +3270,12 @@ PrefabInstance:
       propertyPath: fireDelay
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2025715304096061031, guid: a60b10bab59d1184895b7b57d9c06053,
+        type: 3}
+      propertyPath: gunInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: e25e2974de06e54458af51c94f439d57,
+        type: 2}
     - target: {fileID: 2025715304096061034, guid: a60b10bab59d1184895b7b57d9c06053,
         type: 3}
       propertyPath: m_Name
