@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol : MonoBehaviour
+public class Pistol : Gun
 {
-    public Gun pistolInfo;
+    public GunInfo gunInfo;
     public Transform barrel;
-    private bool canShoot = true;
-    private float interval_;
+    public bool canShoot = true;
+    public float interval_;
 
     void Start()
     {
-        interval_ = pistolInfo.fireDelay;
+        interval_ = fireDelay;
     }
 
     void Update()
@@ -20,25 +20,25 @@ public class Pistol : MonoBehaviour
         {
             Shoot();
         }
+        
+        if(!canShoot)
+        {
+            fireDelay -= Time.deltaTime;
+
+            if(fireDelay <= 0)
+            {
+                fireDelay = interval_;
+                canShoot = true;
+            }
+        }
     }
 
     public void Shoot()
     {
         if (canShoot)
         {
-            Instantiate(pistolInfo.bullet, barrel.position, transform.rotation);
+            Instantiate(bullet, barrel.position, transform.rotation);
             canShoot = false;
-        }
-        if(!canShoot)
-        {
-            pistolInfo.fireDelay-= Time.deltaTime;
-
-
-            if(pistolInfo.fireDelay <= 0)
-            {
-                pistolInfo.fireDelay = interval_;
-                canShoot = true;
-            }
         }
     }
 }

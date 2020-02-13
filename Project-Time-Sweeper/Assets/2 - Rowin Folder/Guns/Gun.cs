@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Gun", menuName = "Weapons/Gun", order = 0)]
-public class Gun : ScriptableObject
+[CreateAssetMenu(menuName = "Gun", order = 1)]
+public class GunInfo : ScriptableObject
 {
     public int maxBullets;
     public int currentBullets;
+}
+public class Gun : MonoBehaviour
+{
     public float reloadTime;
     public float fireDelay;
     public GameObject bullet;
