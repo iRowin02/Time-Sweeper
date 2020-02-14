@@ -20,5 +20,6 @@ public class GunUsage : MonoBehaviour
     public int currentBullets;
     public int currentAmmo;
 
+    protected int maxBullets;
     protected int maxAmmo;
 }

@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class FireArms : GunUsage
 {
+    private WeaponSwitcher weaponSwitcher;
+
+    public int leftOver;
     void Start()
     {
+        weaponSwitcher = GetComponentInParent<WeaponSwitcher>();
         interval_ = fireDelay;
         maxAmmo = currentBullets;
+        maxBullets = currentAmmo;
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if(currentAmmo > maxBullets)
         {
-            //if(gunInfo.currentBullets <= 0)
-            //{
-                //StartCoroutine(Reload());
-                //return;
-            //}
-            Shoot();
+            currentAmmo = maxBullets;
+            weaponSwitcher.UpdateAmmo();
+        }
+        if(currentBullets <= 0)
+        {
+            StartCoroutine(Reload(maxAmmo));
+            return;
+        }
+
+        if(!isReloading)
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Shoot();
+            }
         }
         
         if(!canShoot)
@@ -32,35 +46,42 @@ public class FireArms : GunUsage
                 canShoot = true;
             }
         }
+        // if(Input.GetButtonDown("R"))
+        // {
+        //     leftOver = maxAmmo -= currentBullets;
+
+        //     if(leftOver > 0)
+        //     {
+        //         StartCoroutine(Reload(leftOver));
+        //     }
+        //     if(leftOver < 0)
+        //     {
+        //         leftOver = 0;
+        //         return;
+        //     }
+        // }
     }
 
     public void Shoot()
     {
-        if(currentBullets > 1 && isReloading != true)
+        if (canShoot && !isReloading)
         {
-            if (canShoot && !isReloading)
-            {
-                Instantiate(bullet, barrel.position, transform.rotation);
-                currentBullets--;
+            Instantiate(bullet, barrel.position, transform.rotation);
+            currentBullets--;
 
-                canShoot = false;
-            }
-            return;
-        }
-        else
-        {
-            StartCoroutine(Reload());
+            canShoot = false;
         }
     }
-    IEnumerator Reload()
+    IEnumerator Reload(int ammoLeft)
     {
         isReloading = true;
 
-        currentBullets = maxAmmo;
-        currentAmmo -= maxAmmo;
+        currentBullets += ammoLeft;
+        currentAmmo -= ammoLeft;
 
         yield return new WaitForSeconds(reloadTime);
 
+        weaponSwitcher.UpdateAmmo();
         isReloading = false;
     }
 }
