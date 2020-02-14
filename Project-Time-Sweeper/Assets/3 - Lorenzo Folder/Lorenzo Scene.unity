@@ -1144,10 +1144,11 @@ MonoBehaviour:
   visibleTargets: []
   meshRes: 0
   viewMeshFilter: {fileID: 1040960098}
-  _target: {fileID: 0}
+  _target: {fileID: 2101635265}
   pathholder: {fileID: 1521352994}
+  lastSeen: {x: 0, y: 0, z: 0}
   inSight: 0
-  states: 0
+  states: 2
   defaultState: 2
 --- !u!65 &832050492
 BoxCollider:

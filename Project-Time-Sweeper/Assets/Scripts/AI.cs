@@ -39,7 +39,7 @@ public class AI : MonoBehaviour
 
     [Header("Patrol")]
     public Transform pathholder;
-    private Vector3 lastSeen;
+    [ReadOnly]public Vector3 lastSeen;
 
     private float findTargetDelay;
     private Transform player;
@@ -47,8 +47,7 @@ public class AI : MonoBehaviour
     private bool hasDone;
     private bool done;
 
-    //[HideInInspector]
-    public bool inSight;
+    [ReadOnly]public bool inSight;
 
     [Header("AI States")]
     public _AIstates states;
@@ -60,6 +59,7 @@ public class AI : MonoBehaviour
         Attack,
         Patrol,
         Chase,
+        Search,
     }
 
     void Start()
@@ -75,7 +75,7 @@ public class AI : MonoBehaviour
         
 		if(_target != null)
 		{
-			PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
+			//PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
 		}
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -90,11 +90,16 @@ public class AI : MonoBehaviour
 		if(_target != null)
 		{
 			inSight = true;
+            lastSeen = _target.position;
 		}
 		else
 		{
-            states = defaultState;
 			inSight = false;
+
+            if(lastSeen != Vector3.zero)
+            {
+                states = _AIstates.Search;
+            }
 		}
 		if(inSight)
 		{
@@ -119,6 +124,21 @@ public class AI : MonoBehaviour
 		{
 			Attack();
 		}
+    }
+
+    public void Search()
+    {
+        PathRequestManager.RequestPath(transform.position, lastSeen, OnPathFound);
+
+        if(inSight)
+        {
+            states = _AIstates.Attack;
+        }
+        else
+        {
+            lastSeen = Vector3.zero;
+            states = defaultState;
+        }
     }
 
 	//Chase State
@@ -155,8 +175,11 @@ public class AI : MonoBehaviour
 
 	public void Attack()
 	{
-		StartCoroutine(TurnToFace(_target.position));
-        weapon.GetComponent<FireArms>().Shoot();
+        if(_target != null)
+        {
+		    StartCoroutine(TurnToFace(_target.position));
+            weapon.GetComponent<FireArms>().Shoot();
+        }
 	}
 
     //Idle State
@@ -184,14 +207,15 @@ public class AI : MonoBehaviour
 
     IEnumerator FollowPath(Vector3[] waypoints)
     {
-        if (transform.position != waypoints[0] && done == false)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
-            done = true;
-        }
-
         int targetWaypointInt = 1;
         Vector3 targetWaypoint = waypoints[targetWaypointInt];
+
+        if (transform.position != waypoints[0] && done == false)
+        {
+            PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
+            //transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
+            done = true;
+        }
 
         while (true)
         {
