@@ -65,6 +65,10 @@ namespace ThirdPersonMovement
             IntermediateMovement();
             Inputs();
             thirdPersonCamManager.Tick();
+            if(Input.GetKeyDown(KeyCode.Tab))
+            {
+                HealthUpdate(-10);
+            }
         }
 
         public void Awake()

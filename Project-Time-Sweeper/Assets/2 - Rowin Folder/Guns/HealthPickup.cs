@@ -14,7 +14,6 @@ public class HealthPickup : MonoBehaviour
         healthAmount = Random.Range(minHealth, maxHealth);
         healthAmountDisplay.text = healthAmount.ToString();
     }
-
     void OnCollisionEnter(Collision coll)
     {
         if(coll.gameObject.CompareTag("Player"))

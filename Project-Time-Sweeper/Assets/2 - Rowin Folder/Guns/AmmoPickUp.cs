@@ -14,7 +14,6 @@ public class AmmoPickUp : MonoBehaviour
         ammoAmount = Random.Range(minAmmo, maxAmmo);
         ammoAmountDisplay.text = ammoAmount.ToString();
     }
-
     void OnCollisionEnter(Collision coll)
     {
         if(coll.gameObject.CompareTag("Player"))

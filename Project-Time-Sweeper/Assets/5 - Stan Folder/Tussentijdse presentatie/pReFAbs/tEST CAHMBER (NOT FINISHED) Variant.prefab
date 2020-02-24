@@ -341,6 +341,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: tEST CAHMBER (NOT FINISHED) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: f7e18be84539c0546acbef1f0bd16497,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7e18be84539c0546acbef1f0bd16497, type: 3}
 --- !u!1 &2843737709227614061 stripped

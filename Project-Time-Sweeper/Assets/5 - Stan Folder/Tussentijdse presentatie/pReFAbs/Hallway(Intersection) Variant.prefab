@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &4821683420543978461
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5115285017037272778}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 20.93412, y: 0.0830369, z: 20.93412}
-  m_Center: {x: 0.0073986053, y: -0.034338236, z: 0.0073986053}
 --- !u!1001 &3881198567312666563
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80,11 +67,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hallway(Intersection) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: ea756163d8718654184188132894b944,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea756163d8718654184188132894b944, type: 3}
---- !u!1 &5115285017037272778 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: ea756163d8718654184188132894b944,
-    type: 3}
-  m_PrefabInstance: {fileID: 3881198567312666563}
-  m_PrefabAsset: {fileID: 0}
