@@ -59,7 +59,6 @@ public class AI : MonoBehaviour
         Attack,
         Patrol,
         Chase,
-        Search,
     }
 
     void Start()
@@ -81,63 +80,19 @@ public class AI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    public void LateUpdate()
+    public void Update() 
     {
-        if (states != _AIstates.Patrol)
+        if(Input.GetKeyDown(KeyCode.Tab))
         {
-            hasDone = false;
+            PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
         }
-		if(_target != null)
-		{
-			inSight = true;
-            lastSeen = _target.position;
-		}
-		else
-		{
-			inSight = false;
-
-            if(lastSeen != Vector3.zero)
-            {
-                states = _AIstates.Search;
-            }
-		}
-		if(inSight)
-		{
-			states = _AIstates.Attack;
-		}
-
-        //DrawFOV();
-        StateManager();
     }
 
-    public void StateManager()
+    private void OnCollisionEnter(Collision other) 
     {
-        if (states == _AIstates.Idle)
+        if(other.transform.tag == "Player")
         {
-            Idle();
-        }
-        if (states == _AIstates.Patrol)
-        {
-            Patrol();
-        }
-		if(states == _AIstates.Attack)
-		{
-			Attack();
-		}
-    }
-
-    public void Search()
-    {
-        PathRequestManager.RequestPath(transform.position, lastSeen, OnPathFound);
-
-        if(inSight)
-        {
-            states = _AIstates.Attack;
-        }
-        else
-        {
-            lastSeen = Vector3.zero;
-            states = defaultState;
+            other.gameObject.GetComponent<ThirdPersonMovement.ThirdPersonController>().HealthUpdate(-10);
         }
     }
 
@@ -190,7 +145,7 @@ public class AI : MonoBehaviour
     //End Idle State
 
     //Patrol State
-    public void Patrol()
+    public void Patroling()
     {
         if (!hasDone == true)
         {
@@ -257,7 +212,6 @@ public class AI : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
-        _target = null;
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -271,7 +225,6 @@ public class AI : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
-					_target = target;
                 }
             }
         }
