@@ -99,22 +99,24 @@ namespace ThirdPersonMovement
 
         public void IntermediateMovement()
         {
-            Vector3 targetDir = moveDir;
-            targetDir.y = 0;
-            if (targetDir == Vector3.zero)
+            if (!aiming)
             {
-                targetDir = transform.forward;
+                Vector3 targetDir = moveDir;
+                targetDir.y = 0;
+                if (targetDir == Vector3.zero)
+                {
+                    targetDir = transform.forward;
+                }
+                Quaternion tr = Quaternion.LookRotation(targetDir);
+                Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, Time.deltaTime * moveVar * rotationSpeed);
+                transform.rotation = targetRotation;
             }
-            Quaternion tr = Quaternion.LookRotation(targetDir);
-            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, Time.deltaTime * moveVar * rotationSpeed);
-            transform.rotation = targetRotation;
-
-            anim.SetBool("Aiming", aiming);
-
-            if (aiming)
-                AimedAnimHandler(moveDir);
             else
-                MovementAnimHandler();
+            {
+                transform.LookAt(thirdPersonCamManager.aimTarget);
+            }
+
+            MovementAnimHandler();
         }
 
         #region AnimHandlers
@@ -122,15 +124,6 @@ namespace ThirdPersonMovement
         {
             anim.SetFloat("Vertical", moveVar, animDamp, Time.deltaTime);
             anim.SetBool("Running", running);
-        }
-        public void AimedAnimHandler(Vector3 moveDir)
-        {
-            Vector3 relativeDir = transform.TransformDirection(moveDir);
-            float h = relativeDir.x;
-            float v = relativeDir.z;         
-
-            anim.SetFloat("Horizontal", h, animDamp, Time.deltaTime);
-            anim.SetFloat("Vertical", v, animDamp, Time.deltaTime);
         }
 
         public void AnimatorSetup()

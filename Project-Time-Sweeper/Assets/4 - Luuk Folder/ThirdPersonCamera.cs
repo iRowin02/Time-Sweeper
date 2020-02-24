@@ -21,14 +21,14 @@ namespace ThirdPersonMovement
         public Transform target;
         public Transform pivot;
         public Transform camTrans;
+        public Transform aimTarget;
 
         [Header("Misc")]
         public float minAngle = -35;
         public float maxAngle = 35;
-        public float minAngleX = -90;
-        public float maxAngleX = 90;
         public float lookAngle;
         public float tiltAngle;
+        public bool aiming;
 
         float smoothX;
         float smoothY;
@@ -42,6 +42,7 @@ namespace ThirdPersonMovement
             target = t;
             camTrans = Camera.main.transform;
             pivot = camTrans.parent;
+            aimTarget = camTrans.GetChild(0);
         }
 
         public void Tick()
@@ -50,14 +51,13 @@ namespace ThirdPersonMovement
             float v = Input.GetAxis("Mouse Y");
 
             float targetSpeed = mouseSpeed;
+            aiming = target.GetComponent<ThirdPersonController>().aiming;
 
-            if (target.GetComponent<ThirdPersonController>().aiming)
+            if (aiming)
             {
                 float aimSpeed = zoomSpeed * Time.deltaTime;
                 Vector3 smoothZoom = Vector3.Lerp(camTrans.localPosition, zoomPos, aimSpeed);
                 camTrans.localPosition = smoothZoom;
-
-                lookAngle = Mathf.Clamp(lookAngle, minAngleX, maxAngleX);
             }
             else
             {
@@ -66,8 +66,9 @@ namespace ThirdPersonMovement
                 camTrans.localPosition = smoothUnZoom;
             }
 
-            FollowTarget();
             Rotation(v, h, targetSpeed);
+
+            FollowTarget();
         }
 
         public void Rotation(float v, float h, float targetSpeed)
