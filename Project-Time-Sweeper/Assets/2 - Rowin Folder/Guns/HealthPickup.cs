@@ -19,7 +19,7 @@ public class HealthPickup : MonoBehaviour
     {
         if(coll.gameObject.CompareTag("Player"))
         {
-            coll.gameObject.GetComponent<PlayerInfo>().HealthUpdate(healthAmount);
+            coll.gameObject.GetComponent<ThirdPersonMovement.ThirdPersonController>().HealthUpdate(healthAmount);
             Destroy(gameObject);
         }
     }

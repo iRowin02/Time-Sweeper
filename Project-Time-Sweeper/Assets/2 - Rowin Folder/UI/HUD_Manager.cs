@@ -14,7 +14,7 @@ public class Weapons
 public class HUD_Manager : MonoBehaviour
 {
     [Header("Managers")]
-    public PlayerInfo playerInfo;
+    public ThirdPersonMovement.ThirdPersonController playerInfo;
     [Header("UI Elements")]
     public Image healthBar;
     [Header("Variables")]
@@ -25,7 +25,7 @@ public class HUD_Manager : MonoBehaviour
     public void Awake()
     {
         healthBar.fillAmount = 1;
-        playerInfo.GetComponent<PlayerInfo>().OnHealthPctChange += HandleHealthChange;
+        playerInfo.OnHealthPctChange += HandleHealthChange;
     }
 
     #region HandleHealth
@@ -33,7 +33,6 @@ public class HUD_Manager : MonoBehaviour
     private void HandleHealthChange(float pct)
     {
         StartCoroutine(ChangePct(pct));
-        print("ok");
     }
 
     private IEnumerator ChangePct(float pct)
