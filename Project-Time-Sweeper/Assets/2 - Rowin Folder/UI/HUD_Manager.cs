@@ -4,14 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[System.Serializable]
+public class Weapons
+{
+    public Image weaponImage;
+    public int maxAmmo, currentAmo;
+}
+
 public class HUD_Manager : MonoBehaviour
 {
     [Header("Managers")]
     public PlayerInfo playerInfo;
     [Header("UI Elements")]
-    public TextMeshProUGUI currentBullets, bulletsLeft;
     public Image healthBar;
     [Header("Variables")]
+
     [SerializeField]
     private float updateSeconds = 0.2f;
 
@@ -19,8 +26,10 @@ public class HUD_Manager : MonoBehaviour
     {
         healthBar.fillAmount = 1;
         playerInfo.GetComponent<PlayerInfo>().OnHealthPctChange += HandleHealthChange;
-        print("nee");
     }
+
+    #region HandleHealth
+
     private void HandleHealthChange(float pct)
     {
         StartCoroutine(ChangePct(pct));
@@ -41,4 +50,6 @@ public class HUD_Manager : MonoBehaviour
         }
         healthBar.fillAmount = pct;
     }
+    #endregion
 }
+

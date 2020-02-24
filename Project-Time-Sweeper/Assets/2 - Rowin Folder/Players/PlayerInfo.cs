@@ -33,13 +33,17 @@ public class PlayerInfo : MonoBehaviour
 
     #region Health
 
-    public void DoDamage(int damage)
+    public void HealthUpdate(int damage)
     {
         playerHealth += damage;
 
         float currentHealthPct = playerHealth / maxHealth;
 
         OnHealthPctChange(currentHealthPct);
+        if(playerHealth > 100)
+        {
+            playerHealth = maxHealth;
+        }
     }
     
     #endregion
@@ -48,7 +52,7 @@ public class PlayerInfo : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire2"))
         {
-            DoDamage(-10);
+            HealthUpdate(-10);
         }
     }
 }

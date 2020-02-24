@@ -6,6 +6,8 @@ public class AI : MonoBehaviour
 {
 	[Header("General Values")]
 	public float health;
+    public GameObject weapon;
+    public float minDist, maxDist;
 
     [Header("View Values")]
     public float viewRadius;
@@ -34,10 +36,10 @@ public class AI : MonoBehaviour
     public Transform _target;
     private Vector3[] paths;
     private int targetIndex;
-	private Vector3 lastSeen;
 
     [Header("Patrol")]
     public Transform pathholder;
+    [ReadOnly]public Vector3 lastSeen;
 
     private float findTargetDelay;
     private Transform player;
@@ -45,11 +47,11 @@ public class AI : MonoBehaviour
     private bool hasDone;
     private bool done;
 
-    //[HideInInspector]
-    public bool inSight;
+    [ReadOnly]public bool inSight;
 
     [Header("AI States")]
     public _AIstates states;
+    public _AIstates defaultState;
 
     public enum _AIstates
     {
@@ -57,6 +59,7 @@ public class AI : MonoBehaviour
         Attack,
         Patrol,
         Chase,
+        Search,
     }
 
     void Start()
@@ -72,7 +75,7 @@ public class AI : MonoBehaviour
         
 		if(_target != null)
 		{
-			PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
+			//PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
 		}
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -87,17 +90,23 @@ public class AI : MonoBehaviour
 		if(_target != null)
 		{
 			inSight = true;
+            lastSeen = _target.position;
 		}
 		else
 		{
 			inSight = false;
+
+            if(lastSeen != Vector3.zero)
+            {
+                states = _AIstates.Search;
+            }
 		}
 		if(inSight)
 		{
-			Attack();
+			states = _AIstates.Attack;
 		}
 
-        DrawFOV();
+        //DrawFOV();
         StateManager();
     }
 
@@ -115,6 +124,21 @@ public class AI : MonoBehaviour
 		{
 			Attack();
 		}
+    }
+
+    public void Search()
+    {
+        PathRequestManager.RequestPath(transform.position, lastSeen, OnPathFound);
+
+        if(inSight)
+        {
+            states = _AIstates.Attack;
+        }
+        else
+        {
+            lastSeen = Vector3.zero;
+            states = defaultState;
+        }
     }
 
 	//Chase State
@@ -151,7 +175,11 @@ public class AI : MonoBehaviour
 
 	public void Attack()
 	{
-		StartCoroutine("TurnToFace", _target);
+        if(_target != null)
+        {
+		    StartCoroutine(TurnToFace(_target.position));
+            weapon.GetComponent<FireArms>().Shoot();
+        }
 	}
 
     //Idle State
@@ -179,14 +207,15 @@ public class AI : MonoBehaviour
 
     IEnumerator FollowPath(Vector3[] waypoints)
     {
-        if (transform.position != waypoints[0] && done == false)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
-            done = true;
-        }
-
         int targetWaypointInt = 1;
         Vector3 targetWaypoint = waypoints[targetWaypointInt];
+
+        if (transform.position != waypoints[0] && done == false)
+        {
+            PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
+            //transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
+            done = true;
+        }
 
         while (true)
         {
@@ -228,6 +257,7 @@ public class AI : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
+        _target = null;
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
