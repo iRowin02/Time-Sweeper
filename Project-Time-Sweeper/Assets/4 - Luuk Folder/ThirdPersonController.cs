@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 namespace ThirdPersonMovement
 {
@@ -8,6 +9,10 @@ namespace ThirdPersonMovement
         float animDamp = 0.4f;
         [HideInInspector]
         public float resetSpeed = 5;
+
+        [Header("Managers")]
+        [SerializeField]
+        private HUD_Manager HUD;
 
         [Header("States")]
         public bool running;
@@ -30,11 +35,29 @@ namespace ThirdPersonMovement
         public float ver;
         public float hor;
 
+        [Header("Variables")]
+        public float maxHealth;
+        [ReadOnly]
+        public float playerHealth;
+
+        public int playerMana;
+        private int _playerMana;
+
+        public event Action<float> OnHealthPctChange = delegate { };
+
+        [SerializeField]
+        private float manaRate;
+
         [Header("Handlers")]
         public Animator anim;
         public Rigidbody rig;
         public ThirdPersonCamera thirdPersonCamManager;
         public GameObject activeModel;
+
+        public void Start()
+        {
+            playerHealth = maxHealth;
+        }
 
         public void Update()
         {
@@ -65,7 +88,22 @@ namespace ThirdPersonMovement
             aiming = Input.GetButton("RightMouse");
             cursorLockMode = Input.GetButton("Cancel");
         }
+            #region Health
 
+        public void HealthUpdate(int damage)
+        {
+            playerHealth += damage;
+
+            float currentHealthPct = playerHealth / maxHealth;
+
+            OnHealthPctChange(currentHealthPct);
+            if(playerHealth > 100)
+            {
+                playerHealth = maxHealth;
+            }
+        }
+        
+        #endregion
 
         public void BaseMovement()
         {
@@ -166,6 +204,8 @@ namespace ThirdPersonMovement
                 anim.SetBool("OnGround", onGround);
             }
         }
+        
     }
     #endregion
+    
 }
