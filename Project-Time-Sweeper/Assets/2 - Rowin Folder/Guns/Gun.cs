@@ -15,6 +15,8 @@ public class GunUsage : MonoBehaviour
     [Header("Usage")]
     public GameObject bullet;
     public Transform barrel;
+    public Camera cam;
+    public LayerMask layer;
 
     [Header("Ammunition")]
     public int currentBullets;

@@ -17,6 +17,7 @@ public class HUD_Manager : MonoBehaviour
     public ThirdPersonMovement.ThirdPersonController playerInfo;
     [Header("UI Elements")]
     public Image healthBar;
+    public TextMeshProUGUI healthAmount;
     [Header("Variables")]
 
     [SerializeField]
@@ -24,6 +25,7 @@ public class HUD_Manager : MonoBehaviour
 
     public void Awake()
     {
+        healthAmount.text = playerInfo.playerHealth.ToString();
         healthBar.fillAmount = 1;
         playerInfo.OnHealthPctChange += HandleHealthChange;
     }
@@ -44,6 +46,7 @@ public class HUD_Manager : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             healthBar.fillAmount = Mathf.Lerp(preChangePct, pct, elapsed / updateSeconds);
+            healthAmount.text = playerInfo.playerHealth.ToString();
 
             yield return null;
         }

@@ -7,12 +7,15 @@ public class FireArms : GunUsage
     private WeaponSwitcher weaponSwitcher;
 
     public int leftOver;
+
     void Start()
     {
         weaponSwitcher = GetComponentInParent<WeaponSwitcher>();
         interval_ = fireDelay;
         maxAmmo = currentBullets;
         maxBullets = currentAmmo;
+
+        cam = Camera.main;
     }
 
     void Update()
@@ -66,6 +69,17 @@ public class FireArms : GunUsage
     {
         if (canShoot && !isReloading)
         {
+            RaycastHit hit;
+            //Physics.IgnoreLayerCollision(1,11);
+            Vector3 ray = cam.ViewportToWorldPoint (new Vector3(0.5f, 0.5f, 0.0f));
+            
+            if (Physics.Raycast (ray, cam.transform.forward, out hit, 0))
+            {
+                Debug.DrawLine(ray, hit.point, Color.red, 10f);
+                
+                print(hit.transform.gameObject.name);
+            }
+
             Instantiate(bullet, barrel.position, transform.rotation);
             currentBullets--;
 
