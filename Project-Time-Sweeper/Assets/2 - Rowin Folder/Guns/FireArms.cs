@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FireArms : GunUsage
@@ -78,12 +77,9 @@ public class FireArms : GunUsage
             {
                 print(hit.collider.gameObject.name);
                 Debug.DrawRay(ray, hit.point, Color.red, 15f);
-                Instantiate(bullet, barrel.position, hit.transform.rotation);
+                //Instantiate(bullet, barrel.position, hit.point);
                 currentBullets--;
             }
-            //print(hit.transform.gameObject.name);
-
-
             canShoot = false;
         }
     }
