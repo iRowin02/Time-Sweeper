@@ -15,11 +15,13 @@ public class HUD_Manager : MonoBehaviour
 {
     [Header("Managers")]
     public ThirdPersonMovement.ThirdPersonController playerInfo;
-    [Header("UI Elements")]
+    [Header("HealthBar Elements")]
     public Image healthBar;
     public TextMeshProUGUI healthAmount;
+    [Header("ManaBar Elements")]
+    public Image[] manaBar;
+    public int manaAmount;
     [Header("Variables")]
-
     [SerializeField]
     private float updateSeconds = 0.2f;
 
@@ -52,6 +54,17 @@ public class HUD_Manager : MonoBehaviour
         }
         healthBar.fillAmount = pct;
     }
+    #endregion
+    #region HandleMana
+
+    public void HandleManaChange()
+    {
+        //for(int i = 0; i < manaBar.Length; i++)
+        //{
+//
+        //}
+    }
+
     #endregion
 }
 

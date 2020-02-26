@@ -78,11 +78,11 @@ public class FireArms : GunUsage
             {
                 print(hit.collider.gameObject.name);
                 Debug.DrawRay(ray, hit.point, Color.red, 15f);
+                Instantiate(bullet, barrel.position, hit.transform.rotation);
+                currentBullets--;
             }
             //print(hit.transform.gameObject.name);
 
-            Instantiate(bullet, barrel.position, transform.rotation);
-            currentBullets--;
 
             canShoot = false;
         }
