@@ -16,6 +16,7 @@ public class FireArms : GunUsage
         maxBullets = currentAmmo;
 
         cam = Camera.main;
+        layer = ~layer;
     }
 
     void Update()
@@ -71,14 +72,14 @@ public class FireArms : GunUsage
         {
             RaycastHit hit;
             //Physics.IgnoreLayerCollision(1,11);
-            Vector3 ray = cam.ViewportToWorldPoint (new Vector3(0.5f, 0.5f, 0.0f));
-            
-            if (Physics.Raycast (ray, cam.transform.forward, out hit, 0))
+            Vector3 ray = cam.transform.position;
+
+            if (Physics.Raycast (ray, cam.transform.forward, out hit,float.PositiveInfinity, layer))
             {
-                Debug.DrawLine(ray, hit.point, Color.red, 10f);
-                
-                print(hit.transform.gameObject.name);
+                print(hit.collider.gameObject.name);
+                Debug.DrawRay(ray, hit.point, Color.red, 15f);
             }
+            //print(hit.transform.gameObject.name);
 
             Instantiate(bullet, barrel.position, transform.rotation);
             currentBullets--;
