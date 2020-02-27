@@ -45,6 +45,7 @@ namespace ThirdPersonMovement
 
         public event Action<float> OnHealthPctChange = delegate { };
 
+        private float grenadeCharge;
         [SerializeField]
         private float manaRate;
 
@@ -65,9 +66,42 @@ namespace ThirdPersonMovement
             IntermediateMovement();
             Inputs();
             thirdPersonCamManager.Tick();
+            //Temp input for testing
             if(Input.GetKeyDown(KeyCode.Tab))
             {
                 HealthUpdate(-10);
+            }
+            if(Input.GetKeyDown(KeyCode.T))
+            {
+                HUD.totalMana += 1;
+            }
+            if(Input.GetKeyDown(KeyCode.Z))
+            {
+                print("Time Stop");
+            }
+            if(Input.GetKeyDown(KeyCode.X))
+            {
+                print("Time Restore");
+            }
+            // if(Input.GetKeyDown(KeyCode.Q))
+            // {
+            //     print("Grenade");
+            // }
+            if(Input.GetKey(KeyCode.Q))
+            {
+                grenadeCharge += Time.deltaTime;
+            }
+            if(Input.GetKeyUp(KeyCode.Q))
+            {
+                if(grenadeCharge >= 3)
+                {
+                    print("Grenade is charged");
+                }
+                else
+                {
+                    grenadeCharge = 0;
+                    print("Grenade release");
+                }
             }
         }
 

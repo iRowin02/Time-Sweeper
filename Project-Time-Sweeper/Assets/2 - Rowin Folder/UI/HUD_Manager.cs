@@ -19,11 +19,24 @@ public class HUD_Manager : MonoBehaviour
     public Image healthBar;
     public TextMeshProUGUI healthAmount;
     [Header("ManaBar Elements")]
-    public Image[] manaBar;
-    public int manaAmount;
+    public Image manaBar;
+    private float manaValue = .20f;
+    public float totalMana;
+    private float totalMana_;
     [Header("Variables")]
     [SerializeField]
-    private float updateSeconds = 0.2f;
+    private float healthUpdateSeconds = 0.2f;
+    [SerializeField]
+    private float manaUpdateSeconds = 0.02f;
+
+    public void Update()
+    {
+        if(totalMana_ != totalMana)
+        {
+            totalMana_ = totalMana;
+            StartCoroutine(HandleManaChange((int)totalMana));
+        }
+    }
 
     public void Awake()
     {
@@ -44,10 +57,10 @@ public class HUD_Manager : MonoBehaviour
         float preChangePct = healthBar.fillAmount;
         float elapsed = 0f;
 
-        while(elapsed < updateSeconds)
+        while(elapsed < healthUpdateSeconds)
         {
             elapsed += Time.deltaTime;
-            healthBar.fillAmount = Mathf.Lerp(preChangePct, pct, elapsed / updateSeconds);
+            healthBar.fillAmount = Mathf.Lerp(preChangePct, pct, elapsed / healthUpdateSeconds);
             healthAmount.text = playerInfo.playerHealth.ToString();
 
             yield return null;
@@ -55,14 +68,28 @@ public class HUD_Manager : MonoBehaviour
         healthBar.fillAmount = pct;
     }
     #endregion
+
     #region HandleMana
 
-    public void HandleManaChange()
+    public IEnumerator HandleManaChange(int manaAmount)
     {
-        //for(int i = 0; i < manaBar.Length; i++)
-        //{
-//
-        //}
+        //int maxMana = 5;
+        //int minMana = 0;
+
+        float preMana = manaBar.fillAmount;
+        float mana = manaValue * manaAmount;
+
+        float timeElapsed = 0f;
+
+        while (timeElapsed < manaUpdateSeconds)
+        {
+            timeElapsed += Time.deltaTime;
+            manaBar.fillAmount = Mathf.Lerp(preMana, mana, timeElapsed / manaUpdateSeconds);
+
+            yield return null;
+        }
+
+        manaBar.fillAmount = mana;
     }
 
     #endregion
