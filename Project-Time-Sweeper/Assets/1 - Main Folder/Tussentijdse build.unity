@@ -2058,6 +2058,11 @@ PrefabInstance:
       propertyPath: manaBar
       value: 
       objectReference: {fileID: 594370456}
+    - target: {fileID: 7381831101655644841, guid: 524b20ab16b8ab0438f8fc8a10b701d2,
+        type: 3}
+      propertyPath: manaUpdateSeconds
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7381831101655644842, guid: 524b20ab16b8ab0438f8fc8a10b701d2,
         type: 3}
       propertyPath: m_LocalPosition.x
