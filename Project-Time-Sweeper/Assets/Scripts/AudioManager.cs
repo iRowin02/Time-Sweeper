@@ -29,20 +29,15 @@ public class AudioManager : MonoBehaviour
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
 
-            //s.source.outputAudioMixerGroup = s.audioMixer.FindMatchingGroups()
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
     }
 
-    IEnumerator AmbienceRandom()
+    public void Start() 
     {
-        int waitTime = UnityEngine.Random.Range(10,20);
-        int randomSound = UnityEngine.Random.Range(0,1);
-        yield return new WaitForSeconds(waitTime);
-        Play(sounds[randomSound].name);
-        yield return new WaitForSeconds(sounds[randomSound].clip.length);
+        Play("AmbienceOne");
     }
 
     public void Play(string name)

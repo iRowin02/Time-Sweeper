@@ -843,15 +843,15 @@ MonoBehaviour:
   sounds:
   - name: AmbientOne
     clip: {fileID: 8300000, guid: dafd5cc2c052e1243bee3f732420b39f, type: 3}
-    volume: 0.799
+    volume: 1
     pitch: 0.1
     audioMixer: {fileID: 24100000, guid: 49beb901530277c4b8aa790689ef73b7, type: 2}
     outputMixer: 
-    loop: 0
+    loop: 1
     source: {fileID: 0}
   - name: AmbientTwo
     clip: {fileID: 8300000, guid: 9c610a9d001458542a9ca20a3111d8b5, type: 3}
-    volume: 0.633
+    volume: 1
     pitch: 0.1
     audioMixer: {fileID: 24100000, guid: 49beb901530277c4b8aa790689ef73b7, type: 2}
     outputMixer: 
