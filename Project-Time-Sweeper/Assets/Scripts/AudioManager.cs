@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 
 public static class AudioManager 
 {
-    public static AudioMixer audioMixer;
+    public static AudioMixer audioMixer; // this isnt right geen instance
 
     public enum AudioGroups
     {
@@ -25,3 +25,4 @@ public static class AudioManager
     }
 }
 //AudioManager.PlaySound(CLIP!, AudioManager.AudioGroups.AUDIOGROEP!);
+//AudioManager.audioMixer = Resources.Load("MasterVolume") as AudioMixer;
