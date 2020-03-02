@@ -76,8 +76,9 @@ public class FireArms : GunUsage
             if (Physics.Raycast (ray, cam.transform.forward, out hit,float.PositiveInfinity, layer))
             {
                 print(hit.collider.gameObject.name);
-                Debug.DrawRay(ray, hit.point, Color.red, 15f);
-                //Instantiate(bullet, barrel.position, hit.point);
+                //Debug.DrawRay(ray, hit.point, Color.red, 15f);
+                //Instantiate(bullet, hit.point, Quaternion.identity);
+                AudioManager.PlaySound(gunSound, AudioManager.AudioGroups.GameSFX);
                 currentBullets--;
             }
             canShoot = false;

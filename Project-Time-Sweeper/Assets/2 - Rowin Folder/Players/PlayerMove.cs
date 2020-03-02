@@ -26,10 +26,10 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
-        float horiInput = Input.GetAxis("Horizontal");
+        float horInput = Input.GetAxis("Horizontal");
         float vertInput = Input.GetAxis("Vertical");
 
-        dir = new Vector3(horiInput, 0, vertInput);
+        dir = new Vector3(horInput, 0, vertInput);
 
         transform.Translate(dir * movementSpeed * Time.deltaTime);
 

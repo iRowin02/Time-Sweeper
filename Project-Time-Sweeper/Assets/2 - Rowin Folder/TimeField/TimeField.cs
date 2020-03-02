@@ -11,7 +11,7 @@ public class TimeField : MonoBehaviour
     {
         int id = other.gameObject.GetInstanceID();
         if (!enemies.ContainsKey(id)) { enemies.Add(id, other.gameObject); }
-        Freeze();
+        Freeze(other);
     }
 
     private void OnTriggerExit(Collider other)
@@ -21,14 +21,14 @@ public class TimeField : MonoBehaviour
     }
 
 
-    void Freeze()
+    void Freeze(Collider coll)
     {
         // enemies will contain all gameobjects currently in the collider
         foreach (KeyValuePair<int,GameObject> kvp in enemies)
         {
             GameObject enemy = kvp.Value;
             
-            FakePlayer _enemy = enemy.GetComponent<FakePlayer>();
+            var _enemy = coll.GetComponent<FakePlayer>();
 
             if(_enemy.enemyStates != FakePlayer.states.TimeFrozen)
             {

@@ -2,6 +2,8 @@
 
 public class GunUsage : MonoBehaviour
 {
+    public AudioClip gunSound;
+
     [Header("Variables")]
     public float reloadTime;
     public float fireDelay = 0.2f;

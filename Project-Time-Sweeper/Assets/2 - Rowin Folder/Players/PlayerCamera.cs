@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCam : MonoBehaviour
+public class PlayerCamera : MonoBehaviour
 {
-    public Transform playerBody;
+     public Transform playerBody;
 
     public Vector2 minMaxClampValue;
 
@@ -46,8 +46,8 @@ public class PlayerCam : MonoBehaviour
 
     private void CameraRotation()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * (mouseSen*10) * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * (mouseSen*10) * Time.deltaTime;
 
         xAxisClamp += mouseY;
 
@@ -71,8 +71,8 @@ public class PlayerCam : MonoBehaviour
 
     private void ClampXAxisrotationToValue(float value)
     {
-        Vector3 ealerRotation = transform.eulerAngles;
-        ealerRotation.x = value;
-        transform.eulerAngles = ealerRotation;
+        Vector3 eulerRotation = transform.eulerAngles;
+        eulerRotation.x = value;
+        transform.eulerAngles = eulerRotation;
     }
 }
