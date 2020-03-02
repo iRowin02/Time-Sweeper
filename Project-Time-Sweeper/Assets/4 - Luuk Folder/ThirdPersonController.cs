@@ -13,6 +13,8 @@ namespace ThirdPersonMovement
         [Header("Managers")]
         [SerializeField]
         private HUD_Manager HUD;
+        [SerializeField]
+        private TimeManager timeManager;
 
         [Header("States")]
         public bool running;
@@ -77,7 +79,7 @@ namespace ThirdPersonMovement
             }
             if(Input.GetKeyDown(KeyCode.Z))
             {
-                print("Time Stop");
+                timeManager.SlowDown();
             }
             if(Input.GetKeyDown(KeyCode.X))
             {
