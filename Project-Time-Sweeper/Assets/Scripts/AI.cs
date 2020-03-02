@@ -53,6 +53,8 @@ public class AI : MonoBehaviour
     public _AIstates states;
     public _AIstates defaultState;
 
+    public AudioClip test;
+
     public enum _AIstates
     {
         Idle,
@@ -63,6 +65,8 @@ public class AI : MonoBehaviour
 
     void Start()
     {
+        AudioManager.PlaySound(test, AudioManager.AudioGroups.GameMusic);
+
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
