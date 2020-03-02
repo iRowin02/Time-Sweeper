@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 
 public static class AudioManager 
 {
-    public static AudioMixer audioMixer; // this isnt right geen instance
+    public static AudioMixer audioMixer; 
 
     public enum AudioGroups
     {
