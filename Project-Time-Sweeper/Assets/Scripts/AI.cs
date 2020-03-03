@@ -39,7 +39,7 @@ public class AI : MonoBehaviour
 
     [Header("Patrol")]
     public Transform pathholder;
-    [ReadOnly]public Vector3 lastSeen;
+    public Vector3 lastSeen;
 
     private float findTargetDelay;
     private Transform player;
@@ -47,7 +47,7 @@ public class AI : MonoBehaviour
     private bool hasDone;
     private bool done;
 
-    [ReadOnly]public bool inSight;
+    public bool inSight;
 
     [Header("AI States")]
     public _AIstates states;
@@ -75,28 +75,29 @@ public class AI : MonoBehaviour
 
         findTargetDelay = 0.2f;
         StartCoroutine("FindTargetsWithDelay", findTargetDelay);
-        
-		if(_target != null)
-		{
-			//PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
-		}
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public void Update() 
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
-        {
-            PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
-        }
+        StateManager();
     }
 
-    private void OnCollisionEnter(Collision other) 
+    public void StateManager()
     {
-        if(other.transform.tag == "Player")
+        if(states == _AIstates.Patrol)
         {
-            other.gameObject.GetComponent<ThirdPersonMovement.ThirdPersonController>().HealthUpdate(-10);
+            StopCoroutine("Patroling");
+            StartCoroutine("Patroling");
+            print("boi");
+        }
+        if(states == _AIstates.Attack)
+        {
+            if(_target != null)
+            {
+                Attack();
+            }
         }
     }
 
@@ -134,11 +135,14 @@ public class AI : MonoBehaviour
 
 	public void Attack()
 	{
-        if(_target != null)
+        if(!inSight)
         {
-		    StartCoroutine(TurnToFace(_target.position));
-            weapon.GetComponent<FireArms>().Shoot();
+            PathRequestManager.RequestPath(transform.position, lastSeen, OnPathFound);
+            return;
         }
+
+		StartCoroutine(TurnToFace(_target.position));
+        weapon.GetComponent<FireArms>().Shoot();
 	}
 
     //Idle State
@@ -172,7 +176,7 @@ public class AI : MonoBehaviour
         if (transform.position != waypoints[0] && done == false)
         {
             PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
-            //transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
             done = true;
         }
 
@@ -216,6 +220,8 @@ public class AI : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
+        _target = null;
+        inSight = false;
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -229,45 +235,12 @@ public class AI : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
+                    _target = target;
+                    lastSeen = target.position;
+                    inSight = true;
                 }
             }
         }
-    }
-
-    public void DrawFOV()
-    {
-        int rayCount = Mathf.RoundToInt(viewAngle * meshRes);
-        float rayDegrees = viewAngle / rayCount;
-        List<Vector3> viewPoints = new List<Vector3>();
-
-        for (int i = 0; i < rayCount; i++)
-        {
-            float angle = transform.eulerAngles.y - viewAngle / 2 + rayDegrees * i;
-            ViewCastInfo newViewCastInfo = ViewCast(angle);
-            viewPoints.Add(newViewCastInfo.point);
-        }
-
-        int vertexCount = viewPoints.Count + 1;
-        Vector3[] vertices = new Vector3[vertexCount];
-        int[] triangles = new int[(vertexCount - 2) * 3];
-
-        vertices[0] = Vector3.zero;
-
-        for (int i = 0; i < vertexCount - 1; i++)
-        {
-            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
-            if (i < vertexCount - 2)
-            {
-                triangles[i * 3] = 0;
-                triangles[i * 3 + 1] = i + 1;
-                triangles[i * 3 + 2] = i + 2;
-            }
-        }
-
-        viewMesh.Clear();
-        viewMesh.vertices = vertices;
-        viewMesh.triangles = triangles;
-        viewMesh.RecalculateNormals();
     }
 
     ViewCastInfo ViewCast(float globalAngle)
