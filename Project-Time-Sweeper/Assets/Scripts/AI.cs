@@ -45,7 +45,6 @@ public class AI : MonoBehaviour
     private Transform player;
 
     private bool hasDone;
-    private bool done;
 
     public bool inSight;
 
@@ -75,29 +74,31 @@ public class AI : MonoBehaviour
 
         findTargetDelay = 0.2f;
         StartCoroutine("FindTargetsWithDelay", findTargetDelay);
-
-        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public void Update() 
     {
         StateManager();
+
+        if(inSight == true && _target != null)
+        {
+            states = _AIstates.Attack;
+        }
     }
 
     public void StateManager()
     {
         if(states == _AIstates.Patrol)
         {
-            StopCoroutine("Patroling");
-            StartCoroutine("Patroling");
-            print("boi");
+            if(hasDone == false)
+            {
+                StopCoroutine("Patroling");
+                StartCoroutine("Patroling");
+            }
         }
         if(states == _AIstates.Attack)
         {
-            if(_target != null)
-            {
-                Attack();
-            }
+            Attack();
         }
     }
 
@@ -107,14 +108,15 @@ public class AI : MonoBehaviour
         if (pathSuccesful)
         {
             paths = newPath;
-            StopCoroutine("FollowPath");
-            StartCoroutine("FollowPath");
+            StopCoroutine("FollowPaths");
+            StartCoroutine("FollowPaths");
         }
     }
 
-    IEnumerator FollowPath()
+    IEnumerator FollowPaths()
     {
 		Vector3 currentWaypoint = paths[0];
+        StopCoroutine("TurnToFace");
 
 		while(true)
 		{
@@ -135,14 +137,18 @@ public class AI : MonoBehaviour
 
 	public void Attack()
 	{
+        hasDone = false;
+        StopCoroutine("Patroling");
+        StopCoroutine("FollowPath");
+        StopCoroutine("TurnToFace");
+        
         if(!inSight)
         {
-            PathRequestManager.RequestPath(transform.position, lastSeen, OnPathFound);
-            return;
+            transform.position = Vector3.MoveTowards(transform.position, lastSeen, speed * Time.deltaTime);
         }
-
-		StartCoroutine(TurnToFace(_target.position));
-        weapon.GetComponent<FireArms>().Shoot();
+        
+        transform.LookAt(_target);
+        print("schiet");
 	}
 
     //Idle State
@@ -155,17 +161,14 @@ public class AI : MonoBehaviour
     //Patrol State
     public void Patroling()
     {
-        if (!hasDone == true)
+         Vector3[] waypoints = new Vector3[pathholder.childCount];
+        for (int i = 0; i < waypoints.Length; i++)
         {
-            Vector3[] waypoints = new Vector3[pathholder.childCount];
-            for (int i = 0; i < waypoints.Length; i++)
-            {
-                waypoints[i] = pathholder.GetChild(i).position;
-                waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
-            }
-            hasDone = true;
-            StartCoroutine(FollowPath(waypoints));
+            waypoints[i] = pathholder.GetChild(i).position;
+            waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
         }
+        StartCoroutine(FollowPath(waypoints));
+        hasDone = true;
     }
 
     IEnumerator FollowPath(Vector3[] waypoints)
@@ -173,11 +176,9 @@ public class AI : MonoBehaviour
         int targetWaypointInt = 1;
         Vector3 targetWaypoint = waypoints[targetWaypointInt];
 
-        if (transform.position != waypoints[0] && done == false)
+        if (transform.position != waypoints[0])
         {
-            PathRequestManager.RequestPath(transform.position, _target.position, OnPathFound);
             transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
-            done = true;
         }
 
         while (true)
@@ -220,8 +221,6 @@ public class AI : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
-        _target = null;
-        inSight = false;
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -238,6 +237,11 @@ public class AI : MonoBehaviour
                     _target = target;
                     lastSeen = target.position;
                     inSight = true;
+                }
+                else
+                {
+                    inSight = false;
+                    _target = null;
                 }
             }
         }
