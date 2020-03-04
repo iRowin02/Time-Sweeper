@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -14,7 +14,7 @@ public class AmmoPickUp : MonoBehaviour
         ammoAmount = Random.Range(minAmmo, maxAmmo);
         ammoAmountDisplay.text = ammoAmount.ToString();
     }
-    void OnCollisionEnter(Collision coll)
+    void OnTCollisionEnter(Collision coll)
     {
         if(coll.gameObject.CompareTag("Player"))
         {
