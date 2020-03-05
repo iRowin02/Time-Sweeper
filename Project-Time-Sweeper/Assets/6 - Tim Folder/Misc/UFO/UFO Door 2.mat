@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1274668247928658742
+--- !u!114 &-5106641343643306625
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,11 +20,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Black Hole
-  m_Shader: {fileID: -6465566751694194690, guid: 20fd9f70820f55f48aab13bbd5d40476,
+  m_Name: UFO Door 2
+  m_Shader: {fileID: -6465566751694194690, guid: 7d799ec55731678498b103636cb9e957,
     type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_ShaderKeywords: _EMISSION
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -33,8 +33,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_609848DE:
-        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+    - Texture2D_B81DDEF:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -66,10 +66,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_BBC8B36A: 0.68
-    - Vector1_C0564159: -2.81
-    - Vector1_DCC32350: 0.43
-    - Vector1_EB1E051B: 55.34
+    - Vector1_2FFF74C1: 0.6
+    - Vector1_649BDDBE: 0.075
+    - Vector1_7315018F: 11.72
+    - Vector1_FCC0CE5C: 0.03
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -92,8 +92,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_6A7C17EE: {r: 0.8018868, g: 0.17496006, b: 0.02647741, a: 0}
+    - Color_672A5A1A: {r: 0, g: 1.1486983, b: 0.13964568, a: 0}
+    - Vector2_E223CAE0: {r: 1.5, g: 1.5, b: 0, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 4, g: 4, b: 4, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

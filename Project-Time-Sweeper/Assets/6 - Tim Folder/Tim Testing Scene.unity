@@ -275,13 +275,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459219183}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.06, y: 1, z: -4.2}
+  m_LocalRotation: {x: -0, y: 0.9936157, z: -0.11281765, w: 0}
+  m_LocalPosition: {x: 1.64, y: 2.9, z: 4.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 12.956, y: 180.00002, z: 0}
 --- !u!114 &459219188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 597569296}
   - component: {fileID: 597569295}
+  - component: {fileID: 597569297}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -352,8 +353,8 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
+    m_Bias: 1
+    m_NormalBias: 0.001
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
       e00: 1
@@ -405,6 +406,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &597569297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597569294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UsePipelineSettings: 0
 --- !u!1001 &869964029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1439,17 +1453,17 @@ PrefabInstance:
     - target: {fileID: 737946336327201110, guid: 0b148b9d5258f764da79f70219bacb0b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.151
+      value: 4.455
       objectReference: {fileID: 0}
     - target: {fileID: 737946336327201110, guid: 0b148b9d5258f764da79f70219bacb0b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.26
+      value: 1.759
       objectReference: {fileID: 0}
     - target: {fileID: 737946336327201110, guid: 0b148b9d5258f764da79f70219bacb0b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.064
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 737946336327201110, guid: 0b148b9d5258f764da79f70219bacb0b,
         type: 3}
@@ -1587,7 +1601,7 @@ PrefabInstance:
     - target: {fileID: 4499212090270851178, guid: b8670fc3a160a0a49815b29db8e0a6a6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.83
+      value: 7.4
       objectReference: {fileID: 0}
     - target: {fileID: 4499212090270851178, guid: b8670fc3a160a0a49815b29db8e0a6a6,
         type: 3}
