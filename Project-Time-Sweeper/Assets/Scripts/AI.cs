@@ -42,7 +42,7 @@ public class AI : MonoBehaviour
     public Vector3 lastSeen;
 
     private float findTargetDelay;
-    private Transform player;
+    public Transform player;
 
     private bool hasDone;
 
@@ -59,7 +59,7 @@ public class AI : MonoBehaviour
         Idle,
         Attack,
         Patrol,
-        Chase,
+        Alert,
     }
 
     void Start()
@@ -73,32 +73,37 @@ public class AI : MonoBehaviour
         inSight = false;
 
         findTargetDelay = 0.2f;
-        StartCoroutine("FindTargetsWithDelay", findTargetDelay);
+        //StartCoroutine("FindTargetsWithDelay", findTargetDelay);
     }
 
     public void Update() 
     {
-        StateManager();
+        switch(states)
+        {
+            default:
+            case _AIstates.Idle:
+                if(pathholder == null)
+                {
+                    //FindVisibleTargets();
+                }
+                else
+                {
+                    states = _AIstates.Patrol;
+                }
+            break;
 
-        if(inSight == true && _target != null)
-        {
-            states = _AIstates.Attack;
-        }
-    }
+            case _AIstates.Patrol:
+                if(pathholder != null)
+                {
+                    //FindVisibleTargets();
+                    StartCoroutine("Patroling");
+                }
+            break;
+            
+            case _AIstates.Attack:
 
-    public void StateManager()
-    {
-        if(states == _AIstates.Patrol)
-        {
-            if(hasDone == false)
-            {
-                StopCoroutine("Patroling");
-                StartCoroutine("Patroling");
-            }
-        }
-        if(states == _AIstates.Attack)
-        {
-            Attack();
+                transform.LookAt(_target);
+            break;
         }
     }
 
@@ -136,12 +141,7 @@ public class AI : MonoBehaviour
 	//End Chase State
 
 	public void Attack()
-	{
-        hasDone = false;
-        StopCoroutine("Patroling");
-        StopCoroutine("FollowPath");
-        StopCoroutine("TurnToFace");
-        
+	{        
         if(!inSight)
         {
             transform.position = Vector3.MoveTowards(transform.position, lastSeen, speed * Time.deltaTime);
@@ -218,9 +218,14 @@ public class AI : MonoBehaviour
         }
     }
 
+    public void OnTriggerStay(Collider other) 
+    {
+        
+    }
+
     void FindVisibleTargets()
     {
-        visibleTargets.Clear();
+        //visibleTargets.Clear();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -234,12 +239,12 @@ public class AI : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
-                    _target = target;
-                    lastSeen = target.position;
                     inSight = true;
+                    _target = target;
                 }
                 else
                 {
+                    visibleTargets.Clear();
                     inSight = false;
                     _target = null;
                 }
