@@ -5,7 +5,6 @@ using System;
 
 public class PlayerMove : MonoBehaviour
 {
-    public Rigidbody rb;
 
     [Header("Managers")]
     [SerializeField]
@@ -16,22 +15,22 @@ public class PlayerMove : MonoBehaviour
     [Header("Public Variables")]
     public Vector3 dir;
     public float movementSpeed, jumpHeight, speedMultiplier, yMovement;
-    private bool canJump, isSprinting;
     public Transform gunParent;
 
     [Header("Variables")]
-    public float maxHealth;
-    public float playerHealth;
-
+    public float maxHealth, playerHealth;
     public int playerMana;
-    private int _playerMana;
 
     public event Action<float> OnHealthPctChange = delegate { };
 
-    private float grenadeCharge;
-
     [Header("Private Variables")]
-    private float regSpeed, yMovement_;
+    private float regSpeed, yMovement_,grenadeCharge;
+    private bool canJump, isSprinting;
+    private int _playerMana;
+    private Rigidbody rb;
+    private Animator anim;
+
+    private float horInput, vertInput;
     
 
     private void Start()
@@ -42,19 +41,21 @@ public class PlayerMove : MonoBehaviour
         regSpeed = movementSpeed;
         yMovement_ = yMovement;
         playerHealth = maxHealth;
+        anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
         Move();
         PlayerInputs();
-        ViewBobbing();
     }
+    
+
     #region Move
     public void Move()
     {
-        float horInput = Input.GetAxis("Horizontal");
-        float vertInput = Input.GetAxis("Vertical");
+        horInput = Input.GetAxis("Horizontal");
+        vertInput = Input.GetAxis("Vertical");
 
         dir = new Vector3(horInput, 0, vertInput);
 
@@ -69,8 +70,8 @@ public class PlayerMove : MonoBehaviour
         {
             if(canJump)
             {
-            rb.AddForce(0,jumpHeight,0);
-            canJump = false;
+                rb.AddForce(0,jumpHeight,0);
+                canJump = false;
             }
         }
         if(Input.GetKeyDown(KeyCode.LeftShift))
@@ -138,10 +139,15 @@ public class PlayerMove : MonoBehaviour
         if(isSprinting)
         {
             movementSpeed = movementSpeed * speedMultiplier;
+            if(dir.x != 0 || dir.z != 0)
+            {
+                ViewBobbing();
+            }
         }
         else
         {
             movementSpeed = regSpeed;
+            anim.SetBool("isSprinting", false);
         }
 
     }
@@ -152,7 +158,7 @@ public class PlayerMove : MonoBehaviour
 
     public void ViewBobbing()
     {
-        //gunParent.localPosition = new Vector3 (0, SystemInfo)
+        anim.SetBool("isSprinting", true);
     }
     #endregion
 

@@ -14,7 +14,7 @@ public class Weapons
 public class HUD_Manager : MonoBehaviour
 {
     [Header("Managers")]
-    public ThirdPersonMovement.ThirdPersonController playerInfo;
+    public PlayerMove playerInfo;
     [Header("HealthBar Elements")]
     public Image healthBar;
     public TextMeshProUGUI healthAmount;
@@ -47,7 +47,7 @@ public class HUD_Manager : MonoBehaviour
 
     #region HandleHealth
 
-    private void HandleHealthChange(float pct)
+    public void HandleHealthChange(float pct)
     {
         StartCoroutine(ChangePct(pct));
     }

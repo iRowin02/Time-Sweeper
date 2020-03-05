@@ -21,7 +21,7 @@ public class PickUps : MonoBehaviour
         {
             if(health == true)
             {
-                coll.gameObject.GetComponent<ThirdPersonMovement.ThirdPersonController>().HealthUpdate(amount);
+                coll.gameObject.GetComponent<PlayerMove>().HealthUpdate(amount);
             }
             if(ammo == true)
             {

@@ -12,7 +12,7 @@ public class GunUsage : MonoBehaviour
     [ReadOnly]public bool isReloading;
 
     [Header("Usage")]
-    public GameObject bullet;
+    public GameObject muzzleFlash;
     public Transform barrel;
     public Camera cam;
     public LayerMask layer;

@@ -9,6 +9,7 @@ public class PlayerCamera : MonoBehaviour
     public Vector2 minMaxClampValue;
 
     public float mouseSen;
+    public float maxMouseSen;
     public float clampValue = 90.0f;
     private float xAxisClamp = 90.0f;
 
@@ -16,6 +17,7 @@ public class PlayerCamera : MonoBehaviour
 
     void Awake()
     {
+        maxMouseSen = mouseSen;
         LockCursor();
         xAxisClamp = 0.0f;
     }

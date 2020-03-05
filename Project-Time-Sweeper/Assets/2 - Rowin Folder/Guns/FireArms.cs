@@ -70,18 +70,15 @@ public class FireArms : GunUsage
         if (canShoot && !isReloading)
         {
             RaycastHit hit;
-            //Physics.IgnoreLayerCollision(1,11);
             Vector3 ray = cam.transform.position;
 
             if (Physics.Raycast (ray, cam.transform.forward, out hit,float.PositiveInfinity, layer))
             {
-                print(hit.collider.gameObject.name);
-                //Debug.DrawRay(ray, hit.point, Color.red, 15f);
-                //Instantiate(bullet, hit.point, Quaternion.identity);
-                AudioManager.PlaySound(gunSound, AudioManager.AudioGroups.GameSFX);
-                currentBullets--;
+                Fire(hit);
             }
+            GameObject muzzle = Instantiate(muzzleFlash, barrel.position, transform.rotation);
             canShoot = false;
+            Destroy(muzzle, 0.2f);
         }
     }
     IEnumerator Reload(int ammoLeft)
@@ -95,6 +92,12 @@ public class FireArms : GunUsage
 
         weaponSwitcher.UpdateAmmo();
         isReloading = false;
+    }
+    void Fire(RaycastHit hit)
+    {
+        print(hit.collider.gameObject.name);
+        AudioManager.PlaySound(gunSound, AudioManager.AudioGroups.GameSFX);
+        currentBullets--;
     }
 }
 
