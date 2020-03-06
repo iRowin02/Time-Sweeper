@@ -5,7 +5,7 @@ using UnityEngine;
 public class ExplosiveBarrels : MonoBehaviour
 {
     public GameObject explossion;
-    public GameObject exploded;
+    //public GameObject exploded;
     public float wait;
 
     void Start()
@@ -21,7 +21,7 @@ public class ExplosiveBarrels : MonoBehaviour
 
         Destroy(particle, wait);
         
-        Instantiate(exploded, transform.position, Quaternion.identity);
+        //Instantiate(exploded, transform.position, Quaternion.identity);
     }
 
 }

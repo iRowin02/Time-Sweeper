@@ -16,8 +16,7 @@ public class TimeManager : MonoBehaviour
         Time.timeScale += (1f / slowDownLength) * Time.deltaTime;
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
 
-        playerCamera.mouseSen += (playerCamera.mouseSen / slowDownLength ) * Time.deltaTime;
-        playerCamera.mouseSen = Mathf.Clamp(playerCamera.mouseSen, 0, playerCamera.maxMouseSen);
+
     }
 
     public void SlowDown()
@@ -27,9 +26,5 @@ public class TimeManager : MonoBehaviour
 
         playerCamera.mouseSen = playerCamera.mouseSen * 2;
         print("Slowing Down Now");
-    }
-    void Test() 
-    {
-        
     }
 }

@@ -48,8 +48,8 @@ public class PlayerCamera : MonoBehaviour
 
     private void CameraRotation()
     {
-        float mouseX = Input.GetAxis("Mouse X") * (mouseSen*10) * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * (mouseSen*10) * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * (mouseSen*10) * Time.unscaledDeltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * (mouseSen*10) * Time.unscaledDeltaTime;
 
         xAxisClamp += mouseY;
 

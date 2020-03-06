@@ -6,6 +6,8 @@ using System;
 public class PlayerMove : MonoBehaviour
 {
 
+    public event Action<float> OnHealthPctChange = delegate { };
+
     [Header("Managers")]
     [SerializeField]
     private HUD_Manager HUD;
@@ -13,18 +15,18 @@ public class PlayerMove : MonoBehaviour
     private TimeManager timeManager;
 
     [Header("Public Variables")]
-    public Vector3 dir;
-    public float movementSpeed, jumpHeight, speedMultiplier, yMovement;
-    public Transform gunParent;
-
-    [Header("Variables")]
-    public float maxHealth, playerHealth;
+    public float movementSpeed;
+    public float jumpHeight;
+    public float speedMultiplier;
+    public float playerHealth;
     public int playerMana;
 
-    public event Action<float> OnHealthPctChange = delegate { };
+    public float thrust;
+    
 
     [Header("Private Variables")]
-    private float regSpeed, yMovement_,grenadeCharge;
+    private Vector3 dir;
+    private float regSpeed, yMovement_,grenadeCharge, maxHealth;
     private bool canJump, isSprinting;
     private int _playerMana;
     private Rigidbody rb;
@@ -39,20 +41,19 @@ public class PlayerMove : MonoBehaviour
         Physics.IgnoreLayerCollision(8, 9);    
         rb = GetComponent<Rigidbody>();
         regSpeed = movementSpeed;
-        yMovement_ = yMovement;
         playerHealth = maxHealth;
         anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
-        Move();
+        //Move();
         PlayerInputs();
     }
     
 
     #region Move
-    public void Move()
+    /*public void Move()
     {
         horInput = Input.GetAxis("Horizontal");
         vertInput = Input.GetAxis("Vertical");
@@ -60,12 +61,17 @@ public class PlayerMove : MonoBehaviour
         dir = new Vector3(horInput, 0, vertInput);
 
         transform.Translate(dir * movementSpeed * Time.deltaTime);
-    }
+    }*/
     #endregion
 
     #region PlayerInputs
     public void PlayerInputs()
     {
+        if(Input.GetButtonDown("Fire2"))
+        {
+            print("dodge");
+            Dodge();
+        }
         if(Input.GetButtonDown("Jump"))
         {
             if(canJump)
@@ -176,6 +182,13 @@ public class PlayerMove : MonoBehaviour
             playerHealth = maxHealth;
         }
     }      
+    #endregion
+
+    #region Dodge
+    public void Dodge()
+    {
+        rb.AddForce(transform.forward * thrust, ForceMode.Impulse );
+    }
     #endregion
 }
 

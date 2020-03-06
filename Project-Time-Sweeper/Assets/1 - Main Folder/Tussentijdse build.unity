@@ -2097,6 +2097,11 @@ PrefabInstance:
       propertyPath: timeManager
       value: 
       objectReference: {fileID: 413511822}
+    - target: {fileID: 5239886942632076226, guid: 7c0f63168cf2be145890172653d44e7b,
+        type: 3}
+      propertyPath: thrust
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5239886942753069118, guid: 7c0f63168cf2be145890172653d44e7b,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -2167,8 +2172,7 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5239886942557492613, guid: 7c0f63168cf2be145890172653d44e7b, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c0f63168cf2be145890172653d44e7b, type: 3}
 --- !u!1001 &1359098372
 PrefabInstance:
@@ -2342,8 +2346,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explossion: {fileID: 4882725903710816521, guid: 475f5d1e71843684aa8c08d705d8ac56,
-    type: 3}
-  exploded: {fileID: 7040209830137242844, guid: e370d261026819d4bbe3e3ceb59cfb7c,
     type: 3}
   wait: 3
 --- !u!1 &1467561132
