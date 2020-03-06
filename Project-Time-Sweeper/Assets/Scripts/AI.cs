@@ -9,11 +9,6 @@ public class AI : MonoBehaviour
     public GameObject weapon;
     public float minDist, maxDist;
 
-    [Header("View Values")]
-    public float viewRadius;
-    [Range(0, 360)]
-    public float viewAngle;
-
     [Header("Movement Values")]
     public float speed;
     public float waitTime;
@@ -26,12 +21,6 @@ public class AI : MonoBehaviour
     [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
 
-    [Header("Mesh")]
-    [Range(0, 50)]
-    public float meshRes;
-    public MeshFilter viewMeshFilter;
-    private Mesh viewMesh;
-
     [Header("Chase")]
     public Transform _target;
     private Vector3[] paths;
@@ -39,18 +28,14 @@ public class AI : MonoBehaviour
 
     [Header("Patrol")]
     public Transform pathholder;
-    public Vector3 lastSeen;
 
-    private float findTargetDelay;
-    public Transform player;
-
-    private bool hasDone;
-
+    [Header("Line of Sight")]
     public bool inSight;
+    public Vector3 lastSeen;
+    public GameObject viewpoint;
 
     [Header("AI States")]
     public _AIstates states;
-    public _AIstates defaultState;
 
     public AudioClip test;
 
@@ -66,14 +51,7 @@ public class AI : MonoBehaviour
     {
         AudioManager.PlaySound(test, AudioManager.AudioGroups.GameMusic);
 
-        viewMesh = new Mesh();
-        viewMesh.name = "View Mesh";
-        viewMeshFilter.mesh = viewMesh;
-
         inSight = false;
-
-        findTargetDelay = 0.2f;
-        //StartCoroutine("FindTargetsWithDelay", findTargetDelay);
     }
 
     public void Update() 
@@ -95,14 +73,15 @@ public class AI : MonoBehaviour
             case _AIstates.Patrol:
                 if(pathholder != null)
                 {
-                    //FindVisibleTargets();
                     StartCoroutine("Patroling");
                 }
             break;
             
             case _AIstates.Attack:
 
+
                 transform.LookAt(_target);
+                print("Im shooting");
             break;
         }
     }
@@ -141,12 +120,7 @@ public class AI : MonoBehaviour
 	//End Chase State
 
 	public void Attack()
-	{        
-        if(!inSight)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, lastSeen, speed * Time.deltaTime);
-        }
-        
+	{         
         transform.LookAt(_target);
         print("schiet");
 	}
@@ -168,7 +142,6 @@ public class AI : MonoBehaviour
             waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
         }
         StartCoroutine(FollowPath(waypoints));
-        hasDone = true;
     }
 
     IEnumerator FollowPath(Vector3[] waypoints)
@@ -209,87 +182,45 @@ public class AI : MonoBehaviour
     }
     //End Patrol state
 
-    IEnumerator FindTargetsWithDelay(float delay)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(delay);
-            FindVisibleTargets();
-        }
-    }
-
     public void OnTriggerStay(Collider other) 
     {
-        
+        NoticePlayer(other.gameObject);
     }
 
-    void FindVisibleTargets()
+    public void OnTriggerExit(Collider other) 
     {
-        //visibleTargets.Clear();
-        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-
-        for (int i = 0; i < targetsInViewRadius.Length; i++)
-        {
-            Transform target = targetsInViewRadius[i].transform;
-            Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
-            {
-                float distToTarget = Vector3.Distance(transform.position, target.position);
-
-                if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
-                {
-                    visibleTargets.Add(target);
-                    inSight = true;
-                    _target = target;
-                }
-                else
-                {
-                    visibleTargets.Clear();
-                    inSight = false;
-                    _target = null;
-                }
-            }
-        }
+        UnNoticePlayer(other.gameObject);
     }
 
-    ViewCastInfo ViewCast(float globalAngle)
+    public void NoticePlayer(GameObject player)
     {
-        Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask))
+        Physics.Raycast(viewpoint.transform.position, player.transform.position, out hit, Mathf.Infinity);
+
+        if(hit.transform.tag == "Player")
         {
-            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+            inSight = true;
+            states = _AIstates.Attack;
         }
         else
         {
-            return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+            inSight = false;
         }
     }
 
-    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
+    public void UnNoticePlayer(GameObject player)
     {
-        if (!angleIsGlobal)
-        {
-            angleInDegrees += transform.eulerAngles.y;
-        }
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+        inSight = false;
+
+        lastSeen = player.transform.position;
+
+        CheckLastLocation(player.transform);
     }
 
-    public struct ViewCastInfo
+    public void CheckLastLocation(Transform lastKnown)
     {
-        public bool hit;
-        public Vector3 point;
-        public float dist;
-        public float angle;
-
-        public ViewCastInfo(bool _hit, Vector3 _point, float _dist, float _angle)
-        {
-            hit = _hit;
-            point = _point;
-            dist = _dist;
-            angle = _angle;
-        }
+        PathRequestManager.RequestPath(gameObject.transform.position, lastKnown.position, OnPathFound);
     }
 
     private void OnDrawGizmos()
