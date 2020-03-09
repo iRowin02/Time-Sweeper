@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7784231858177901279}
   - component: {fileID: 1250913412372117737}
   - component: {fileID: 4783010226875778064}
+  - component: {fileID: 3896101486518754151}
   m_Layer: 0
   m_Name: Enemy UFO
   m_TagString: Untagged
@@ -80,6 +81,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!111 &3896101486518754151
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6511216020612444364}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 5a07cad883bd1014aaab4db6fa91e1d1, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 5a07cad883bd1014aaab4db6fa91e1d1, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &3540818407179236725
 PrefabInstance:
   m_ObjectHideFlags: 0
