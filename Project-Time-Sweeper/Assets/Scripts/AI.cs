@@ -39,6 +39,7 @@ public class AI : MonoBehaviour
 
     public AudioClip test;
 
+    private bool haveDone = false;
     public enum _AIstates
     {
         Idle,
@@ -56,13 +57,17 @@ public class AI : MonoBehaviour
 
     public void Update() 
     {
+        if(inSight == true)
+        {
+            states = _AIstates.Attack;
+        }
         switch(states)
         {
             default:
             case _AIstates.Idle:
                 if(pathholder == null)
                 {
-                    //FindVisibleTargets();
+                    
                 }
                 else
                 {
@@ -78,7 +83,6 @@ public class AI : MonoBehaviour
             break;
             
             case _AIstates.Attack:
-
 
                 transform.LookAt(_target);
                 print("Im shooting");
@@ -117,22 +121,7 @@ public class AI : MonoBehaviour
 			yield return null;
 		}
     }
-	//End Chase State
 
-	public void Attack()
-	{         
-        transform.LookAt(_target);
-        print("schiet");
-	}
-
-    //Idle State
-    public void Idle()
-    {
-        //Insert animation
-    }
-    //End Idle State
-
-    //Patrol State
     public void Patroling()
     {
          Vector3[] waypoints = new Vector3[pathholder.childCount];
@@ -149,9 +138,10 @@ public class AI : MonoBehaviour
         int targetWaypointInt = 1;
         Vector3 targetWaypoint = waypoints[targetWaypointInt];
 
-        if (transform.position != waypoints[0])
+        if (transform.position != waypoints[0] && haveDone == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, waypoints[0], speed * Time.deltaTime);
+            haveDone = true;
         }
 
         while (true)
@@ -180,7 +170,7 @@ public class AI : MonoBehaviour
             yield return null;
         }
     }
-    //End Patrol state
+
 
     public void OnTriggerStay(Collider other) 
     {
