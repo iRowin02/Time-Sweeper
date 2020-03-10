@@ -1174,13 +1174,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12ff67b5a589c974ab7940798dad982d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 200
   weapon: {fileID: 0}
   minDist: 0
   maxDist: 0
-  speed: 0
-  waitTime: 0
-  turnSpeed: 0
+  speed: 1
+  waitTime: 0.2
+  turnSpeed: 90
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
@@ -1192,9 +1192,9 @@ MonoBehaviour:
   pathholder: {fileID: 1521352994}
   inSight: 0
   lastSeen: {x: 0, y: 0, z: 0}
-  viewpoint: {fileID: 0}
+  viewpoint: {fileID: 895970547}
   states: 0
-  test: {fileID: 0}
+  test: {fileID: 8300000, guid: dafd5cc2c052e1243bee3f732420b39f, type: 3}
 --- !u!65 &1552915908
 BoxCollider:
   m_ObjectHideFlags: 0
