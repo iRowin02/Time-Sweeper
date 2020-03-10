@@ -22,6 +22,7 @@ public class PlayerMove : MonoBehaviour
     public int playerMana;
 
     public float thrust;
+    public float dodgeTime;
     
 
     [Header("Private Variables")]
@@ -31,6 +32,7 @@ public class PlayerMove : MonoBehaviour
     private int _playerMana;
     private Rigidbody rb;
     private Animator anim;
+    private bool canDodge;
 
     private float horInput, vertInput;
     
@@ -47,13 +49,13 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        //Move();
+        Move();
         PlayerInputs();
     }
     
 
     #region Move
-    /*public void Move()
+    public void Move()
     {
         horInput = Input.GetAxis("Horizontal");
         vertInput = Input.GetAxis("Vertical");
@@ -61,7 +63,7 @@ public class PlayerMove : MonoBehaviour
         dir = new Vector3(horInput, 0, vertInput);
 
         transform.Translate(dir * movementSpeed * Time.deltaTime);
-    }*/
+    }
     #endregion
 
     #region PlayerInputs
@@ -187,7 +189,18 @@ public class PlayerMove : MonoBehaviour
     #region Dodge
     public void Dodge()
     {
-        rb.AddForce(transform.forward * thrust, ForceMode.Impulse );
+        StartCoroutine(Dodger());
+    }
+
+    IEnumerator Dodger()
+    {
+        if(canDodge == true)
+        {
+            rb.AddForce(transform.forward * thrust, ForceMode.Impulse);
+            canDodge = false;
+        }
+        yield return new WaitForSeconds(dodgeTime);
+        canDodge = true;
     }
     #endregion
 }

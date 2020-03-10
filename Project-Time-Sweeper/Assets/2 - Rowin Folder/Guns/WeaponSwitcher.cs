@@ -50,13 +50,26 @@ public class WeaponSwitcher : MonoBehaviour
                 selectedWeapon--;
             }
         }
-        if(previousSelectedWeapon != selectedWeapon)
-        {
-            SelectWeapon();
-        }
         if(ammoDifference != activeGun.GetComponent<FireArms>().currentBullets)
         {
             UpdateAmmo();
+        }
+        if(Input.GetKey(KeyCode.Alpha1))
+        {
+            selectedWeapon = 0;
+        }
+        if(Input.GetKey(KeyCode.Alpha2) && transform.childCount >= 2)
+        {
+            selectedWeapon = 1;
+        }
+        if(Input.GetKey(KeyCode.Alpha3) && transform.childCount >= 3)
+        {
+            selectedWeapon = 2;
+        }
+
+        if(previousSelectedWeapon != selectedWeapon)
+        {
+            SelectWeapon();
         }
     }
 

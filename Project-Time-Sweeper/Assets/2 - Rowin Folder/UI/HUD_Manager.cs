@@ -20,6 +20,7 @@ public class HUD_Manager : MonoBehaviour
     public TextMeshProUGUI healthAmount;
     [Header("ManaBar Elements")]
     public Image manaBar;
+    public TextMeshProUGUI manaTextAmount;
     private float manaValue = .20f;
     public float totalMana;
     private float totalMana_;
@@ -34,13 +35,15 @@ public class HUD_Manager : MonoBehaviour
         if(totalMana_ != totalMana)
         {
             totalMana_ = totalMana;
+            manaTextAmount.text = "(" + totalMana.ToString() + ")";
             StartCoroutine(HandleManaChange((int)totalMana));
         }
     }
 
     public void Awake()
     {
-        healthAmount.text = playerInfo.playerHealth.ToString();
+        manaTextAmount.text = "(" + totalMana.ToString() + ")";
+        healthAmount.text = "(" + playerInfo.playerHealth.ToString() + ")";
         healthBar.fillAmount = 1;
         playerInfo.OnHealthPctChange += HandleHealthChange;
     }
@@ -61,7 +64,7 @@ public class HUD_Manager : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             healthBar.fillAmount = Mathf.Lerp(preChangePct, pct, elapsed / healthUpdateSeconds);
-            healthAmount.text = playerInfo.playerHealth.ToString();
+            healthAmount.text = "(" + playerInfo.playerHealth.ToString() + ")";
 
             yield return null;
         }
@@ -88,7 +91,6 @@ public class HUD_Manager : MonoBehaviour
 
             yield return null;
         }
-
         manaBar.fillAmount = mana;
     }
 

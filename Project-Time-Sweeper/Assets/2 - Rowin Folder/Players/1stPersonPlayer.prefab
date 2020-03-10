@@ -2892,7 +2892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInfo: {fileID: 5239886942632076226}
-  healthBar: {fileID: 5239886942812530724}
+  healthBar: {fileID: 0}
   healthAmount: {fileID: 2562416653257411053}
   manaBar: {fileID: 5239886942713232589}
   totalMana: 0
