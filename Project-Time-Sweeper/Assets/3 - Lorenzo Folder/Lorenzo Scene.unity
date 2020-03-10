@@ -1162,39 +1162,28 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1552915903}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1552915907
-MonoBehaviour:
+--- !u!195 &1552915907
+NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552915904}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12ff67b5a589c974ab7940798dad982d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 200
-  weapon: {fileID: 0}
-  minDist: 0
-  maxDist: 0
-  speed: 1
-  waitTime: 0.2
-  turnSpeed: 90
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 2048
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 256
-  visibleTargets: []
-  _target: {fileID: 0}
-  pathholder: {fileID: 1521352994}
-  inSight: 0
-  lastSeen: {x: 0, y: 0, z: 0}
-  viewpoint: {fileID: 895970547}
-  states: 0
-  test: {fileID: 8300000, guid: dafd5cc2c052e1243bee3f732420b39f, type: 3}
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!65 &1552915908
 BoxCollider:
   m_ObjectHideFlags: 0
