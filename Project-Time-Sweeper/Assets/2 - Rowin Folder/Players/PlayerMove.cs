@@ -32,7 +32,7 @@ public class PlayerMove : MonoBehaviour
     private int _playerMana;
     private Rigidbody rb;
     private Animator anim;
-    private bool canDodge;
+    private bool canDodge = true;
 
     private float horInput, vertInput;
     
@@ -189,7 +189,15 @@ public class PlayerMove : MonoBehaviour
     #region Dodge
     public void Dodge()
     {
-        StartCoroutine(Dodger());
+        if(HUD.totalMana != 0)
+        {
+            HUD.totalMana--;
+            StartCoroutine(Dodger());
+        }
+        else
+        {
+            print("no mana left");
+        }
     }
 
     IEnumerator Dodger()
@@ -198,6 +206,10 @@ public class PlayerMove : MonoBehaviour
         {
             rb.AddForce(transform.forward * thrust, ForceMode.Impulse);
             canDodge = false;
+        }
+        else
+        {
+            StopCoroutine(Dodger());
         }
         yield return new WaitForSeconds(dodgeTime);
         canDodge = true;
