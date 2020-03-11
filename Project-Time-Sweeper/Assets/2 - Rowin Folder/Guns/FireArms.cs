@@ -35,7 +35,10 @@ public class FireArms : GunUsage
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                Shoot();
+                if(currentAmmo >= 0)
+                {
+                    Shoot();
+                }
             }
         }
         

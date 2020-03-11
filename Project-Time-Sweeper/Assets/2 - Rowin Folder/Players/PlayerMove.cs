@@ -69,6 +69,7 @@ public class PlayerMove : MonoBehaviour
     #region PlayerInputs
     public void PlayerInputs()
     {
+
         if(Input.GetButtonDown("Fire2"))
         {
             print("dodge");
@@ -93,41 +94,41 @@ public class PlayerMove : MonoBehaviour
             PlayerSprinting();
         }
         if(Input.GetKeyDown(KeyCode.Tab))
-            {
-                HealthUpdate(-10);
-            }
-            if(Input.GetKeyDown(KeyCode.T))
-            {
-                HUD.totalMana += 1;
-            }
-            if(Input.GetKeyDown(KeyCode.Z))
-            {
-                timeManager.SlowDown();
-            }
-            if(Input.GetKeyDown(KeyCode.X))
-            {
-                print("Time Restore");
-            }
+        {
+            HealthUpdate(-10);
+        }
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            HUD.totalMana += 1;
+        }
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            timeManager.SlowDown();
+        }
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            print("Time Restore");
+        }
             // if(Input.GetKeyDown(KeyCode.Q))
             // {
             //     print("Grenade");
             // }
-            if(Input.GetKey(KeyCode.Q))
+        if(Input.GetKey(KeyCode.Q))
+        {
+            grenadeCharge += Time.deltaTime;
+        }
+        if(Input.GetKeyUp(KeyCode.Q))
+        {
+            if(grenadeCharge >= 3)
             {
-                grenadeCharge += Time.deltaTime;
+                print("Grenade is charged");
             }
-            if(Input.GetKeyUp(KeyCode.Q))
+            else
             {
-                if(grenadeCharge >= 3)
-                {
-                    print("Grenade is charged");
-                }
-                else
-                {
                     grenadeCharge = 0;
                     print("Grenade release");
-                }
             }
+        }
     }
     #endregion
 
