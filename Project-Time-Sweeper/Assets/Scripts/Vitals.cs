@@ -5,8 +5,8 @@ using UnityEngine;
 public class Vitals : MonoBehaviour
 {
     [SerializeField] float health;
-
     float curHealth;
+
     void Start()
     {
         curHealth = health;

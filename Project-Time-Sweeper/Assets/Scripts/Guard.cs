@@ -47,6 +47,10 @@ public class Guard : MonoBehaviour
                     break;
             }
         }
+        else
+        {
+            //DIE
+        }
     }
 
     void stateIdle()
