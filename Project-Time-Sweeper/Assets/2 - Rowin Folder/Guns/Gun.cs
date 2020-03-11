@@ -14,7 +14,7 @@ public class GunUsage : MonoBehaviour
     [Header("Usage")]
     public GameObject muzzleFlash;
     public Transform barrel;
-    public Camera cam;
+    protected Camera cam;
     public LayerMask layer;
 
     [Header("Ammunition")]
