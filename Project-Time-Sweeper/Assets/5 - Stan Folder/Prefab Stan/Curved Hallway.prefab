@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9206296241804553524}
+  - component: {fileID: 7732801861025028639}
+  - component: {fileID: 6572993010749466286}
+  - component: {fileID: 7100900473237595000}
   m_Layer: 0
   m_Name: Curved Hallway
   m_TagString: Untagged
@@ -32,6 +35,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7732801861025028639
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5891286378665974564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13.915391, y: 1.1288753, z: 13.826666}
+  m_Center: {x: -3.2800117, y: -2.1117585, z: -0.59427166}
+--- !u!65 &6572993010749466286
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5891286378665974564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9006882, y: 3.881283, z: 9.607735}
+  m_Center: {x: 2.9502373, y: 0.38551962, z: -2.6364565}
+--- !u!65 &7100900473237595000
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5891286378665974564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4203515, y: 3.881283, z: 3.6632407}
+  m_Center: {x: -2.2352993, y: 0.38551962, z: -5.6087036}
 --- !u!1001 &1191988205906510505
 PrefabInstance:
   m_ObjectHideFlags: 0
