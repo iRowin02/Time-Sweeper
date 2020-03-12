@@ -69,11 +69,19 @@ public class PlayerMove : MonoBehaviour
     #region PlayerInputs
     public void PlayerInputs()
     {
-
-        if(Input.GetButtonDown("Fire2"))
+        if(HUD.totalMana != 0)
         {
-            print("dodge");
-            Dodge();
+            if(Input.GetButtonDown("Fire2") || HUD.totalMana <= 0)
+            {
+                Dodge();
+                HUD.totalMana -= 1;
+            }
+
+            if(Input.GetKey(KeyCode.Z) )
+            {
+                timeManager.SlowDown();
+                HUD.totalMana -= 3;
+            }
         }
         if(Input.GetButtonDown("Jump"))
         {
@@ -102,9 +110,6 @@ public class PlayerMove : MonoBehaviour
             HUD.totalMana += 1;
         }
         if(Input.GetKeyDown(KeyCode.Z))
-        {
-            timeManager.SlowDown();
-        }
         if(Input.GetKeyDown(KeyCode.X))
         {
             print("Time Restore");

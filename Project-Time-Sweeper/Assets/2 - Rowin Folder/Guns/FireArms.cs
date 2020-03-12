@@ -52,20 +52,20 @@ public class FireArms : GunUsage
                 canShoot = true;
             }
         }
-        // if(Input.GetButtonDown("R"))
-        // {
-        //     leftOver = maxAmmo -= currentBullets;
+        if(Input.GetButtonDown("R"))
+        {
+            leftOver = maxAmmo -= currentBullets;
 
-        //     if(leftOver > 0)
-        //     {
-        //         StartCoroutine(Reload(leftOver));
-        //     }
-        //     if(leftOver < 0)
-        //     {
-        //         leftOver = 0;
-        //         return;
-        //     }
-        // }
+            if(leftOver > 0)
+             {
+                 StartCoroutine(Reload(leftOver));
+             }
+             if(leftOver < 0)
+             {
+                 leftOver = 0;
+                 return;
+             }
+        }
     }
 
     public void Shoot()
