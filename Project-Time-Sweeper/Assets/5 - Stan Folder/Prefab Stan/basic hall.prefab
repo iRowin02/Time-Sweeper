@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3576694456326080056}
   - component: {fileID: 5546743792929078286}
   - component: {fileID: 2289367360876314871}
+  - component: {fileID: 4817366639342968504}
+  - component: {fileID: 412937231372338328}
   m_Layer: 0
   m_Name: basic hall
   m_TagString: Untagged
@@ -79,3 +81,30 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4817366639342968504
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574667932105847851}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 4.4480724, y: 3.5075457, z: 6.170725}
+  m_Center: {x: -0.008169651, y: 1.7515832, z: 0.0000019073486}
+--- !u!64 &412937231372338328
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574667932105847851}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2411793529154364387, guid: fbb6fb82d5114ec47bbf7f21885966f3, type: 3}
