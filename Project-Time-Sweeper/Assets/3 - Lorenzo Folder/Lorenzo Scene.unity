@@ -762,6 +762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minAttackDamage: 10
+  maxAttackDamage: 15
   states: 0
 --- !u!1 &562257894
 GameObject:
