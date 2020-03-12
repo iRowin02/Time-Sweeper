@@ -11,6 +11,8 @@ public class Guard : MonoBehaviour
     Transform myTransform;
 
     Animator anim;
+
+    [SerializeField] float minAttackDamage, float maxAttackDamage;
     public enum ai_states
     {
         idle,
