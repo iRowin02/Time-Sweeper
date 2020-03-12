@@ -37,7 +37,7 @@ Material:
     - Vector1_923417B6: 0.2
     - Vector1_E6B59E78: 30
     m_Colors:
-    - Color_3C2C3C5A: {r: 2.828427, g: 0.07827036, b: 0, a: 0}
+    - Color_3C2C3C5A: {r: 0, g: 2.8284268, b: 0.24662311, a: 0}
     - Color_9CCBD42A: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &8837278696310551609
 MonoBehaviour:
