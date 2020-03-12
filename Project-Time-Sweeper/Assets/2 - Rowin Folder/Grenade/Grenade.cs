@@ -6,9 +6,10 @@ public class Grenade : MonoBehaviour
 {
     public float radius;
     public float force;
-    public float maxDamage;
+    public float maxDamage, throwPower, curveOffset;
     private bool hasExploded;
     public GameObject timeFieldObj;
+    private Rigidbody rb;
     public enum GrenadeStates
     {
         impact,
@@ -20,10 +21,16 @@ public class Grenade : MonoBehaviour
     public GameObject particleEffect;
 
 
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
 
+        rb.AddForce(transform.forward * throwPower);
+        rb.AddForce(Vector3.up * curveOffset);
+    }
     void OnCollisionEnter(Collision collider)
     {
-        if(collider.gameObject.CompareTag("Floor"))
+        if(collider.gameObject.CompareTag("Ground"))
         {
             if(!hasExploded)
             {

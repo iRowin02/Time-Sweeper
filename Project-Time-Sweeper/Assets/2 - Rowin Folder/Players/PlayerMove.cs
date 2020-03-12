@@ -15,6 +15,10 @@ public class PlayerMove : MonoBehaviour
     private TimeManager timeManager;
 
     [Header("Public Variables")]
+    public GameObject grenade;
+
+    public Transform grenadeSpot;
+
     public float movementSpeed;
     public float jumpHeight;
     public float speedMultiplier;
@@ -114,10 +118,10 @@ public class PlayerMove : MonoBehaviour
         {
             print("Time Restore");
         }
-            // if(Input.GetKeyDown(KeyCode.Q))
-            // {
-            //     print("Grenade");
-            // }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Instantiate(grenade, grenadeSpot.position, transform.rotation);
+        }
         if(Input.GetKey(KeyCode.Q))
         {
             grenadeCharge += Time.deltaTime;
@@ -140,7 +144,7 @@ public class PlayerMove : MonoBehaviour
     #region Collision
     void OnCollisionEnter(Collision coll)
     {
-        if(coll.transform.CompareTag("Floor"))
+        if(coll.transform.CompareTag("Ground"))
         {
             canJump = true;
         }
