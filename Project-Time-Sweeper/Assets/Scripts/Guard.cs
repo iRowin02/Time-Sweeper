@@ -12,7 +12,7 @@ public class Guard : MonoBehaviour
 
     Animator anim;
 
-    [SerializeField] float minAttackDamage, float maxAttackDamage;
+    [SerializeField] float minAttackDamage, maxAttackDamage;
     public enum ai_states
     {
         idle,
