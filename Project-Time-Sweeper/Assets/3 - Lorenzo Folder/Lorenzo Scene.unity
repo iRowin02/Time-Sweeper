@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: fb1087398016c09479c5693592721761,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -761,8 +761,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6eb7764cb41f874fbfd18cccd5461aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAttackDamage: 10
-  maxAttackDamage: 15
+  minAttackDst: 10
+  maxAttackDst: 15
+  moveSpeed: 15
+  fireRate: 1
   states: 0
 --- !u!1 &562257894
 GameObject:

@@ -12,7 +12,11 @@ public class Guard : MonoBehaviour
 
     Animator anim;
 
-    [SerializeField] float minAttackDamage, maxAttackDamage;
+    public float minAttackDst, maxAttackDst;
+    public float moveSpeed;
+
+    public float fireRate;
+
     public enum ai_states
     {
         idle,
@@ -57,16 +61,71 @@ public class Guard : MonoBehaviour
 
     void stateIdle()
     {
-
+        if(curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
+        {
+            myTransform.LookAt(curTarget.transform);
+            if (Vector3.Distance(myTransform.position, curTarget.transform.position) <= maxAttackDst && Vector3.Distance(myTransform.position, curTarget.transform.position) >= minAttackDst)
+            {
+                //ATTACK
+                states = ai_states.combat;
+            }
+            else
+            {
+                //MOVE
+                states = ai_states.move;
+            }
+        }
+        else
+        {
+            //FIND TARGET
+        }
     }
 
     void stateMove()
     {
-
+        if (curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
+        {
+            if(Vector3.Distance(myTransform.position, curTarget.transform.position) > maxAttackDst)
+            {
+                //MOVE CLOSER
+                myTransform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            }
+            else if(Vector3.Distance(myTransform.position, curTarget.transform.position) < minAttackDst)
+            {
+                //MOVE AWAY
+                myTransform.Translate(Vector3.forward * -1 * moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                //ATTACK
+                states = ai_states.combat;
+            }
+        }
+        else
+        {
+            states = ai_states.idle;
+        }
     }
 
     void stateCombat()
     {
-
+        if (curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
+        {    
+            myTransform.LookAt(curTarget.transform);
+            if (Vector3.Distance(myTransform.position, curTarget.transform.position) <= maxAttackDst && Vector3.Distance(myTransform.position, curTarget.transform.position) >= minAttackDst)
+            {
+                //ATTACK
+                states = ai_states.combat;
+            }
+            else
+            {
+                //MOVE
+                states = ai_states.move;
+            }
+        }
+        else
+        {
+            states = ai_states.idle;
+        }
     }
 }
