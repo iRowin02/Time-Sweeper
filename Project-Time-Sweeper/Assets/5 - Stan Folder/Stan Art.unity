@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 8d8fc731d88a28a46a80e6a9ce7fa7f8
+  m_OcclusionCullingData: {fileID: 36300000, guid: ec03767fbf29b684796e99a00046e698,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -415,7 +416,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4817366639342968504, guid: 972dc3a98c4c0364e844939812f6dcbb, type: 3}
+    - {fileID: 5343467489338215057, guid: 972dc3a98c4c0364e844939812f6dcbb, type: 3}
+    - {fileID: 5687457160638303288, guid: 972dc3a98c4c0364e844939812f6dcbb, type: 3}
+    - {fileID: 1007788638852071953, guid: 972dc3a98c4c0364e844939812f6dcbb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 972dc3a98c4c0364e844939812f6dcbb, type: 3}
 --- !u!1001 &1713678567
 PrefabInstance:
@@ -1092,7 +1097,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5291401989324463012, guid: cca8ae07b7133384cbcdec851e7ab74d, type: 3}
+    - {fileID: 8274812878587187506, guid: cca8ae07b7133384cbcdec851e7ab74d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cca8ae07b7133384cbcdec851e7ab74d, type: 3}
 --- !u!1001 &7516345199897980580
 PrefabInstance:

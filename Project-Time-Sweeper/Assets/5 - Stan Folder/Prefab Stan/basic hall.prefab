@@ -11,10 +11,7 @@ GameObject:
   - component: {fileID: 3576694456326080056}
   - component: {fileID: 5546743792929078286}
   - component: {fileID: 2289367360876314871}
-  - component: {fileID: 4817366639342968504}
-  - component: {fileID: 5343467489338215057}
-  - component: {fileID: 5687457160638303288}
-  - component: {fileID: 1007788638852071953}
+  - component: {fileID: 4503350279330525226}
   m_Layer: 0
   m_Name: basic hall
   m_TagString: Untagged
@@ -83,8 +80,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &4817366639342968504
-BoxCollider:
+--- !u!64 &4503350279330525226
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -93,45 +90,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.752963, y: 0.23111892, z: 6.170725}
-  m_Center: {x: 0.020671368, y: -0.10743296, z: 0.0000019073486}
---- !u!65 &5343467489338215057
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574667932105847851}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0588033, y: 4.065766, z: 6.170725}
-  m_Center: {x: 3.2338667, y: 1.9764054, z: 0.0000019073486}
---- !u!65 &5687457160638303288
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574667932105847851}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0373092, y: 4.065766, z: 6.170725}
-  m_Center: {x: -3.244614, y: 1.9764054, z: 0.0000019073486}
---- !u!65 &1007788638852071953
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574667932105847851}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 8.526537, y: 0.3493929, z: 6.170725}
-  m_Center: {x: 0, y: 3.8345919, z: 0.0000019073486}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2411793529154364387, guid: fbb6fb82d5114ec47bbf7f21885966f3, type: 3}
