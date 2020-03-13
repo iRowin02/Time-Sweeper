@@ -12,10 +12,16 @@ public class Guard : MonoBehaviour
 
     Animator anim;
 
-    public float minAttackDst, maxAttackDst;
+    [Header("General")]
     public float moveSpeed;
+    public float damage;
+
+    [Header("Sight")]
+    public float minAttackDst, maxAttackDst;
+
 
     public float fireRate;
+    private float curFireRate = 0;
 
     public enum ai_states
     {
@@ -56,6 +62,7 @@ public class Guard : MonoBehaviour
         else
         {
             //DIE
+            Destroy(this.gameObject);
         }
     }
 
@@ -71,6 +78,7 @@ public class Guard : MonoBehaviour
             }
             else
             {
+                anim.SetBool("move", true);
                 //MOVE
                 states = ai_states.move;
             }
@@ -78,6 +86,32 @@ public class Guard : MonoBehaviour
         else
         {
             //FIND TARGET
+            Guard[] allGuards = GameObject.FindObjectsOfType<Guard>();
+            Guard bestTarget = null;
+
+            for (int i = 0; i < allGuards.Length; i++)
+            {
+                Guard curGuard = allGuards[i];
+                if (curGuard.GetComponent<Team>().getTeamNumber() != myTeam.getTeamNumber() && curGuard.GetComponent<Vitals>().GetCurrentHealth() > 0)
+                {
+                    if(bestTarget == null)
+                    {
+                        bestTarget = curGuard;
+                    }
+                    else
+                    {
+                        //CHANGE IF BETTER IS FOUND
+                        if(Vector3.Distance(curGuard.transform.position, myTransform.position) < Vector3.Distance(bestTarget.transform.position, myTransform.position))
+                        {
+                            bestTarget = curGuard;
+                        }
+                    }
+                }
+            }
+            if(bestTarget != null)
+            {
+                curTarget = bestTarget;       
+            }
         }
     }
 
@@ -97,12 +131,14 @@ public class Guard : MonoBehaviour
             }
             else
             {
+                anim.SetBool("move", false);
                 //ATTACK
                 states = ai_states.combat;
             }
         }
         else
         {
+            anim.SetBool("move", false);
             states = ai_states.idle;
         }
     }
@@ -115,10 +151,22 @@ public class Guard : MonoBehaviour
             if (Vector3.Distance(myTransform.position, curTarget.transform.position) <= maxAttackDst && Vector3.Distance(myTransform.position, curTarget.transform.position) >= minAttackDst)
             {
                 //ATTACK
-                states = ai_states.combat;
+                if(curFireRate <= 0)
+                {
+                    anim.SetTrigger("fire");
+
+                    curTarget.GetComponent<Vitals>().getHit(damage);
+
+                    curFireRate = fireRate;
+                }
+                else
+                {
+                    curFireRate -= 1 * Time.deltaTime;
+                }
             }
             else
             {
+                anim.SetBool("move", true);
                 //MOVE
                 states = ai_states.move;
             }
