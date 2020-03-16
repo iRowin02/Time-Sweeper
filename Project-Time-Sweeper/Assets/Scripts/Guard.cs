@@ -11,6 +11,18 @@ public class Guard : MonoBehaviour
     Transform myTransform;
 
     Animator anim;
+
+    [Header("General")]
+    public float moveSpeed;
+    public float damage;
+
+    [Header("Sight")]
+    public float minAttackDst, maxAttackDst;
+
+
+    public float fireRate;
+    private float curFireRate = 0;
+
     public enum ai_states
     {
         idle,
@@ -50,21 +62,118 @@ public class Guard : MonoBehaviour
         else
         {
             //DIE
+            Destroy(this.gameObject);
         }
     }
 
     void stateIdle()
     {
+        if(curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
+        {
+            myTransform.LookAt(curTarget.transform);
+            if (Vector3.Distance(myTransform.position, curTarget.transform.position) <= maxAttackDst && Vector3.Distance(myTransform.position, curTarget.transform.position) >= minAttackDst)
+            {
+                //ATTACK
+                states = ai_states.combat;
+            }
+            else
+            {
+                anim.SetBool("move", true);
+                //MOVE
+                states = ai_states.move;
+            }
+        }
+        else
+        {
+            //FIND TARGET
+            Guard[] allGuards = GameObject.FindObjectsOfType<Guard>();
+            Guard bestTarget = null;
 
+            for (int i = 0; i < allGuards.Length; i++)
+            {
+                Guard curGuard = allGuards[i];
+                if (curGuard.GetComponent<Team>().getTeamNumber() != myTeam.getTeamNumber() && curGuard.GetComponent<Vitals>().GetCurrentHealth() > 0)
+                {
+                    if(bestTarget == null)
+                    {
+                        bestTarget = curGuard;
+                    }
+                    else
+                    {
+                        //CHANGE IF BETTER IS FOUND
+                        if(Vector3.Distance(curGuard.transform.position, myTransform.position) < Vector3.Distance(bestTarget.transform.position, myTransform.position))
+                        {
+                            bestTarget = curGuard;
+                        }
+                    }
+                }
+            }
+            if(bestTarget != null)
+            {
+                curTarget = bestTarget;       
+            }
+        }
     }
 
     void stateMove()
     {
-
+        if (curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
+        {
+            if(Vector3.Distance(myTransform.position, curTarget.transform.position) > maxAttackDst)
+            {
+                //MOVE CLOSER
+                myTransform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            }
+            else if(Vector3.Distance(myTransform.position, curTarget.transform.position) < minAttackDst)
+            {
+                //MOVE AWAY
+                myTransform.Translate(Vector3.forward * -1 * moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                anim.SetBool("move", false);
+                //ATTACK
+                states = ai_states.combat;
+            }
+        }
+        else
+        {
+            anim.SetBool("move", false);
+            states = ai_states.idle;
+        }
     }
 
     void stateCombat()
     {
+        if (curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
+        {    
+            myTransform.LookAt(curTarget.transform);
+            if (Vector3.Distance(myTransform.position, curTarget.transform.position) <= maxAttackDst && Vector3.Distance(myTransform.position, curTarget.transform.position) >= minAttackDst)
+            {
+                //ATTACK
+                if(curFireRate <= 0)
+                {
+                    anim.SetTrigger("fire");
 
+                    curTarget.GetComponent<Vitals>().getHit(damage);
+
+                    curFireRate = fireRate;
+                }
+                else
+                {
+                    curFireRate -= 1 * Time.deltaTime;
+                }
+            }
+            else
+            {
+                anim.SetBool("move", true);
+                //MOVE
+                states = ai_states.move;
+            }
+        }
+        else
+        {
+            states = ai_states.idle;
+        }
     }
 }
