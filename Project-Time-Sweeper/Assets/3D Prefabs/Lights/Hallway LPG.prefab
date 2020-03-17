@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7211024822648393880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6384866912267347211}
+  - component: {fileID: 2455253357861516449}
+  m_Layer: 0
+  m_Name: Hallway LPG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6384866912267347211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211024822648393880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 1.15, z: -198.35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!220 &2455253357861516449
+LightProbeGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211024822648393880}
+  m_Enabled: 1
+  m_SourcePositions:
+  - {x: 3.511244, y: 0.05178225, z: 2.3703613}
+  - {x: 3.511244, y: 0.05178225, z: 0.8036499}
+  - {x: 2.3055902, y: -1, z: 2.3703613}
+  - {x: 2.3055902, y: -1, z: 0.8036499}
+  - {x: -3.2541819, y: 0.05178225, z: 2.3703613}
+  - {x: -3.2541819, y: 0.05178225, z: 0.8036499}
+  - {x: -2.0664427, y: -1, z: 2.3703613}
+  - {x: -2.0664427, y: -1, z: 0.8036499}
+  - {x: 2.3055902, y: 2.507544, z: 2.3703613}
+  - {x: 2.3055902, y: 2.507544, z: 0.8036499}
+  - {x: -2.0664427, y: 2.507544, z: 2.3703613}
+  - {x: -2.0664427, y: 2.507544, z: 0.8036499}
+  - {x: 3.511244, y: 1.4516212, z: 2.3703613}
+  - {x: 3.511244, y: 1.4516212, z: 0.8036499}
+  - {x: -3.2541819, y: 1.4516212, z: 2.3703613}
+  - {x: -3.2541819, y: 1.4516212, z: 0.8036499}
+  - {x: 3.511244, y: 0.05178225, z: -2.619629}
+  - {x: 2.3055902, y: -1, z: -2.619629}
+  - {x: -3.2541819, y: 0.05178225, z: -2.619629}
+  - {x: -2.0664427, y: -1, z: -2.619629}
+  - {x: 2.3055902, y: 2.507544, z: -2.619629}
+  - {x: -2.0664427, y: 2.507544, z: -2.619629}
+  - {x: 3.511244, y: 1.4516212, z: -2.619629}
+  - {x: -3.2541819, y: 1.4516212, z: -2.619629}
+  - {x: 3.511244, y: 0.05178225, z: -0.8284302}
+  - {x: 2.3055902, y: -1, z: -0.8284302}
+  - {x: -3.2541819, y: 0.05178225, z: -0.8284302}
+  - {x: -2.0664427, y: -1, z: -0.8284302}
+  - {x: 2.3055902, y: 2.507544, z: -0.8284302}
+  - {x: -2.0664427, y: 2.507544, z: -0.8284302}
+  - {x: 3.511244, y: 1.4516212, z: -0.8284302}
+  - {x: -3.2541819, y: 1.4516212, z: -0.8284302}
+  m_Dering: 1
