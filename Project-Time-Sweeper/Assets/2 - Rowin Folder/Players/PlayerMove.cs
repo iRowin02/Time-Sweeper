@@ -61,8 +61,8 @@ public class PlayerMove : MonoBehaviour
     #region Move
     public void Move()
     {
-        horInput = Input.GetAxis("Horizontal");
-        vertInput = Input.GetAxis("Vertical");
+        horInput = Input.GetAxisRaw("Horizontal");
+        vertInput = Input.GetAxisRaw("Vertical");
 
         dir = new Vector3(horInput, 0, vertInput);
 
@@ -70,50 +70,53 @@ public class PlayerMove : MonoBehaviour
     }
     #endregion
 
-    #region PlayerInputs
+        #region PlayerInputs
     public void PlayerInputs()
     {
-        if(HUD.totalMana != 0)
+        if (HUD.totalMana != 0)
         {
-            if(Input.GetButtonDown("Fire2") || HUD.totalMana <= 0)
+            if (Input.GetButtonDown("Fire2") || HUD.totalMana <= 0)
             {
                 Dodge();
                 HUD.totalMana -= 1;
             }
 
-            if(Input.GetKey(KeyCode.Z) )
+            if (Input.GetKey(KeyCode.Z))
             {
                 timeManager.SlowDown();
                 HUD.totalMana -= 3;
             }
         }
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
-            if(canJump)
+            if (canJump)
             {
-                rb.AddForce(0,jumpHeight,0);
+                rb.AddForce(0, jumpHeight, 0);
                 canJump = false;
             }
         }
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             isSprinting = true;
             PlayerSprinting();
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             isSprinting = false;
             PlayerSprinting();
         }
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             HealthUpdate(-10);
         }
-        if(Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             HUD.totalMana += 1;
         }
-        if(Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            timeManager.SlowDown();
+        }
         if(Input.GetKeyDown(KeyCode.X))
         {
             print("Time Restore");
