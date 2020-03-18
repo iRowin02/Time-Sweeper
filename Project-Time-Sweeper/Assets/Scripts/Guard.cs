@@ -92,6 +92,22 @@ public class Guard : MonoBehaviour
             for (int i = 0; i < allGuards.Length; i++)
             {
                 Guard curGuard = allGuards[i];
+
+                //VISABLE?
+                Vector3 myPos = myTransform.position;
+                myPos.y = myTransform.position.y + 0.5f; //CAST UIT ZIJN MIDDEL
+
+                Vector3 playerPos = curGuard.transform.position;
+                playerPos.y = curGuard.transform.position.y + 0.5f; //NAAR MIDDEL VAN
+
+                Vector3 dirToPlayer = playerPos - myPos;
+
+                RaycastHit hit;
+                if(Physics.Raycast(myPos, dirToPlayer, out hit, Mathf.Infinity))
+                {
+                    //if(hit.)
+                }
+
                 if (curGuard.GetComponent<Team>().getTeamNumber() != myTeam.getTeamNumber() && curGuard.GetComponent<Vitals>().GetCurrentHealth() > 0)
                 {
                     if(bestTarget == null)
