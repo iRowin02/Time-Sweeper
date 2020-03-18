@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
@@ -23,11 +24,15 @@ public class Guard : MonoBehaviour
     public float fireRate;
     private float curFireRate = 0;
 
+    Vector3 targetLastKnownPos;
+    Path currentPath = null;
+
     public enum ai_states
     {
         idle,
         move,
         combat,
+        Investigate,
     }
 
     public ai_states states = ai_states.idle;
@@ -42,9 +47,9 @@ public class Guard : MonoBehaviour
 
     void Update()
     {
-        if(myVitals.GetCurrentHealth() > 0)
+        if (myVitals.GetCurrentHealth() > 0)
         {
-            switch(states)
+            switch (states)
             {
                 case ai_states.idle:
                     stateIdle();
@@ -55,6 +60,9 @@ public class Guard : MonoBehaviour
                 case ai_states.combat:
                     stateCombat();
                     break;
+                case ai_states.Investigate:
+                    StateInvestigate();
+                    break;
                 default:
                     break;
             }
@@ -62,13 +70,24 @@ public class Guard : MonoBehaviour
         else
         {
             //DIE
-            Destroy(this.gameObject);
+            anim.SetBool("move", false);
+
+            if(GetComponent<BoxCollider>() != null)
+            {
+                Destroy(GetComponent<BoxCollider>());
+            }
+
+            Quaternion deathRot = Quaternion.Euler(-90, myTransform.rotation.eulerAngles.y, myTransform.rotation.eulerAngles.z);
+            if(myTransform.rotation != deathRot)
+            {
+                myTransform.rotation = deathRot;
+            }
         }
     }
 
     void stateIdle()
     {
-        if(curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
+        if (curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
         {
             myTransform.LookAt(curTarget.transform);
             if (Vector3.Distance(myTransform.position, curTarget.transform.position) <= maxAttackDst && Vector3.Distance(myTransform.position, curTarget.transform.position) >= minAttackDst)
@@ -93,40 +112,29 @@ public class Guard : MonoBehaviour
             {
                 Guard curGuard = allGuards[i];
 
-                //VISABLE?
-                Vector3 myPos = myTransform.position;
-                myPos.y = myTransform.position.y + 0.5f; //CAST UIT ZIJN MIDDEL
-
-                Vector3 playerPos = curGuard.transform.position;
-                playerPos.y = curGuard.transform.position.y + 0.5f; //NAAR MIDDEL VAN
-
-                Vector3 dirToPlayer = playerPos - myPos;
-
-                RaycastHit hit;
-                if(Physics.Raycast(myPos, dirToPlayer, out hit, Mathf.Infinity))
-                {
-                    //if(hit.)
-                }
-
                 if (curGuard.GetComponent<Team>().getTeamNumber() != myTeam.getTeamNumber() && curGuard.GetComponent<Vitals>().GetCurrentHealth() > 0)
                 {
-                    if(bestTarget == null)
+                    if (canISeeTarget(curGuard.transform))
                     {
-                        bestTarget = curGuard;
-                    }
-                    else
-                    {
-                        //CHANGE IF BETTER IS FOUND
-                        if(Vector3.Distance(curGuard.transform.position, myTransform.position) < Vector3.Distance(bestTarget.transform.position, myTransform.position))
+                        if (bestTarget == null)
                         {
                             bestTarget = curGuard;
                         }
+                        else
+                        {
+                            //CHANGE IF BETTER IS FOUND
+                            if (Vector3.Distance(curGuard.transform.position, myTransform.position) < Vector3.Distance(bestTarget.transform.position, myTransform.position))
+                            {
+                                bestTarget = curGuard;
+                            }
+                        }
                     }
+
                 }
             }
-            if(bestTarget != null)
+            if (bestTarget != null)
             {
-                curTarget = bestTarget;       
+                curTarget = bestTarget;
             }
         }
     }
@@ -135,12 +143,12 @@ public class Guard : MonoBehaviour
     {
         if (curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
         {
-            if(Vector3.Distance(myTransform.position, curTarget.transform.position) > maxAttackDst)
+            if (Vector3.Distance(myTransform.position, curTarget.transform.position) > maxAttackDst)
             {
                 //MOVE CLOSER
                 myTransform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             }
-            else if(Vector3.Distance(myTransform.position, curTarget.transform.position) < minAttackDst)
+            else if (Vector3.Distance(myTransform.position, curTarget.transform.position) < minAttackDst)
             {
                 //MOVE AWAY
                 myTransform.Translate(Vector3.forward * -1 * moveSpeed * Time.deltaTime);
@@ -162,12 +170,23 @@ public class Guard : MonoBehaviour
     void stateCombat()
     {
         if (curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() > 0)
-        {    
+        {
+            if (!canISeeTarget(curTarget.transform))
+            {
+                targetLastKnownPos = curTarget.transform.position;
+
+                currentPath = CalcPath(myTransform.position, targetLastKnownPos);
+
+                anim.SetBool("move", true);
+                states = ai_states.Investigate;
+                return;
+            }
+
             myTransform.LookAt(curTarget.transform);
             if (Vector3.Distance(myTransform.position, curTarget.transform.position) <= maxAttackDst && Vector3.Distance(myTransform.position, curTarget.transform.position) >= minAttackDst)
             {
                 //ATTACK
-                if(curFireRate <= 0)
+                if (curFireRate <= 0)
                 {
                     anim.SetTrigger("fire");
 
@@ -189,7 +208,88 @@ public class Guard : MonoBehaviour
         }
         else
         {
-            states = ai_states.idle;
+            if(curTarget != null && curTarget.GetComponent<Vitals>().GetCurrentHealth() <= 0)
+            {
+                targetLastKnownPos = curTarget.transform.position;
+
+                currentPath = CalcPath(myTransform.position, targetLastKnownPos);
+
+                anim.SetBool("move", true);
+                states = ai_states.Investigate;
+            }
+            else
+            {
+                states = ai_states.idle;
+            }
         }
     }
+
+    void StateInvestigate()
+    {
+        if(currentPath != null)
+        {
+            if(currentPath.ReachedEndNode())
+            {
+                anim.SetBool("move", false);
+
+                currentPath = null;
+                curTarget = null;
+
+                states = ai_states.idle;
+                return;
+            }
+
+            Vector3 nodePos = currentPath.GetNextNode();
+
+            if (Vector3.Distance(myTransform.position, nodePos) < 1)
+            {
+                currentPath.currentPathIndex++;
+            }
+            else
+            {
+                myTransform.LookAt(nodePos);
+                myTransform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+
+        }
+    }
+
+    bool canISeeTarget(Transform target)
+    {
+        bool canSeeIt = false;
+        //VISABLE?
+        Vector3 myPos = myTransform.position;
+        myPos.y = myTransform.position.y + 0.5f; //CAST UIT ZIJN MIDDEL
+
+        Vector3 playerPos = target.position;
+        playerPos.y = target.position.y + 0.5f; //NAAR MIDDEL VAN
+
+        Vector3 dirToPlayer = playerPos - myPos;
+
+        RaycastHit hit;
+        if (Physics.Raycast(myPos, dirToPlayer, out hit, Mathf.Infinity))
+        {
+            if (hit.transform == target)
+            {
+                canSeeIt = true;
+            }
+        }
+
+        return canSeeIt;
+    }
+
+    Path CalcPath(Vector3 source, Vector3 destination)
+    {
+        NavMeshPath nvPath = new NavMeshPath();
+        NavMesh.CalculatePath(source, destination, NavMesh.AllAreas, nvPath);
+
+        Path path = new Path(nvPath.corners);
+
+        return path;
+    }
 }
+
+
