@@ -105,7 +105,7 @@ public class Guard : MonoBehaviour
         else
         {
             //FIND TARGET
-            Guard[] allGuards = GameObject.FindObjectsOfType<Guard>();
+            Guard[] allGuards = GameObject.FindObjectsOfType<Guard>(); //WISSELEN MET SPELER!!!!
             Guard bestTarget = null;
 
             for (int i = 0; i < allGuards.Length; i++)
