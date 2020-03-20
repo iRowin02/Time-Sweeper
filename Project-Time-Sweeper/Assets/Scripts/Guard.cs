@@ -97,8 +97,8 @@ public class Guard : MonoBehaviour
             }
             else
             {
-                anim.SetBool("move", true);
                 //MOVE
+                anim.SetBool("move", true);
                 states = ai_states.move;
             }
         }
@@ -155,8 +155,8 @@ public class Guard : MonoBehaviour
             }
             else
             {
-                anim.SetBool("move", false);
                 //ATTACK
+                anim.SetBool("move", false);
                 states = ai_states.combat;
             }
         }
@@ -201,8 +201,8 @@ public class Guard : MonoBehaviour
             }
             else
             {
-                anim.SetBool("move", true);
                 //MOVE
+                anim.SetBool("move", true);
                 states = ai_states.move;
             }
         }
@@ -291,5 +291,3 @@ public class Guard : MonoBehaviour
         return path;
     }
 }
-
-
