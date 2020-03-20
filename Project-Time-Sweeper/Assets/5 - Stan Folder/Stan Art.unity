@@ -100,7 +100,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 8376770cfcca96b4b865c61b6b25dccc,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3394,6 +3394,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Holoprojector (AB)
       objectReference: {fileID: 0}
+    - target: {fileID: 1966898357323962149, guid: 470bd30741dbaaf4c9b60e1517c46b00,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3247247589637023030, guid: 470bd30741dbaaf4c9b60e1517c46b00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3997,6 +4002,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3255610501958640207, guid: 470bd30741dbaaf4c9b60e1517c46b00,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 470bd30741dbaaf4c9b60e1517c46b00, type: 3}
 --- !u!1001 &556126250
@@ -4252,6 +4262,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UFO
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 9f5fd7240af4bab449e625d111ce5376,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5fd7240af4bab449e625d111ce5376, type: 3}
@@ -5394,6 +5409,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Holoprojector (TG)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432876054571531958, guid: 2490d19d094cd8b438fbcf1edaa0b689,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2490d19d094cd8b438fbcf1edaa0b689, type: 3}
@@ -9846,6 +9866,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Holobeam
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3fbe8e77612ea41498c000bf27f7760c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fbe8e77612ea41498c000bf27f7760c, type: 3}
 --- !u!1001 &1185312986
@@ -13876,7 +13901,7 @@ PrefabInstance:
     - target: {fileID: 7573313767870290845, guid: 805affaa3394c4543bf93c3cdfd7a0a2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7573313767870290845, guid: 805affaa3394c4543bf93c3cdfd7a0a2,
         type: 3}
@@ -16079,6 +16104,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Holoprojector (BP) (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3754123504434773196, guid: 4758a77d6d083d0479bd6308e9a0c331,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4758a77d6d083d0479bd6308e9a0c331, type: 3}
 --- !u!1001 &1986210728
@@ -18023,6 +18053,11 @@ PrefabInstance:
     - target: {fileID: 4853967594479471781, guid: 2490d19d094cd8b438fbcf1edaa0b689,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4855455672709188572, guid: 2490d19d094cd8b438fbcf1edaa0b689,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8432876054571531958, guid: 2490d19d094cd8b438fbcf1edaa0b689,
@@ -20401,6 +20436,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3255610501958640207, guid: 470bd30741dbaaf4c9b60e1517c46b00,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 470bd30741dbaaf4c9b60e1517c46b00, type: 3}
 --- !u!4 &9038164437344016666 stripped
@@ -20508,6 +20548,11 @@ PrefabInstance:
     - target: {fileID: 162704317823946463, guid: 4758a77d6d083d0479bd6308e9a0c331,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179229525439793574, guid: 4758a77d6d083d0479bd6308e9a0c331,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3754123504434773196, guid: 4758a77d6d083d0479bd6308e9a0c331,
