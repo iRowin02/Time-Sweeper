@@ -109,14 +109,22 @@ public class HUD_Manager : MonoBehaviour
     }
     IEnumerator SelfDestructTimer(float timeLeft)
     {
-        timeLeft -= 1;
+        while(true)
+        {
+            timeLeft -= 1;
 
-        int min = Mathf.FloorToInt(timeLeft / 60);
-        int sec = Mathf.FloorToInt(timeLeft % 60);
+            int min = Mathf.FloorToInt(timeLeft / 60);
+            int sec = Mathf.FloorToInt(timeLeft % 60);
 
-        UpdateDestructText(min, sec);
+            UpdateDestructText(min, sec);
 
-        yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1);
+            
+            if(timeLeft <= 0)
+            {
+                StopCoroutine(SelfDestructTimer(timeLeft));
+            }
+        }
     }
     void UpdateDestructText(int min, int sec)
     {
