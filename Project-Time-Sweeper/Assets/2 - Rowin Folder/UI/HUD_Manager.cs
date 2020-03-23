@@ -24,6 +24,9 @@ public class HUD_Manager : MonoBehaviour
     private float manaValue = .20f;
     public float totalMana;
     private float totalMana_;
+    [Header("Other Elements")]
+    public GameObject selfDestruct;
+    public TextMeshProUGUI selfDestructText;
     [Header("Variables")]
     [SerializeField]
     private float healthUpdateSeconds = 0.2f;
@@ -94,6 +97,31 @@ public class HUD_Manager : MonoBehaviour
         manaBar.fillAmount = mana;
     }
 
+    #endregion
+
+    #region SelfDestruct
+    public void SelfDestructEngage(float time)
+    {
+        selfDestruct.SetActive(true);
+
+        StartCoroutine(SelfDestructTimer(time));
+
+    }
+    IEnumerator SelfDestructTimer(float timeLeft)
+    {
+        timeLeft -= 1;
+
+        int min = Mathf.FloorToInt(timeLeft / 60);
+        int sec = Mathf.FloorToInt(timeLeft % 60);
+
+        UpdateDestructText(min, sec);
+
+        yield return new WaitForSeconds(1);
+    }
+    void UpdateDestructText(int min, int sec)
+    {
+        selfDestructText.text = min.ToString("00") + ":" + sec.ToString("00");
+    }
     #endregion
 }
 

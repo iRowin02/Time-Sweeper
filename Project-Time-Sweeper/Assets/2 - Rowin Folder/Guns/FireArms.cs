@@ -100,6 +100,11 @@ public class FireArms : GunUsage
     {
         print(hit.collider.gameObject.name);
         AudioManager.PlaySound(gunSound, AudioManager.AudioGroups.GameSFX);
+        float damage = Random.Range(15, 20);
+        if(hit.collider.gameObject.GetComponent<Guard>())
+        {
+            hit.collider.gameObject.GetComponent<Vitals>().getHit(damage);
+        }
         currentBullets--;
     }
 }

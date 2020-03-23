@@ -34,6 +34,7 @@ public class TimeManager : MonoBehaviour
         Time.fixedDeltaTime = Time.timeScale * .02f;
 
         playerCamera.mouseSen = sens;
+
         print("Slowing Down Now");
     }
 }
