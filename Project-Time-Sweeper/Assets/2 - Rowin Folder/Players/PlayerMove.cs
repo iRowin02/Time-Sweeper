@@ -70,7 +70,7 @@ public class PlayerMove : MonoBehaviour
     }
     #endregion
 
-        #region PlayerInputs
+    #region PlayerInputs
     public void PlayerInputs()
     {
         if (HUD.totalMana != 0)
@@ -107,7 +107,7 @@ public class PlayerMove : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            HealthUpdate(-10);
+            //HealthUpdate(-10);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -183,9 +183,8 @@ public class PlayerMove : MonoBehaviour
     }
     #endregion
 
-    #region Health
-
-    /*
+    /*#region Health
+   
     public void HealthUpdate(int damage)
     {
         playerHealth += damage;
