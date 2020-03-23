@@ -185,6 +185,7 @@ public class PlayerMove : MonoBehaviour
 
     #region Health
 
+    /*
     public void HealthUpdate(int damage)
     {
         playerHealth += damage;
@@ -198,7 +199,7 @@ public class PlayerMove : MonoBehaviour
         }
     }      
     #endregion
-
+*/
     #region Dodge
     public void Dodge()
     {
