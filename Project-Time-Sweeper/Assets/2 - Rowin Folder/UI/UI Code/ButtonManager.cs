@@ -19,7 +19,6 @@ public class ButtonManager : MonoBehaviour
     }
     void LevelLoading(int level)
     {
-        
         transition.SetTrigger("Play");
 
         StartCoroutine(LoadLevel(level));

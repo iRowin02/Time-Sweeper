@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/1 - Main Folder/Main Menu.unity
     guid: 8b1564fed1634264f88955666482e746
   - enabled: 1
-    path: Assets/1 - Main Folder/Tussentijdse build.unity
-    guid: f7164f9ee30a57546ab6bd0bdacf2d77
+    path: Assets/1 - Main Folder/StoryScene.unity
+    guid: 79eee7f4e1337764e99ad52ba1f59b79
   m_configObjects: {}
