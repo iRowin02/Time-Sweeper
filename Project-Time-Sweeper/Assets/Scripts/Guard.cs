@@ -190,6 +190,7 @@ public class Guard : MonoBehaviour
                 {
                     anim.SetTrigger("fire");
 
+
                     curTarget.GetComponent<Vitals>().getHit(damage);
 
                     curFireRate = fireRate;
