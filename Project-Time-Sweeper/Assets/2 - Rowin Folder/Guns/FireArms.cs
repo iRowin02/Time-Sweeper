@@ -10,6 +10,7 @@ public class FireArms : GunUsage
     void Start()
     {
         weaponSwitcher = GetComponentInParent<WeaponSwitcher>();
+        HUD = FindObjectOfType<HUD_Manager>();
         interval_ = fireDelay;
         maxAmmo = currentBullets;
         maxBullets = currentAmmo;
@@ -33,11 +34,14 @@ public class FireArms : GunUsage
 
         if(!isReloading)
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButton("Fire1"))
             {
-                if(currentAmmo >= 0)
+                if(HUD.isPaused == false)
                 {
-                    Shoot();
+                    if(currentAmmo >= 0)
+                    {
+                        Shoot();
+                    }
                 }
             }
         }

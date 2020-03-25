@@ -10,7 +10,7 @@ public class PickUps : MonoBehaviour
     [ReadOnly] public int amount;
     public TextMeshProUGUI amountDisplay;
     
-    void Start()
+    void Awake()
     {
         amount = Random.Range(min, max);
         amountDisplay.text = amount.ToString();

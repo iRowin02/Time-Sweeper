@@ -3,6 +3,8 @@
 public class GunUsage : MonoBehaviour
 {
     public AudioClip gunSound;
+    [SerializeField]
+    protected HUD_Manager HUD;
 
     [Header("Variables")]
     public float reloadTime;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class Weapons
@@ -24,6 +25,9 @@ public class HUD_Manager : MonoBehaviour
     private float manaValue = .20f;
     public float totalMana;
     private float totalMana_;
+    [Header("Pause Elements")]
+    public GameObject pauseScreen;
+    public bool isPaused;
     [Header("Other Elements")]
     public GameObject selfDestruct;
     public TextMeshProUGUI selfDestructText;
@@ -40,6 +44,24 @@ public class HUD_Manager : MonoBehaviour
             totalMana_ = totalMana;
             manaTextAmount.text = "(" + totalMana.ToString() + ")";
             StartCoroutine(HandleManaChange((int)totalMana));
+        }
+        InputUpdate();
+    }
+    void InputUpdate()
+    {
+        if(Input.GetButtonDown("Cancel"))
+        {
+            isPaused = !isPaused;
+        }
+        if(isPaused)
+        {
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
+        if(!isPaused)
+        {
+            pauseScreen.SetActive(false);
+            Time.timeScale = 1;
         }
     }
 
@@ -129,6 +151,16 @@ public class HUD_Manager : MonoBehaviour
     void UpdateDestructText(int min, int sec)
     {
         selfDestructText.text = min.ToString("00") + ":" + sec.ToString("00");
+    }
+    #endregion
+    #region Buttons
+    public void ResumeButton()
+    {
+        isPaused = false;
+    }
+    public void QuitButton()
+    {
+        SceneManager.LoadScene(0);
     }
     #endregion
 }
