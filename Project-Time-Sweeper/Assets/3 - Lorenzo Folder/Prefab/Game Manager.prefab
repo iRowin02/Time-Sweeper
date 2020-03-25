@@ -43,3 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc715775fcfeaa4c9c5797672e3cfe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ambientSounds:
+  - {fileID: 8300000, guid: dafd5cc2c052e1243bee3f732420b39f, type: 3}
+  - {fileID: 8300000, guid: 9c610a9d001458542a9ca20a3111d8b5, type: 3}
