@@ -83,6 +83,7 @@ public class FireArms : GunUsage
             {
                 Fire(hit);
             }
+
             GameObject muzzle = Instantiate(muzzleFlash, barrel.position, transform.rotation);
             canShoot = false;
             Destroy(muzzle, 0.2f);
@@ -108,6 +109,10 @@ public class FireArms : GunUsage
         if(hit.collider.gameObject.GetComponent<Guard>())
         {
             hit.collider.gameObject.GetComponent<Vitals>().getHit(damage);
+        }
+        if(hit.collider.gameObject.GetComponent<ExplosiveBarrels>())
+        {
+            hit.collider.gameObject.GetComponent<ExplosiveBarrels>().Explossion();
         }
         currentBullets--;
     }

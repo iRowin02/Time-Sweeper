@@ -157,6 +157,7 @@ public class HUD_Manager : MonoBehaviour
     public void ResumeButton()
     {
         isPaused = false;
+
     }
     public void QuitButton()
     {

@@ -19,6 +19,8 @@ public class PlayerMove : MonoBehaviour
 
     public Transform grenadeSpot;
 
+    public ParticleSystem dashParticle;
+
     public float movementSpeed;
     public float jumpHeight;
     public float speedMultiplier;
@@ -27,6 +29,7 @@ public class PlayerMove : MonoBehaviour
 
     public float thrust;
     public float dodgeTime;
+    private float _dodgeTime;
     
 
     [Header("Private Variables")]
@@ -49,12 +52,14 @@ public class PlayerMove : MonoBehaviour
         regSpeed = movementSpeed;
         playerHealth = maxHealth;
         anim = GetComponentInChildren<Animator>();
+        _dodgeTime = dodgeTime;
     }
 
     void Update()
     {
         Move();
         PlayerInputs();
+        DodgeTimer();
     }
     
 
@@ -78,7 +83,6 @@ public class PlayerMove : MonoBehaviour
             if (Input.GetButtonDown("Fire2") || HUD.totalMana <= 0)
             {
                 Dodge();
-                HUD.totalMana -= 1;
             }
 
             if (Input.GetKey(KeyCode.Z))
@@ -204,28 +208,30 @@ public class PlayerMove : MonoBehaviour
     {
         if(HUD.totalMana != 0)
         {
-            HUD.totalMana--;
-            StartCoroutine(Dodger());
+            if (canDodge == true)
+            {
+                dashParticle.Play();
+                rb.AddForce(transform.forward * thrust, ForceMode.Impulse);
+                canDodge = false;
+                HUD.totalMana -= 1;
+            }
         }
         else
         {
             print("no mana left");
         }
     }
-
-    IEnumerator Dodger()
+    public void DodgeTimer()
     {
-        if(canDodge == true)
+        if(canDodge == false)
         {
-            rb.AddForce(transform.forward * thrust, ForceMode.Impulse);
-            canDodge = false;
+            dodgeTime -= Time.deltaTime;
+            if(dodgeTime <= 0)
+            {
+                dodgeTime = _dodgeTime;
+                canDodge = true;
+            }
         }
-        else
-        {
-            StopCoroutine(Dodger());
-        }
-        yield return new WaitForSeconds(dodgeTime);
-        canDodge = true;
     }
     #endregion
 }
