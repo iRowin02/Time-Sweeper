@@ -11,9 +11,11 @@ public class ExplosiveBarrels : MonoBehaviour
     {
         Destroy(gameObject);
 
-        Instantiate(explossion, transform.position, Quaternion.identity);
+        GameObject particle = Instantiate(explossion, transform.position, Quaternion.identity);
         
         Instantiate(exploded, transform.position, Quaternion.identity);
+
+        Destroy(particle);
     }
 
 }

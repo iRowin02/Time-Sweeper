@@ -22373,6 +22373,11 @@ PrefabInstance:
       propertyPath: HUD
       value: 
       objectReference: {fileID: 419761876}
+    - target: {fileID: 7573313767534612346, guid: 805affaa3394c4543bf93c3cdfd7a0a2,
+        type: 3}
+      propertyPath: layer.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
     - target: {fileID: 7573313767797298727, guid: 805affaa3394c4543bf93c3cdfd7a0a2,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -26253,6 +26258,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2000252984}
     m_Modifications:
+    - target: {fileID: 4932024043414280317, guid: 0c961e39d31643b44bc63c59338e2b23,
+        type: 3}
+      propertyPath: explossion
+      value: 
+      objectReference: {fileID: 3497059624671131621, guid: e1c663bc7d2393440b1926bc97378df0,
+        type: 3}
     - target: {fileID: 6276004394196027863, guid: 0c961e39d31643b44bc63c59338e2b23,
         type: 3}
       propertyPath: m_Name
