@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
-    Guard curTarget;
+    PlayerMove curTarget;
     Team myTeam;
     Vitals myVitals;
 
@@ -105,27 +105,27 @@ public class Guard : MonoBehaviour
         else
         {
             //FIND TARGET
-            Guard[] allGuards = GameObject.FindObjectsOfType<Guard>(); //WISSELEN MET SPELER!!!!
-            Guard bestTarget = null;
+            PlayerMove[] allPlayers = GameObject.FindObjectsOfType<PlayerMove>(); //WISSELEN MET SPELER!!!!
+            PlayerMove bestTarget = null;
 
-            for (int i = 0; i < allGuards.Length; i++)
+            for (int i = 0; i < allPlayers.Length; i++)
             {
-                Guard curGuard = allGuards[i];
+                PlayerMove curPlayer = allPlayers[i];
 
-                if (curGuard.GetComponent<Team>().getTeamNumber() != myTeam.getTeamNumber() && curGuard.GetComponent<Vitals>().GetCurrentHealth() > 0)
+                if (curPlayer.GetComponent<Team>().getTeamNumber() != myTeam.getTeamNumber() && curPlayer.GetComponent<Vitals>().GetCurrentHealth() > 0)
                 {
-                    if (canISeeTarget(curGuard.transform))
+                    if (canISeeTarget(curPlayer.transform))
                     {
                         if (bestTarget == null)
                         {
-                            bestTarget = curGuard;
+                            bestTarget = curPlayer;
                         }
                         else
                         {
                             //CHANGE IF BETTER IS FOUND
-                            if (Vector3.Distance(curGuard.transform.position, myTransform.position) < Vector3.Distance(bestTarget.transform.position, myTransform.position))
+                            if (Vector3.Distance(curPlayer.transform.position, myTransform.position) < Vector3.Distance(bestTarget.transform.position, myTransform.position))
                             {
-                                bestTarget = curGuard;
+                                bestTarget = curPlayer;
                             }
                         }
                     }

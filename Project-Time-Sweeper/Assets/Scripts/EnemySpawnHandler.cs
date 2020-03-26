@@ -8,7 +8,7 @@ public class EnemySpawnHandler : MonoBehaviour
     public GameObject toSpawn;
     private bool hasDone = false;
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (hasDone == true)
             return;
@@ -16,7 +16,7 @@ public class EnemySpawnHandler : MonoBehaviour
         {
             for (int i = 0; i < spawnPoints.Length; i++)
             {
-                Instantiate(toSpawn, spawnPoints[i].transform);
+                Instantiate(toSpawn, spawnPoints[i].transform.position, Quaternion.identity);
             }
             hasDone = true;
         }
