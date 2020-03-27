@@ -23004,6 +23004,16 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7573313767944613337, guid: 805affaa3394c4543bf93c3cdfd7a0a2,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.9661648
+      objectReference: {fileID: 0}
+    - target: {fileID: 7573313767944613337, guid: 805affaa3394c4543bf93c3cdfd7a0a2,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.48308253
+      objectReference: {fileID: 0}
     - target: {fileID: 7573313767944613339, guid: 805affaa3394c4543bf93c3cdfd7a0a2,
         type: 3}
       propertyPath: timeManager
@@ -30814,6 +30824,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5619049783587166415, guid: 3ce98904569b25b45b1f42b22b4cf1f5,
+        type: 3}
+      propertyPath: m_Convex
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5620638005072416415, guid: 3ce98904569b25b45b1f42b22b4cf1f5,
         type: 3}
