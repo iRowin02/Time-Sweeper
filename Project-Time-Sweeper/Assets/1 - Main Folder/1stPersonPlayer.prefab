@@ -3152,6 +3152,7 @@ GameObject:
   - component: {fileID: 7573313767944613336}
   - component: {fileID: 7573313767944613339}
   - component: {fileID: 2678961395038529767}
+  - component: {fileID: 2841475003312054171}
   - component: {fileID: 7573313767944613337}
   - component: {fileID: 7573313767944613338}
   m_Layer: 11
@@ -3240,6 +3241,7 @@ MonoBehaviour:
   timeManager: {fileID: 0}
   grenade: {fileID: 7417829975933425764, guid: 0e261aa9dc8645b4b913f3416fc04a2a, type: 3}
   grenadeSpot: {fileID: 3663406763930776784}
+  dashParticle: {fileID: 0}
   movementSpeed: 4
   jumpHeight: 5
   speedMultiplier: 1.7
@@ -3260,6 +3262,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 200
+--- !u!114 &2841475003312054171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573313767944613332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74e7c309c49f16449fa36528e54313a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamNumber: 9000
 --- !u!136 &7573313767944613337
 CapsuleCollider:
   m_ObjectHideFlags: 0
