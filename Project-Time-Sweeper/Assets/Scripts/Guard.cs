@@ -20,7 +20,6 @@ public class Guard : MonoBehaviour
     [Header("Sight")]
     public float minAttackDst, maxAttackDst;
 
-
     public float fireRate;
     private float curFireRate = 0;
 
