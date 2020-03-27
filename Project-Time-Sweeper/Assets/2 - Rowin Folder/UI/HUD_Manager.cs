@@ -53,10 +53,12 @@ public class HUD_Manager : MonoBehaviour
         {
             isPaused = !isPaused;
         }
+
         if(isPaused)
         {
             pauseScreen.SetActive(true);
             Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
         }
         if(!isPaused)
         {
@@ -157,7 +159,7 @@ public class HUD_Manager : MonoBehaviour
     public void ResumeButton()
     {
         isPaused = false;
-
+        Cursor.lockState = CursorLockMode.Locked;
     }
     public void QuitButton()
     {

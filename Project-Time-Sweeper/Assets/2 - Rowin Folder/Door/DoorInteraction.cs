@@ -16,6 +16,7 @@ public class DoorInteraction : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
+            print("ok");    
             StartCoroutine(DoorAnim());
         }
     }
