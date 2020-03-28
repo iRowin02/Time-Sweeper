@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         sceneName = currentScene.name;
 
-        if (sceneName == "StoryScene")
+        if (sceneName == "StoryScene" && sceneName == "Endgame")
             return;
         StartCoroutine("PlayAmbientSounds");
     }

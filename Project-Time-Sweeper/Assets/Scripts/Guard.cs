@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
-    PlayerMove curTarget;
+    public PlayerMove curTarget;
     Team myTeam;
     Vitals myVitals;
 
@@ -109,6 +109,7 @@ public class Guard : MonoBehaviour
 
             for (int i = 0; i < allPlayers.Length; i++)
             {
+            print("Searching");
                 PlayerMove curPlayer = allPlayers[i];
 
                 if (curPlayer.GetComponent<Team>().getTeamNumber() != myTeam.getTeamNumber() && curPlayer.GetComponent<Vitals>().GetCurrentHealth() > 0)
@@ -189,8 +190,11 @@ public class Guard : MonoBehaviour
                 {
                     anim.SetTrigger("fire");
 
-
-                    curTarget.GetComponent<Vitals>().getHit(damage);
+                    float outCome = Random.Range(0, 2);
+                    if(outCome == 1)
+                    {
+                        curTarget.GetComponent<Vitals>().getHit(damage);
+                    }
 
                     curFireRate = fireRate;
                 }
@@ -265,7 +269,7 @@ public class Guard : MonoBehaviour
         myPos.y = myTransform.position.y + 0.5f; //CAST UIT ZIJN MIDDEL
 
         Vector3 playerPos = target.position;
-        playerPos.y = target.position.y + 0.5f; //NAAR MIDDEL VAN
+        playerPos.y = target.position.y; //NAAR MIDDEL VAN
 
         Vector3 dirToPlayer = playerPos - myPos;
 
