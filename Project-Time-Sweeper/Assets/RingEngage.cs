@@ -8,11 +8,13 @@ public class RingEngage : MonoBehaviour
     private HUD_Manager hud;
     [SerializeField]
     private float time;
+    public AudioClip clip;
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
         {
             hud.SelfDestructEngage(time);
+            AudioManager.PlaySound(clip, AudioManager.AudioGroups.GameMusic);
             Destroy(gameObject);
         }
     }

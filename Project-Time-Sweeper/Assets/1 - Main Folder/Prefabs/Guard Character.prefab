@@ -2198,6 +2198,7 @@ GameObject:
   - component: {fileID: 770552379718209682}
   - component: {fileID: 770552379718209685}
   - component: {fileID: 6064721702122506353}
+  - component: {fileID: 6572477058405866480}
   m_Layer: 0
   m_Name: Guard Character
   m_TagString: Untagged
@@ -2281,8 +2282,8 @@ MonoBehaviour:
   curTarget: {fileID: 0}
   moveSpeed: 6
   damage: 20
-  minAttackDst: 3
-  maxAttackDst: 30
+  minAttackDst: 5
+  maxAttackDst: 20
   fireRate: 0.5
   states: 0
 --- !u!65 &6064721702122506353
@@ -2298,6 +2299,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.63, z: 0.45}
   m_Center: {x: 0, y: 0.95, z: 0}
+--- !u!54 &6572477058405866480
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759607208844472860}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &8888071009696552352
 GameObject:
   m_ObjectHideFlags: 0

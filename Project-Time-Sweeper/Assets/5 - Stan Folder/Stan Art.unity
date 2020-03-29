@@ -923,6 +923,7 @@ GameObject:
   m_Component:
   - component: {fileID: 63540645}
   - component: {fileID: 63540646}
+  - component: {fileID: 63540647}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -957,6 +958,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.581213, y: 1.5380297, z: 1.4051781}
   m_Center: {x: -0.003876686, y: 0.703979, z: 0.075006485}
+--- !u!114 &63540647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63540644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4543ec1e4e562cc418b03dbfce01ae5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &64767134 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4741537285454965192, guid: 2ac7412b72cc5c7418c3944a65853dba,
@@ -5316,7 +5329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hud: {fileID: 7573313767547512805}
   time: 360
-  alarm: {fileID: 0}
+  clip: {fileID: 8300000, guid: 8be78a837f735a140ba9b3ff922a3e84, type: 3}
 --- !u!1001 &439110132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27151,6 +27164,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6909452061383641056, guid: 925c8d162bd436c41b7638f86cc68f6c,
+        type: 3}
+      propertyPath: ambientSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6909452061383641057, guid: 925c8d162bd436c41b7638f86cc68f6c,
         type: 3}
       propertyPath: m_Name

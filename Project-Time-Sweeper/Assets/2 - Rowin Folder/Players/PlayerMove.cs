@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -80,6 +81,11 @@ public class PlayerMove : MonoBehaviour
     #region Health
     void HandleHealth()
     {
+        if(vitals.GetCurrentHealth() <= 0)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene(4);
+        }
         if (vitals.GetCurrentHealth() != _health)
         {
             float pct = vitals.GetCurrentHealth() / _health * 100;

@@ -16,6 +16,7 @@ public class Endgame : MonoBehaviour
     IEnumerator EndGame()
     {
         yield return new WaitForSeconds(5);
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(3);
     }
 }
