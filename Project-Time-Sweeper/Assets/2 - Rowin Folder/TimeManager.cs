@@ -12,10 +12,12 @@ public class TimeManager : MonoBehaviour
     public float maxSlowDown;
 
     private float sens, oldsens;
+    private float test;
     void Awake()
     {
         oldsens = playerCamera.mouseSen;
         sens = (playerCamera.mouseSen * 2);
+        test = Time.fixedDeltaTime;
     }
 
     void Update()
@@ -24,7 +26,9 @@ public class TimeManager : MonoBehaviour
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
         if(Time.timeScale == 1)
         {
+            Time.fixedDeltaTime = test;
             playerCamera.mouseSen = oldsens;
+            print("done slowing");
         }
     }
 
@@ -36,5 +40,9 @@ public class TimeManager : MonoBehaviour
         playerCamera.mouseSen = sens;
 
         print("Slowing Down Now");
+    }
+    void ResetTime()
+    {
+
     }
 }

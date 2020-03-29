@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -30,14 +32,21 @@ public class PlayerMove : MonoBehaviour
     public float thrust;
     public float dodgeTime;
     private float _dodgeTime;
-    
+    [SerializeField]
+    private float healthUpdateSeconds = 0.2f;
+    public Vitals vitals;
+    [Header("HealthBar Elements")]
+    public Image healthBar;
+    public TextMeshProUGUI healthAmount;
+    private float _health;
+
 
     [Header("Private Variables")]
     private Vector3 dir;
-    private float regSpeed,grenadeCharge, maxHealth;
+    private float regSpeed,grenadeCharge, bobSpeed;
     private bool canJump, isSprinting;
     private Rigidbody rb;
-    private Animator anim;
+    public Animator anim;
     private bool canDodge = true;
 
     private float horInput, vertInput;
@@ -49,9 +58,12 @@ public class PlayerMove : MonoBehaviour
         Physics.IgnoreLayerCollision(8, 9);    
         rb = GetComponent<Rigidbody>();
         regSpeed = movementSpeed;
-        playerHealth = maxHealth;
-        anim = GetComponentInChildren<Animator>();
+        vitals = GetComponent<Vitals>();
+        playerHealth = vitals.GetCurrentHealth();
         _dodgeTime = dodgeTime;
+        bobSpeed = anim.speed;
+        healthAmount.text = "(" + playerHealth.ToString() + ")";
+        healthBar.fillAmount = 1;
     }
 
     void Update()
@@ -59,8 +71,37 @@ public class PlayerMove : MonoBehaviour
         Move();
         PlayerInputs();
         DodgeTimer();
+        HandleHealth();
     }
-    
+    #region Health
+    void HandleHealth()
+    {
+        if (vitals.GetCurrentHealth() != _health)
+        {
+            float pct = vitals.GetCurrentHealth() / _health * 100;
+            float total = pct / 100;
+            StartCoroutine(ChangePct(total));
+        }
+    }
+    #endregion
+    #region HandleHealth
+
+    private IEnumerator ChangePct(float pct)
+    {
+        float preChangePct = healthBar.fillAmount;
+        float elapsed = 0f;
+
+        while (elapsed < healthUpdateSeconds)
+        {
+            elapsed += Time.deltaTime;
+            healthBar.fillAmount = Mathf.Lerp(preChangePct, pct, elapsed / healthUpdateSeconds);
+            healthAmount.text = "(" + playerHealth.ToString() + ")";
+
+            yield return null;
+        }
+        healthBar.fillAmount = pct;
+    }
+    #endregion
 
     #region Move
     public void Move()
@@ -108,22 +149,15 @@ public class PlayerMove : MonoBehaviour
             isSprinting = false;
             PlayerSprinting();
         }
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            //HealthUpdate(-10);
-        }
         if (Input.GetKeyDown(KeyCode.T))
         {
             HUD.totalMana += 1;
         }
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             timeManager.SlowDown();
         }
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            print("Time Restore");
-        }
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Instantiate(grenade, grenadeSpot.position, transform.rotation);
@@ -171,7 +205,7 @@ public class PlayerMove : MonoBehaviour
         else
         {
             movementSpeed = regSpeed;
-            anim.SetBool("isSprinting", false);
+            anim.speed = bobSpeed;
         }
 
     }
@@ -182,7 +216,7 @@ public class PlayerMove : MonoBehaviour
 
     public void ViewBobbing()
     {
-        anim.SetBool("isSprinting", true);
+        anim.speed = anim.speed * speedMultiplier;
     }
     #endregion
 

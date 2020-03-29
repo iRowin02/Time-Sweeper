@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1 - Main Folder/StoryScene.unity
     guid: 79eee7f4e1337764e99ad52ba1f59b79
+  - enabled: 1
+    path: Assets/5 - Stan Folder/Stan Art.unity
+    guid: 8d8fc731d88a28a46a80e6a9ce7fa7f8
+  - enabled: 1
+    path: Assets/1 - Main Folder/Endgame.unity
+    guid: cb8383b05641da84cb7481c759f49d35
   m_configObjects: {}

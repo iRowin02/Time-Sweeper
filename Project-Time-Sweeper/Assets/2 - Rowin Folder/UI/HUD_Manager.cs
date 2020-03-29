@@ -16,10 +16,6 @@ public class HUD_Manager : MonoBehaviour
 {
     [Header("Managers")]
     public PlayerMove playerInfo;
-    private Vitals vitals;
-    [Header("HealthBar Elements")]
-    public Image healthBar;
-    public TextMeshProUGUI healthAmount;
     [Header("ManaBar Elements")]
     public Image manaBar;
     public TextMeshProUGUI manaTextAmount;
@@ -34,17 +30,10 @@ public class HUD_Manager : MonoBehaviour
     public TextMeshProUGUI selfDestructText;
     [Header("Variables")]
     [SerializeField]
-    private float healthUpdateSeconds = 0.2f;
-    [SerializeField]
     private float manaUpdateSeconds = 0.02f;
-
-    private void Start()
-    {
-        vitals = GetComponent<Vitals>();
-    }
     public void Update()
     {
-        if(totalMana_ != totalMana)
+        if (totalMana_ != totalMana)
         {
             totalMana_ = totalMana;
             manaTextAmount.text = "(" + totalMana.ToString() + ")";
@@ -75,34 +64,7 @@ public class HUD_Manager : MonoBehaviour
     public void Awake()
     {
         manaTextAmount.text = "(" + totalMana.ToString() + ")";
-        healthAmount.text = "(" + playerInfo.playerHealth.ToString() + ")";
-        healthBar.fillAmount = 1;
-        playerInfo.OnHealthPctChange += HandleHealthChange;
     }
-
-    #region HandleHealth
-
-    public void HandleHealthChange(float pct)
-    {
-        StartCoroutine(ChangePct(pct));
-    }
-
-    private IEnumerator ChangePct(float pct)
-    {
-        float preChangePct = healthBar.fillAmount;
-        float elapsed = 0f;
-
-        while(elapsed < healthUpdateSeconds)
-        {
-            elapsed += Time.deltaTime;
-            healthBar.fillAmount = Mathf.Lerp(preChangePct, pct, elapsed / healthUpdateSeconds);
-            healthAmount.text = "(" + playerInfo.playerHealth.ToString() + ")";
-
-            yield return null;
-        }
-        healthBar.fillAmount = pct;
-    }
-    #endregion
 
     #region HandleMana
 
