@@ -694,8 +694,7 @@ GameObject:
   - component: {fileID: 999648947007765234}
   - component: {fileID: 7279726415244150396}
   - component: {fileID: 1456229948568113970}
-  - component: {fileID: 2143861296060535214}
-  - component: {fileID: 2900249622008372154}
+  - component: {fileID: 4921523330615982292}
   m_Layer: 0
   m_Name: Button (1)
   m_TagString: Untagged
@@ -813,22 +812,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!111 &2143861296060535214
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3675534840819726723}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!95 &2900249622008372154
+--- !u!95 &4921523330615982292
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -1248,8 +1232,7 @@ GameObject:
   - component: {fileID: 388576223266120902}
   - component: {fileID: 3202726282715544373}
   - component: {fileID: 8886979561027058155}
-  - component: {fileID: 3645138393579951769}
-  - component: {fileID: 5667884259412617838}
+  - component: {fileID: 468141312002404369}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -1367,22 +1350,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!111 &3645138393579951769
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5556585683789618928}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!95 &5667884259412617838
+--- !u!95 &468141312002404369
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
