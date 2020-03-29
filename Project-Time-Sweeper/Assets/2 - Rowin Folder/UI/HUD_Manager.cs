@@ -16,6 +16,7 @@ public class HUD_Manager : MonoBehaviour
 {
     [Header("Managers")]
     public PlayerMove playerInfo;
+    private Vitals vitals;
     [Header("HealthBar Elements")]
     public Image healthBar;
     public TextMeshProUGUI healthAmount;
@@ -37,6 +38,10 @@ public class HUD_Manager : MonoBehaviour
     [SerializeField]
     private float manaUpdateSeconds = 0.02f;
 
+    private void Start()
+    {
+        vitals = GetComponent<Vitals>();
+    }
     public void Update()
     {
         if(totalMana_ != totalMana)

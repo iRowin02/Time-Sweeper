@@ -34,9 +34,8 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Private Variables")]
     private Vector3 dir;
-    private float regSpeed, yMovement_,grenadeCharge, maxHealth;
+    private float regSpeed,grenadeCharge, maxHealth;
     private bool canJump, isSprinting;
-    private int _playerMana;
     private Rigidbody rb;
     private Animator anim;
     private bool canDodge = true;

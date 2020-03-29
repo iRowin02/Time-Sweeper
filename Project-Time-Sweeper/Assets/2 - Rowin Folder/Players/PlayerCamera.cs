@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-     public Transform playerBody;
+    public Transform playerBody;
 
     public Vector2 minMaxClampValue;
 
