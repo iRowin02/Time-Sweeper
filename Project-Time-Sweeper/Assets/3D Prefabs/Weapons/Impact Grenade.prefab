@@ -130,5 +130,5 @@ MonoBehaviour:
   curveOffset: 50
   timeFieldObj: {fileID: 0}
   grenade: 1
-  particleEffect: {fileID: 4670226902276676541, guid: 7aa1297e4ff392a4e8525758300bf1c3,
+  particleEffect: {fileID: 3497059624671131621, guid: e1c663bc7d2393440b1926bc97378df0,
     type: 3}
