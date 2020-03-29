@@ -72,6 +72,10 @@ public class PlayerMove : MonoBehaviour
         PlayerInputs();
         DodgeTimer();
         HandleHealth();
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            vitals.getHit(20);
+        }
     }
     #region Health
     void HandleHealth()

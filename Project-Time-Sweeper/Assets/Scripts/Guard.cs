@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
-    public PlayerMove curTarget;
+    public Player curTarget;
     Team myTeam;
     Vitals myVitals;
 
@@ -104,18 +104,18 @@ public class Guard : MonoBehaviour
         else
         {
             //FIND TARGET
-            PlayerMove[] allPlayers = GameObject.FindObjectsOfType<PlayerMove>(); //WISSELEN MET SPELER!!!!
-            PlayerMove bestTarget = null;
+            Player[] allPlayers = GameObject.FindObjectsOfType<Player>(); //WISSELEN MET SPELER!!!!
+            Player bestTarget = null;
 
             for (int i = 0; i < allPlayers.Length; i++)
             {
-            print("Searching");
-                PlayerMove curPlayer = allPlayers[i];
+                Player curPlayer = allPlayers[i];
 
                 if (curPlayer.GetComponent<Team>().getTeamNumber() != myTeam.getTeamNumber() && curPlayer.GetComponent<Vitals>().GetCurrentHealth() > 0)
                 {
                     if (canISeeTarget(curPlayer.transform))
                     {
+                            print("Searching");
                         if (bestTarget == null)
                         {
                             bestTarget = curPlayer;
@@ -129,13 +129,13 @@ public class Guard : MonoBehaviour
                             }
                         }
                     }
-
                 }
             }
             if (bestTarget != null)
             {
                 curTarget = bestTarget;
             }
+
         }
     }
 
@@ -269,13 +269,14 @@ public class Guard : MonoBehaviour
         myPos.y = myTransform.position.y + 0.5f; //CAST UIT ZIJN MIDDEL
 
         Vector3 playerPos = target.position;
-        playerPos.y = target.position.y; //NAAR MIDDEL VAN
+        playerPos.y = target.position.y + 0.5f; //NAAR MIDDEL VAN
 
         Vector3 dirToPlayer = playerPos - myPos;
 
         RaycastHit hit;
         if (Physics.Raycast(myPos, dirToPlayer, out hit, Mathf.Infinity))
         {
+            Debug.DrawRay(myPos, dirToPlayer, Color.green);
             if (hit.transform == target)
             {
                 canSeeIt = true;

@@ -2278,9 +2278,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6eb7764cb41f874fbfd18cccd5461aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curTarget: {fileID: 0}
   moveSpeed: 6
   damage: 20
-  minAttackDst: 2
+  minAttackDst: 3
   maxAttackDst: 30
   fireRate: 0.5
   states: 0

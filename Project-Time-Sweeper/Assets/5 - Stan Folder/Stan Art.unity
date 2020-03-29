@@ -100,7 +100,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 8376770cfcca96b4b865c61b6b25dccc,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -30250,7 +30250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74e7c309c49f16449fa36528e54313a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamNumber: 9000
+  teamNumber: 2
 --- !u!1 &3046346531462482759
 GameObject:
   m_ObjectHideFlags: 0
@@ -35883,6 +35883,7 @@ GameObject:
   - component: {fileID: 2841475001738828028}
   - component: {fileID: 7573313768377248446}
   - component: {fileID: 7573313768377248445}
+  - component: {fileID: 7573313768377248436}
   m_Layer: 11
   m_Name: Player1stPerson
   m_TagString: Player
@@ -35890,6 +35891,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7573313768377248436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573313768377248435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98efd761b84d5c643a79cbb9cf0ba2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &7573313768377248440
 MeshFilter:
   m_ObjectHideFlags: 0
