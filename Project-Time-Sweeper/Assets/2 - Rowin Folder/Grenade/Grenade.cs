@@ -30,7 +30,7 @@ public class Grenade : MonoBehaviour
     }
     void OnCollisionEnter(Collision collider)
     {
-        if(collider.gameObject.CompareTag("Ground"))
+        if(collider.gameObject)
         {
             if(!hasExploded)
             {
@@ -68,7 +68,7 @@ public class Grenade : MonoBehaviour
             }
             if(grenade == GrenadeStates.time)
             {
-                GameObject timeField = Instantiate(timeFieldObj, transform.position, Quaternion.identity);
+                GameObject timeField = Instantiate(timeFieldObj, transform.position, transform.rotation);
             }
         }
 

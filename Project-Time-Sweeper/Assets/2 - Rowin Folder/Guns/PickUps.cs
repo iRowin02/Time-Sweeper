@@ -21,7 +21,8 @@ public class PickUps : MonoBehaviour
         {
             if(health == true)
             {
-                //coll.gameObject.GetComponent<PlayerMove>().HealthUpdate(amount);
+                var obj = coll.gameObject.GetComponent<Vitals>().GetCurrentHealth();
+                obj += amount;
             }
             if(ammo == true)
             {
