@@ -5316,6 +5316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hud: {fileID: 7573313767547512805}
   time: 360
+  alarm: {fileID: 0}
 --- !u!1001 &439110132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6461,7 +6462,7 @@ PrefabInstance:
     - target: {fileID: 1966898357323962149, guid: 470bd30741dbaaf4c9b60e1517c46b00,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1966898357323962149, guid: 470bd30741dbaaf4c9b60e1517c46b00,
         type: 3}
@@ -7315,7 +7316,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 9f5fd7240af4bab449e625d111ce5376,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 9f5fd7240af4bab449e625d111ce5376,
         type: 3}
@@ -9674,7 +9675,7 @@ PrefabInstance:
     - target: {fileID: 8432876054571531958, guid: 2490d19d094cd8b438fbcf1edaa0b689,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8432876054571531958, guid: 2490d19d094cd8b438fbcf1edaa0b689,
         type: 3}
@@ -16082,7 +16083,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 3fbe8e77612ea41498c000bf27f7760c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 3fbe8e77612ea41498c000bf27f7760c,
         type: 3}
@@ -25927,7 +25928,7 @@ PrefabInstance:
     - target: {fileID: 3754123504434773196, guid: 4758a77d6d083d0479bd6308e9a0c331,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3754123504434773196, guid: 4758a77d6d083d0479bd6308e9a0c331,
         type: 3}
@@ -30202,7 +30203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a29a3070e2db5479149f2c994c0d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 2000
 --- !u!1 &2696133171915363297
 GameObject:
   m_ObjectHideFlags: 0
