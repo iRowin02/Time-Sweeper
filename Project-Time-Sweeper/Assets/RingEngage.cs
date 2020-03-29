@@ -13,6 +13,7 @@ public class RingEngage : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             hud.SelfDestructEngage(time);
+            Destroy(gameObject);
         }
     }
 }
