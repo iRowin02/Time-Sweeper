@@ -2285,6 +2285,7 @@ MonoBehaviour:
   minAttackDst: 5
   maxAttackDst: 20
   fireRate: 0.5
+  fire: {fileID: 8300000, guid: d711baf0e2f74de49a7f905085ceba18, type: 3}
   states: 0
 --- !u!65 &6064721702122506353
 BoxCollider:
