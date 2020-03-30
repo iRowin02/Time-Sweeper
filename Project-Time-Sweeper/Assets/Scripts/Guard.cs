@@ -26,6 +26,8 @@ public class Guard : MonoBehaviour
     Vector3 targetLastKnownPos;
     Path currentPath = null;
 
+    public AudioClip fire;
+
     public enum ai_states
     {
         idle,
@@ -189,6 +191,7 @@ public class Guard : MonoBehaviour
                 if (curFireRate <= 0)
                 {
                     anim.SetTrigger("fire");
+                    AudioManager.PlaySound(fire, AudioManager.AudioGroups.GameSFX);
 
                     float outCome = Random.Range(0, 2);
                     if(outCome == 1)
