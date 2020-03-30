@@ -86,16 +86,16 @@ public class PlayerMove : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene(4);
         }
-        if (vitals.GetCurrentHealth() != _health)
-        {
-            float pct = vitals.GetCurrentHealth() / _health * 100;
-            float total = pct / 100;
-            StartCoroutine(ChangePct(total));
-        }
     }
     #endregion
     #region HandleHealth
+    public void HealthUpdate()
+    {
+        float pct = vitals.GetCurrentHealth() / _health * 100;
+        float total = pct / 100;
 
+        StartCoroutine(ChangePct(total));
+    }
     private IEnumerator ChangePct(float pct)
     {
         float preChangePct = healthBar.fillAmount;
@@ -158,6 +158,10 @@ public class PlayerMove : MonoBehaviour
         {
             isSprinting = false;
             PlayerSprinting();
+        }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            timeManager.SlowDown();
         }
         if (Input.GetKeyDown(KeyCode.T))
         {

@@ -4,45 +4,34 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    public PlayerCamera playerCamera;
+    public PlayerMove player;
+    public PlayerCamera playerCam;
 
     public float slowDownFactor = 0.05f;
     public float slowDownLength = 2f;
 
     public float maxSlowDown;
 
-    private float sens, oldsens;
-    private float test;
-    void Awake()
-    {
-        oldsens = playerCamera.mouseSen;
-        sens = (playerCamera.mouseSen * 2);
-        test = Time.fixedDeltaTime;
-    }
 
-    void Update()
-    {
-        Time.timeScale += (1f / slowDownLength) * Time.deltaTime;
-        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
-        if(Time.timeScale == 1)
-        {
-            Time.fixedDeltaTime = test;
-            playerCamera.mouseSen = oldsens;
-            print("done slowing");
-        }
-    }
 
     public void SlowDown()
     {
-        Time.timeScale = slowDownFactor;
-        Time.fixedDeltaTime = Time.timeScale * .02f;
-
-        playerCamera.mouseSen = sens;
-
-        print("Slowing Down Now");
+        StartCoroutine(ResetTime());
     }
-    void ResetTime()
+    IEnumerator ResetTime()
     {
+        Time.timeScale = Time.timeScale / 2;
+        Time.fixedDeltaTime = Time.timeScale;
 
+        playerCam.mouseSen = playerCam.mouseSen * 2;
+        player.movementSpeed = player.movementSpeed * 2;
+
+        yield return new WaitForSeconds(4);
+
+        playerCam.mouseSen = playerCam.mouseSen / 2;
+        player.movementSpeed = player.movementSpeed / 2;
+
+        Time.timeScale = Time.timeScale * 2;
+        Time.fixedDeltaTime = Time.timeScale;
     }
 }
