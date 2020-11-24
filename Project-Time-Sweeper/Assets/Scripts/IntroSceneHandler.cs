@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class IntroSceneHandler : MonoBehaviour
 {
-    void Update()
+   void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
